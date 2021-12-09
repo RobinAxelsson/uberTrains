@@ -2,6 +2,15 @@ const settings = require("./settings.json");
 const path = require("path");
 const express = require("express");
 const webServer = express();
+const cors = require("cors");
+
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,
+  optionSuccessStatus: 200,
+};
+
+webServer.use(cors(corsOptions));
 
 webServer.use(express.static("frontend"));
 
