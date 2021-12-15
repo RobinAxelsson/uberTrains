@@ -1,31 +1,38 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 function App() {
-  const [stations, setStations] = useState([]);
+  const [jsonData, setJsonData] = useState([]);
 
   useEffect(() => {
-    let canceled = false;
-    fetch("http://localhost:4000/api/stations")
-      .then((res) => res.json())
-      .catch((error) => console.log("error", error))
+    fetch("data-sample.json", {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        return res.json();
+      })
       .then((data) => {
-        if (canceled) {
-          return;
-        }
-        setStations(data);
-        console.log(stations);
+        setJsonData(data);
       });
-    return () => {
-      canceled = true;
-    };
   }, []);
 
+  const test = () => {
+    let test = Object.keys(jsonData).map((item, i) => {
+      return jsonData[item];
+    });
+    console.log("test", test);
+  };
+  test();
+  console.log(jsonData);
   return (
     <div className="App">
-      {stations &&
-        stations.map((station) => (
-          <div>
-            <p className="station-name">{station.name}</p>
+      {jsonData &&
+        Object.keys(jsonData).map((item, i) => (
+          <div key={i}>
+            <p className="station-name"> {jsonData[item].ID}</p>
           </div>
         ))}
     </div>
