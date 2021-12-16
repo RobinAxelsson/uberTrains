@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import "./App.css";
 function App() {
   const [jsonData, setJsonData] = useState([]);
+  const [searchStation, setSearchStation] = useState("");
 
   useEffect(() => {
-    fetch("data-sample.json", {
+    fetch("travelplan.json", {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -18,23 +19,47 @@ function App() {
         setJsonData(data);
       });
   }, []);
+  console.log(searchStation);
+  // console.log("json", jsonData);
 
-  const test = () => {
-    let test = Object.keys(jsonData).map((item, i) => {
-      return jsonData[item];
-    });
-    console.log("test", test);
+  // const test = () => {
+  //   let test = jsonData.map((item) => {
+  //     return item.routeEvents.map((i) => i.location);
+  //   });
+  //   console.log("test", test);
+  // };
+
+  const filterStations = (val) => {
+    console.log("val", val);
+    if (searchStation === "") {
+      return val;
+    } else if (
+      val.location.toLowerCase().includes(searchStation.toLowerCase())
+    ) {
+      return val;
+    } else {
+      return false;
+    }
   };
-  test();
-  console.log(jsonData);
+
   return (
     <div className="App">
+      <input
+        placeholder="Search"
+        type="search"
+        name="search"
+        value={searchStation}
+        onChange={(e) => {
+          setSearchStation(e.target.value);
+        }}
+      />
+
       {jsonData &&
-        Object.keys(jsonData).map((item, i) => (
-          <div key={i}>
-            <p className="station-name"> {jsonData[item].ID}</p>
-          </div>
-        ))}
+        jsonData.map((item) =>
+          item.routeEvents
+            .filter(filterStations)
+            .map((i) => <div>{i.location}</div>)
+        )}
     </div>
   );
 }
