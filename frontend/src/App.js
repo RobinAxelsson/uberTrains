@@ -22,6 +22,17 @@ function App() {
 
   return (
     <div className="App">
+      <label>När vill du resa?</label> <br />
+
+      <input type="radio" id="immediateDeparture" name="timeSelector" value="immediateDeparture" />
+      <label for="immediateDeparture">Nu</label>
+
+      <input type="radio" id="selectDeparture" name="timeSelector" value="selectDeparture" />
+      <label for="selectDeparture">Välj avgångstid</label>
+
+      <input type="radio" id="selectArrival" name="timeSelector" value="selectArrival" />
+      <label for="selectArrival">Välj ankomsttid</label>
+
       {stations &&
         stations.map((station) => (
           <div>
