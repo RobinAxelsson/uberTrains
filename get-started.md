@@ -1,5 +1,5 @@
 # Komma igång med projektet
-**Denna guide avser att du installerat samtlig mjukvara som krävs**
+**Denna guide avser att du redan installerat samtlig mjukvara som krävs**
 ## Kloning av Github-projekt
 Öppna Visual Studio Code på din dator och i vänstra menyfältet väljer du "Source Control" <br>
 
