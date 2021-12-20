@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { TravelPlanner } from "./services/TravelPlanner";
+import "reflect-metadata";
 
 const settings = require("../settings.json");
 const path = require("path");
