@@ -21,31 +21,30 @@ function App() {
     };
   }, []);
 
-  function checkSelected() {
+  function toggleTimeAndDatePicker() {
+    $('#timeAndDatePicker').remove();
     if ($('#selectDeparture').is(':checked') || $('#selectArrival').is(':checked')) {
       // Add button press logic here
+      $('#timeAndDateApp').append('<div id="timeAndDatePicker"> <br>' +
+        '<label htmlFor="datePicker">Dag</label> <br>' +
+        '<input type="date" id="datePicker" /> <br> <br>' +
+        '<label htmlFor="timePicker">Tid</label> <br>' +
+        '<input type="time" id="timePicker" /> </div>');
     }
   }
 
   return (
-    <div className="App">
+    <div className="App" id="timeAndDateApp">
       <label>När vill du resa?</label> <br />
 
-      <input type="radio" id="immediateDeparture" name="timeSelector" value="immediateDeparture" />
-      <label for="immediateDeparture">Nu</label>
+      <input type="radio" id="immediateDeparture" name="timeSelector" value="immediateDeparture" onChange={() => toggleTimeAndDatePicker()} />
+      <label htmlFor="immediateDeparture">Nu</label>
 
-      <input type="radio" id="selectDeparture" name="timeSelector" value="selectDeparture" onChange={() => checkSelected()} />
-      <label for="selectDeparture">Välj avgångstid</label>
+      <input type="radio" id="selectDeparture" name="timeSelector" value="selectDeparture" onChange={() => toggleTimeAndDatePicker()} />
+      <label htmlFor="selectDeparture">Välj avgångstid</label>
 
-      <input type="radio" id="selectArrival" name="timeSelector" value="selectArrival" onChange={() => checkSelected()} />
-      <label for="selectArrival">Välj ankomsttid</label>
-
-      {stations &&
-        stations.map((station) => (
-          <div>
-            <p className="station-name">{station.name}</p>
-          </div>
-        ))}
+      <input type="radio" id="selectArrival" name="timeSelector" value="selectArrival" onChange={() => toggleTimeAndDatePicker()} />
+      <label htmlFor="selectArrival">Välj ankomsttid</label>
     </div>
   );
 }
