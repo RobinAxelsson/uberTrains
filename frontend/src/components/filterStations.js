@@ -41,7 +41,7 @@ const filterStations = () => {
   // };
 
   return (
-    <div>
+    <div className="">
       {/* <input
         placeholder="Search"
         type="search"

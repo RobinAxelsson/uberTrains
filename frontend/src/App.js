@@ -1,65 +1,57 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 function App() {
-  const [jsonData, setJsonData] = useState([]);
-  const [searchStation, setSearchStation] = useState("");
+  const [availableTravels, setAvailableTravels] = useState([]);
+  const [start, setStart] = useState([]);
+  const [end, setEnd] = useState([]);
+  const [date, setDate] = useState([]);
 
   useEffect(() => {
-    fetch("travelplan.json", {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    })
+    fetch(
+      "http://localhost:4000/api/journey?date=2012-04-23&start=goteborg&end=stockholm",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    )
       .then((res) => {
         console.log(res);
         return res.json();
       })
       .then((data) => {
-        setJsonData(data);
+        setAvailableTravels(data);
       });
   }, []);
-  console.log(searchStation);
-  // console.log("json", jsonData);
-
-  // const test = () => {
-  //   let test = jsonData.map((item) => {
-  //     return item.routeEvents.map((i) => i.location);
-  //   });
-  //   console.log("test", test);
-  // };
-
-  const filterStations = (val) => {
-    console.log("val", val);
-    if (searchStation === "") {
-      return val;
-    } else if (
-      val.location.toLowerCase().includes(searchStation.toLowerCase())
-    ) {
-      return val;
-    } else {
-      return false;
-    }
-  };
+  // console.log(availableTravels);
 
   return (
-    <div className="App">
-      <input
-        placeholder="Search"
-        type="search"
-        name="search"
-        value={searchStation}
-        onChange={(e) => {
-          setSearchStation(e.target.value);
-        }}
-      />
-
-      {jsonData &&
-        jsonData.map((item) =>
-          item.routeEvents
-            .filter(filterStations)
-            .map((i) => <div>{i.location}</div>)
-        )}
+    <div>
+      <h2>Vart vill du resa?</h2>
+      <form>
+        <label>från</label>
+        <input
+          type="text"
+          required
+          value={start}
+          onChange={(e) => setStart(e.target.value)}
+        />
+        <label>till</label>
+        <input
+          type="text"
+          required
+          value={end}
+          onChange={(e) => setEnd(e.target.value)}
+        />
+        <label>datum</label>
+        <input
+          type="text"
+          required
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+        />
+      </form>
     </div>
   );
 }
