@@ -14,15 +14,10 @@ Systemet är webbaserat och använder sig av följande teknologier:
 - Installera node.js
 - Installera SQLite Studio
 
-## Get started
+## Behöver du komma igång?
 
-- Öppna projektmappen i  Visual Studio Code
-- Öppna 2 terminaler i den ena gå till frontend mappen (kommando: cd frontend)
-- Kör npm install i båda terminalerna
-- Om installationen gick bra, Kör node index i terminalen som inte är inne i frontend, I frontend terminalen kör npm start.
-- Öppna programmet på localhost:3000 (Skriv det i webbläsaren)
-
----
+**För att komma igång med projektet, följ instruktionerna i denna länk:** <br>
+[Get-started](https://github.com/malmz90/uberTrains/blob/dev/get-started.md)
 
 ## Dev Notes
 
