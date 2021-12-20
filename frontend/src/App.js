@@ -1,14 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./App.css";
 function App() {
+  const [showTravels, setShowTravels] = useState(false);
   const [availableTravels, setAvailableTravels] = useState([]);
   const [start, setStart] = useState([]);
   const [end, setEnd] = useState([]);
   const [date, setDate] = useState([]);
 
-  useEffect(() => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     fetch(
-      "http://localhost:4000/api/journey?date=2012-04-23&start=goteborg&end=stockholm",
+      `http://localhost:4000/api/journey?date=${date}&start=${start}&end=${end}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -21,15 +23,18 @@ function App() {
         return res.json();
       })
       .then((data) => {
-        setAvailableTravels(data);
+        if (data) {
+          setAvailableTravels(data);
+          setShowTravels(true);
+        }
       });
-  }, []);
-  // console.log(availableTravels);
+    console.log(availableTravels);
+  };
 
   return (
     <div>
       <h2>Vart vill du resa?</h2>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label>från</label>
         <input
           type="text"
@@ -51,7 +56,20 @@ function App() {
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />
+        <button>fortsätt</button>
       </form>
+      {showTravels && (
+        <div>
+          {availableTravels &&
+            availableTravels.map((item) => (
+              <div>
+                <p>Tåg: {item.train}</p>
+                <p>TågId: {item.trainId}</p>
+                <button>Boka</button>
+              </div>
+            ))}
+        </div>
+      )}
     </div>
   );
 }
