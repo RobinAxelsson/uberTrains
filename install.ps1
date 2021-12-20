@@ -1,6 +1,7 @@
 ﻿cd backend
 npm install -g typescript
 npm install -g ts-node
+npm install -g typeorm
 npm install
 cd ..
 cd frontend
