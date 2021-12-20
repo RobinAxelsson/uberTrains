@@ -5,5 +5,6 @@ npm install
 cd ..
 cd frontend
 npm install
+cd ..
 Write-Host -NoNewLine 'Skript färdigt... tryck valfri knapp för att avsluta';
 $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
