@@ -14,7 +14,7 @@ I nästa steg väljer du i vilken mapp du vill arbeta med projektet. Sökvägen 
 
 ## Projektgrenar
 
-Nu är du inne i projektets huvudgren. Men för att kunna testa nya implementationer behöver ni öppna den gren med den går ni vill testa. <br>
+Nu är du inne i projektets huvudgren. Men för att kunna testa nya implementationer behöver ni öppna den gren med den kod ni vill testa. <br>
 Man arbetar i grenar och det är som kopior av projektet man sedan kan slå ihop. Detta gör man så ens nya kod inte påverkar någon annan. <br>
 Vår utvecklingsgren kallas "dev" och gäller det ny kod för user stories har vi oftast egna branches för detta. <br>
 Det är i en sådan branch ni kommer befinna er i när ni ska testa user stories, innan de bakas ihop med dev-grenen. <br> <br>
