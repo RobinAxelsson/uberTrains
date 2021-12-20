@@ -16,7 +16,8 @@ I nästa steg väljer du i vilken mapp du vill arbeta med projektet. Sökvägen 
 
 Nu är du inne i projektets huvudgren. Men för att kunna testa nya implementationer behöver ni öppna den gren med den kod ni vill testa. <br>
 Man arbetar i grenar och det är som kopior av projektet man sedan kan slå ihop. Detta gör man så ens nya kod inte påverkar någon annan. <br>
-Vår utvecklingsgren kallas "dev" och gäller det ny kod för user stories har vi oftast egna branches för detta. <br>
+Vår huvudgren för utveckling kallas "dev" och där gäller "färdigbakad" kod som inte riktigt gått ut till användarna ännu. <br>
+Gäller det ny kod för user stories har vi oftast egna branches för detta. <br>
 Det är i en sådan branch ni kommer befinna er i när ni ska testa user stories, innan de bakas ihop med dev-grenen. <br> <br>
 För att växla mellan grenar så trycker ni längst ner i det vänstra hörnet i VSCode och sedan klickar på den gren ni vill hoppa till i menyn som dyker upp. <br>
 
