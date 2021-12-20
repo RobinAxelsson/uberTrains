@@ -29,7 +29,8 @@ function App() {
         '<label htmlFor="datePicker">Dag</label> <br>' +
         '<input type="date" id="datePicker" /> <br> <br>' +
         '<label htmlFor="timePicker">Tid</label> <br>' +
-        '<input type="time" id="timePicker" /> </div>');
+        '<input type="time" id="timePicker" /> <br> <br>' +
+        '<button type="button" id="searchButton">Sök resor</button> </div>');
     }
   }
 
