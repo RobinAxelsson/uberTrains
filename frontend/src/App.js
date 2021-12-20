@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import $ from 'jquery';
 function App() {
   const [stations, setStations] = useState([]);
 
@@ -20,6 +21,12 @@ function App() {
     };
   }, []);
 
+  function checkSelected() {
+    if ($('#selectDeparture').is(':checked') || $('#selectArrival').is(':checked')) {
+      // Add button press logic here
+    }
+  }
+
   return (
     <div className="App">
       <label>När vill du resa?</label> <br />
@@ -27,10 +34,10 @@ function App() {
       <input type="radio" id="immediateDeparture" name="timeSelector" value="immediateDeparture" />
       <label for="immediateDeparture">Nu</label>
 
-      <input type="radio" id="selectDeparture" name="timeSelector" value="selectDeparture" />
+      <input type="radio" id="selectDeparture" name="timeSelector" value="selectDeparture" onChange={() => checkSelected()} />
       <label for="selectDeparture">Välj avgångstid</label>
 
-      <input type="radio" id="selectArrival" name="timeSelector" value="selectArrival" />
+      <input type="radio" id="selectArrival" name="timeSelector" value="selectArrival" onChange={() => checkSelected()} />
       <label for="selectArrival">Välj ankomsttid</label>
 
       {stations &&
