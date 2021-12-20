@@ -1,33 +1,65 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 function App() {
-  const [stations, setStations] = useState([]);
+  const [jsonData, setJsonData] = useState([]);
+  const [searchStation, setSearchStation] = useState("");
 
   useEffect(() => {
-    let canceled = false;
-    fetch("http://localhost:4000/api/stations")
-      .then((res) => res.json())
-      .catch((error) => console.log("error", error))
+    fetch("travelplan.json", {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        return res.json();
+      })
       .then((data) => {
-        if (canceled) {
-          return;
-        }
-        setStations(data);
-        console.log(stations);
+        setJsonData(data);
       });
-    return () => {
-      canceled = true;
-    };
   }, []);
+  console.log(searchStation);
+  // console.log("json", jsonData);
+
+  // const test = () => {
+  //   let test = jsonData.map((item) => {
+  //     return item.routeEvents.map((i) => i.location);
+  //   });
+  //   console.log("test", test);
+  // };
+
+  const filterStations = (val) => {
+    console.log("val", val);
+    if (searchStation === "") {
+      return val;
+    } else if (
+      val.location.toLowerCase().includes(searchStation.toLowerCase())
+    ) {
+      return val;
+    } else {
+      return false;
+    }
+  };
 
   return (
     <div className="App">
-      {stations &&
-        stations.map((station) => (
-          <div>
-            <p className="station-name">{station.name}</p>
-          </div>
-        ))}
+      <input
+        placeholder="Search"
+        type="search"
+        name="search"
+        value={searchStation}
+        onChange={(e) => {
+          setSearchStation(e.target.value);
+        }}
+      />
+
+      {jsonData &&
+        jsonData.map((item) =>
+          item.routeEvents
+            .filter(filterStations)
+            .map((i) => <div>{i.location}</div>)
+        )}
     </div>
   );
 }
