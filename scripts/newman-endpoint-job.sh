@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+### This script is needed for running newman integration test in BackendPipeline.yml
+
+# Values are inserted from GitHub secrets as import arguments in the CI pipeline.
+
 COLLECTION_UID=$1
 POSTMAN_APIKEY=$2
 

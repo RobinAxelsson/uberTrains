@@ -5,7 +5,7 @@ name: Backend Pipeline
 
 on:
   push:
-    #branches: [ Dev ]
+#    branches: [ Dev ]
 
 jobs:
   build-backend:
