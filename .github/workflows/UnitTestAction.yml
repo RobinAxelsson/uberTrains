@@ -15,6 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install modules
-      run: cd Backend && npm install
+      run: cd backend && npm install # NOTE: casing of Backend backend is error source.
     - name: Run tests
-      run: cd Backend && npx jest
+      run: cd backend && npx jest
