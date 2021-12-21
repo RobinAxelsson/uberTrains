@@ -13,18 +13,33 @@ jobs:
 
       steps:
       - uses: actions/checkout@v2
+
       - name: Install modules
         run: cd backend && npm install # NOTE: casing of Backend backend is error source.
+
       - name: Run build
         run: cd backend && npm run build
         
   Unit-Testing-Jest:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Install modules
       run: cd backend && npm install # NOTE: casing of Backend backend is error source.
+
     - name: Run tests
       run: cd backend && npx jest
+
+  Newman-Integration-Tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install modules
+      run: cd backend && npm install # NOTE: casing of Backend backend is error source.
+
+    - name: Test Api Endpoints with Newman
+      run: bash ./scripts/newman-endpoint-job.sh ${{ secrets.COLLECTION_UID }} ${{ secrets.POSTMAN_APIKEY }}
