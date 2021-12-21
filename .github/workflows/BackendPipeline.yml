@@ -1,13 +1,23 @@
 # This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Test Backend
+name: Backend Pipeline
 
 on:
   push:
     #branches: [ Dev ]
 
 jobs:
+  build-backend:
+      runs-on: ubuntu-latest
+
+      steps:
+      - uses: actions/checkout@v2
+      - name: Install modules
+        run: cd backend && npm install # NOTE: casing of Backend backend is error source.
+      - name: Run build
+        run: cd backend && npm run build
+        
   Unit-Testing-Jest:
 
     runs-on: ubuntu-latest
