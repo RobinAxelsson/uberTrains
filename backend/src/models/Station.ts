@@ -1,14 +1,11 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
-export class Booking {
+export class station {
 
     @PrimaryGeneratedColumn()
-    id: number;
+    id:number;
 
     @Column()
-    bookingNumber: string;
-
-    @Column()
-    totalPrice: number;
+    name:string;
 }
