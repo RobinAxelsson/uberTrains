@@ -18,7 +18,7 @@ function App() {
     return () => {
       canceled = true;
     };
-  }, []);
+  });
 
   return (
     <div className="App">
