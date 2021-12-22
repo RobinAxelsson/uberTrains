@@ -1,14 +1,36 @@
-const TravelForm = ({
-  handleSubmit,
-  start,
-  setStart,
-  end,
-  setEnd,
-  date,
-  setDate,
-  showTravels,
-  availableTravels,
-}) => {
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
+const TravelForm = ({}) => {
+  const [showTravels, setShowTravels] = useState(false);
+  const [availableTravels, setAvailableTravels] = useState([]);
+  const [start, setStart] = useState([]);
+  const [end, setEnd] = useState([]);
+  const [date, setDate] = useState([]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch(
+      `http://localhost:4000/api/journey?date=${date}&start=${start}&end=${end}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    )
+      .then((res) => {
+        console.log(res);
+        return res.json();
+      })
+      .then((data) => {
+        if (data) {
+          setAvailableTravels(data);
+          setShowTravels(true);
+        }
+      });
+    console.log(availableTravels);
+  };
   return (
     <div>
       <h2>Vart vill du resa?</h2>
@@ -34,6 +56,7 @@ const TravelForm = ({
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />
+
         <button>fortsätt</button>
       </form>
       {showTravels && (
@@ -52,7 +75,9 @@ const TravelForm = ({
                     </div>
                   ))}
                 </p>
-                <button>Boka</button>
+                <Link to="bokning">
+                  <button>Boka</button>
+                </Link>
               </div>
             ))}
         </div>
