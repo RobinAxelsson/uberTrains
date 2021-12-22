@@ -1,15 +1,15 @@
 import "./App.css";
 import TravelForm from "./components/TravelForm";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import BokningsBekräftelse from "./components/BokningsBekräftelse";
+import BookingReceipt from "./components/BookingReceipt";
 
 function App() {
   return (
     <Router>
       <div>
-        <TravelForm />
         <Routes>
-          <Route path="bokning" element={<BokningsBekräftelse />} />
+          <Route path="/" element={<TravelForm />} />
+          <Route path="/receipt" element={<BookingReceipt />} />
         </Routes>
       </div>
     </Router>

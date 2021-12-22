@@ -1,4 +1,4 @@
-const BokningsBekräftelse = () => {
+const BookingReceipt = () => {
   return (
     <div>
       <p>
@@ -9,4 +9,4 @@ const BokningsBekräftelse = () => {
   );
 };
 
-export default BokningsBekräftelse;
+export default BookingReceipt;
