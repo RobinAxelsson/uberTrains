@@ -39,6 +39,13 @@ webServer.get("/api/journey", (req: Request, res: Response) => {
   res.json(plan);
 });
 
+webServer.get("/api/seats", (req: Request, res: Response) => {
+  let seats = {
+    seats: [{ carriage: "vagn 4" }],
+  };
+  res.json(seats);
+});
+
 // const driver = require("better-sqlite3");
 // const db = driver(path.join(__dirname, "database", settings.dbName));
 //
