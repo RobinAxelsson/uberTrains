@@ -1,12 +1,15 @@
 import { Request, Response } from "express";
 import { TravelPlanner } from "./services/TravelPlanner";
+import "reflect-metadata";
+
+import { Connection, createConnection } from "typeorm";
+import { userInfo } from "os";
 
 const settings = require("../settings.json");
 const path = require("path");
 const express = require("express");
 const webServer = express();
 const cors = require("cors");
-
 const corsOptions = {
   origin: "http://localhost:3000",
   credentials: true,
@@ -39,12 +42,6 @@ webServer.get("/api/journey", (req: Request, res: Response) => {
   res.json(plan);
 });
 
-webServer.get("/api/seats", (req: Request, res: Response) => {
-  let seats = {
-    seats: [{ carriage: "vagn 4" }],
-  };
-  res.json(seats);
-});
 
 // const driver = require("better-sqlite3");
 // const db = driver(path.join(__dirname, "database", settings.dbName));
