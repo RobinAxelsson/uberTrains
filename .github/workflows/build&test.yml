@@ -5,7 +5,8 @@ name: UberTrains Build & Test
 
 on:
   push:
-#    branches: [ Dev ]
+   branches-ignore:
+   - entityModels
 
 jobs:
   build-backend:
