@@ -18,29 +18,10 @@ function App() {
       .then((data) => {
         setJsonData(data);
       });
-  }, []);
-  console.log(searchStation);
-  // console.log("json", jsonData);
-
-  // const test = () => {
-  //   let test = jsonData.map((item) => {
-  //     return item.routeEvents.map((i) => i.location);
-  //   });
-  //   console.log("test", test);
-  // };
-
-  const filterStations = (val) => {
-    console.log("val", val);
-    if (searchStation === "") {
-      return val;
-    } else if (
-      val.location.toLowerCase().includes(searchStation.toLowerCase())
-    ) {
-      return val;
-    } else {
-      return false;
-    }
-  };
+    return () => {
+      canceled = true;
+    };
+  });
 
   return (
     <div className="App">
