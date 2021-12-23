@@ -20,5 +20,6 @@
       "entitiesDir": "src/entity",
       "migrationsDir": "src/migration",
       "subscribersDir": "src/subscriber"
-   }
+   },
+   "enableWAL": "true"
 }
