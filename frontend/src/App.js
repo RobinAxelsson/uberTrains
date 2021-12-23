@@ -1,22 +1,19 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 function App() {
-  const [jsonData, setJsonData] = useState([]);
-  const [searchStation, setSearchStation] = useState("");
+  const [stations, setStations] = useState([]);
 
   useEffect(() => {
-    fetch("travelplan.json", {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        return res.json();
-      })
+    let canceled = false;
+    fetch("http://localhost:4000/api/stations")
+      .then((res) => res.json())
+      .catch((error) => console.log("error", error))
       .then((data) => {
-        setJsonData(data);
+        if (canceled) {
+          return;
+        }
+        setStations(data);
+        console.log(stations);
       });
     return () => {
       canceled = true;
@@ -25,22 +22,12 @@ function App() {
 
   return (
     <div className="App">
-      <input
-        placeholder="Search"
-        type="search"
-        name="search"
-        value={searchStation}
-        onChange={(e) => {
-          setSearchStation(e.target.value);
-        }}
-      />
-
-      {jsonData &&
-        jsonData.map((item) =>
-          item.routeEvents
-            .filter(filterStations)
-            .map((i) => <div>{i.location}</div>)
-        )}
+      {stations &&
+        stations.map((station) => (
+          <div>
+            <p className="station-name">{station.name}</p>
+          </div>
+        ))}
     </div>
   );
 }
