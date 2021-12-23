@@ -21,13 +21,31 @@ function App() {
     };
   }, []);
 
+  function getTodaysDate() {
+    let today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; // Adding one since January is 0
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+      dd = '0' + dd;
+    }
+
+    if (mm < 10) {
+      mm = '0' + mm;
+    }
+
+    today = yyyy + '-' + mm + '-' + dd;
+    return today;
+  }
+
   function toggleTimeAndDatePicker() {
     $('#timeAndDatePicker').remove();
     if ($('#selectDeparture').is(':checked') || $('#selectArrival').is(':checked')) {
       // Add button press logic here
       $('#timeAndDateApp').append('<div id="timeAndDatePicker"> <br>' +
         '<label htmlFor="datePicker">Dag</label> <br>' +
-        '<input type="date" id="datePicker" /> <br> <br>' +
+        `<input type="date" id="datePicker" min="${getTodaysDate()}" /> <br> <br>` +
         '<label htmlFor="timePicker">Tid</label> <br>' +
         '<input type="time" id="timePicker" /> <br> <br>' +
         '<button type="button" id="searchButton">Sök resor</button> </div>');
