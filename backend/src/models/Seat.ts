@@ -1,14 +1,15 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { Booking } from "./Booking";
-
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { TrainUnit } from './TrainUnit';
 
 @Entity()
 export class Seat {
 
   @PrimaryGeneratedColumn()
-  Id: string;
+  Id: number;
   @Column()
-  Seat: number;
+  SeatNumber: string;
+  @ManyToOne(() => TrainUnit, trainUnit => trainUnit.Seats)
+  TrainUnit: TrainUnit;
   @Column()
-  Booking!: Booking;
+  BookingNumber!: string;
 }

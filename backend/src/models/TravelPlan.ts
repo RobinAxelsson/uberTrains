@@ -1,11 +1,11 @@
-import { TrainUnit } from "./TrainUnits";
+import { TrainUnit } from "./TrainUnit";
 import { RouteEvent } from "./RouteEvent";
 import { Entity } from "typeorm";
 
 Entity()
 export class TravelPlan {
   Id: string;
-  TrainUnits: TrainUnit[];
-  RouteEvents: RouteEvent[];
+  TrainUnitIds: string[];
+  RouteEventIds: string[];
   PriceModel: string;
 }

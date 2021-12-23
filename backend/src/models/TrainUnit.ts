@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Seat } from "./Seat";
 
 @Entity()
@@ -7,7 +7,8 @@ export class TrainUnit {
   Id: string;
   @Column()
   Name: string;
-  @Column()
+
+  @OneToMany(() => Seat, seat => seat.TrainUnit)
   Seats: Seat[];
   @Column()
   Type: string;
