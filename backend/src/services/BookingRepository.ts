@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import {Booking} from "../models/Booking"
+import {Booking} from "../models/Booking.entity"
 import {Guid} from "./UtilityFunctions";
 import { createConnection } from 'typeorm';
 

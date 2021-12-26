@@ -1,6 +1,6 @@
-import { Booking } from '../../models/Booking';
-import { BookingRepository } from '../../services/BookingRepository';
-import { Guid } from '../../services/UtilityFunctions';
+import { Booking } from '../models/Booking.entity';
+import { Guid } from '../services/UtilityFunctions';
+import { BookingRepository } from '../services/BookingRepository';
 function sum(a: number, b: number) {
   return a + b;
 }
