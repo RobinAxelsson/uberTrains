@@ -1,10 +1,14 @@
-import { Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 @Entity()
 export class RouteEvent {
   @PrimaryGeneratedColumn()
-  Id: string
-  DateTime: string;
-  Location: string; //Mostly Station Name
-  SpecifiedLocation: string; //Like platform "perrong 4b"
+  id: string
+  @Column()
+  dateTime: string;
+  @Column()
+  location: string; //Mostly Station Name
+  @Column()
+  specifiedLocation: string; //Like platform "perrong 4b"
+  @Column()
   EventType: string; //arrival, departure (and extendable crossings etc)
 }

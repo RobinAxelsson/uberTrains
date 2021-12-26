@@ -1,26 +1,27 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Seat } from "./Seat.entity";
 
 @Entity()
 export class Booking {
   @PrimaryGeneratedColumn()
-  Id: number;
+  id: number;
 
   @Column()
-  BookingNumber: string;
+  bookingNumber: string;
 
   @Column()
-  LocalDateTime: string;
+  localDateTime: string;
+
+  @OneToMany(() => Seat, seat => seat.booking)
+  bookedSeats: Seat[];
 
   @Column()
-  PurchasedTickets: number;
+  startStation: string;
 
   @Column()
-  StartStation: string;
+  endStation: string;
 
   @Column()
-  EndStation: string;
-
-  @Column()
-  TotalPrice: number;
+  totalPrice: number;
 
 }

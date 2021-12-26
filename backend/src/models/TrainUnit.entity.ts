@@ -1,15 +1,18 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Seat } from "./Seat.entity";
+import { TravelPlan } from './TravelPlan.entity';
 
 @Entity()
 export class TrainUnit {
   @PrimaryGeneratedColumn()
-  Id: string;
+  id: number;
   @Column()
-  Name: string;
+  name: string;
+  @ManyToOne(() => TravelPlan, travelPlan => travelPlan.trainUnits)
+  travelPlan: TravelPlan;
 
-  @OneToMany(() => Seat, seat => seat.TrainUnit)
-  Seats: Seat[];
+  @OneToMany(() => Seat, seat => seat.trainUnit)
+  seats: Seat[];
   @Column()
-  Type: string;
+  type: string;
 }

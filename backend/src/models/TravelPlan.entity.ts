@@ -1,16 +1,18 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { TrainUnit } from "./TrainUnit.entity";
 
 @Entity()
 export class TravelPlan {
   @PrimaryGeneratedColumn()
-  Id: number;
+  id: number;
   @Column()
-  PlanId: string;
+  planId: string;
   @Column()
-  TripName: string;
-  TrainUnitIds: string;
+  tripName: string;
+  @OneToMany(() => TrainUnit, trainUnit => trainUnit.travelPlan)
+  trainUnits: TrainUnit[];
   @Column()
-  RouteEventIds: string;
+  routeEventIds: string;
   @Column()
-  PriceModel: string;
+  priceModel: string;
 }
