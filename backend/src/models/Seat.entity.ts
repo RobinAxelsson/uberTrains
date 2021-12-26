@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { TrainUnit } from './TrainUnit';
+import { TrainUnit } from './TrainUnit.entity';
 
 @Entity()
 export class Seat {
