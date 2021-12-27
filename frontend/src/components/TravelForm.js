@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import ListTravels from "./ListTravels";
 
-const TravelForm = ({}) => {
+const TravelForm = ({ }) => {
   const [showTravels, setShowTravels] = useState(false);
   const [availableTravels, setAvailableTravels] = useState([]);
   const [start, setStart] = useState([]);
@@ -32,6 +32,25 @@ const TravelForm = ({}) => {
       });
     console.log(availableTravels);
   };
+
+  function getTodaysDate() {
+    let today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; // Adding one since January is 0
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+      dd = '0' + dd;
+    }
+
+    if (mm < 10) {
+      mm = '0' + mm;
+    }
+
+    today = yyyy + '-' + mm + '-' + dd;
+    return today;
+  }
+
   return (
     <div className="flex flex-col">
       <div className="flex justify-center items-center">
@@ -61,9 +80,9 @@ const TravelForm = ({}) => {
           </div>
           <div className="mt-1">
             <input
-              type="text"
-              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-96 sm:text-sm border-gray-300 rounded-md"
-              placeholder="Datum:"
+              type="date"
+              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-48 sm:text-sm border-gray-300 rounded-md"
+              min={getTodaysDate()}
               required
               value={date}
               onChange={(e) => setDate(e.target.value)}
