@@ -431,3 +431,16 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+#TypeORM
+.nyc_output/
+.DS_Store
+.vscode/
+.idea/
+build/
+coverage/
+node_modules/
+ormlogs.log
+npm-debug.log
+/test/github-issues/799/tmp/*
+src/database/dev.sqlite3

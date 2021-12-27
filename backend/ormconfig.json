@@ -1,0 +1,24 @@
+{
+   "type": "sqlite",
+   "host": "localhost",
+   "port": 4000,
+   "username": "admin",
+   "password": "ostkakamedsylt",
+   "database": "src/database/dev.sqlite3",
+   "synchronize": true,
+   "logging": false,
+   "entities": [
+      "src/models/**/*.ts"
+   ],
+   "migrations": [
+      "src/migration/**/*.ts"
+   ],
+   "subscribers": [
+      "src/subscriber/**/*.ts"
+   ],
+   "cli": {
+      "entitiesDir": "src/entity",
+      "migrationsDir": "src/migration",
+      "subscribersDir": "src/subscriber"
+   }
+}
