@@ -12,13 +12,7 @@ const TravelForm = ({}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     fetch(
-      `http://localhost:4000/api/journey?date=${date}&start=${start}&end=${end}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      }
+      `http://localhost:4000/api/journey?date=${date}&start=${start}&end=${end}`
     )
       .then((res) => {
         console.log(res);
@@ -30,8 +24,9 @@ const TravelForm = ({}) => {
           setShowTravels(true);
         }
       });
-    console.log(availableTravels);
+    console.log("travels", availableTravels);
   };
+
   return (
     <div className="flex flex-col">
       <div className="flex justify-center items-center">
