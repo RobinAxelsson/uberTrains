@@ -11,7 +11,7 @@ export class TravelPlan {
   tripName: string;
   @OneToMany(() => TrainUnit, trainUnit => trainUnit.travelPlan)
   trainUnits: TrainUnit[];
-  @Column()
+  @Column({nullable: true})
   routeEventIds: string;
   @Column()
   priceModel: string;

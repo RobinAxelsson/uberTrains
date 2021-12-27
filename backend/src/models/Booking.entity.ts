@@ -12,7 +12,7 @@ export class Booking {
   @Column()
   localDateTime: string;
 
-  @OneToMany(() => Seat, seat => seat.booking)
+  @OneToMany(() => Seat, seat => seat.booking, {onDelete: 'SET NULL'})
   bookedSeats: Seat[];
 
   @Column()
