@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import "reflect-metadata";
 import { BookingDto } from './dtos/BookingDto';
 import { createConnection } from 'typeorm';
-import {seed} from './services/Seeder'
+import {getSeedSeats, seed} from './services/Seeder'
 import { Booking } from "./models/Booking.entity";
 import { TravelPlan } from "./models/TravelPlan.entity";
 import { TrainUnit } from "./models/TrainUnit.entity";
@@ -27,9 +27,10 @@ if(process.env.NODE_ENV === "Development"){
     entities: [Booking, TravelPlan, TrainUnit, Seat, RouteEvent],
     synchronize: true,
     logging: true,
+  }).then(async ()=>{
+    await seed();
   });
   console.log("App is running in Development mode.")
-  seed();
 }
 else{
   createConnection();
@@ -58,11 +59,12 @@ webServer.get("/api/journey", (req: Request, res: Response) => {
   let date = req.query.date;
   res.json({});
 });
+webServer.get("/api/seats", async (req: Request, res: Response) => {
+  let seats = await getSeedSeats();
+  res.json(seats);
+});
 webServer.post("/api/booking", (req: Request, res: Response) => {
-  let bookingDto = req.body as BookingDto;
-
-
-  
+  let bookingDto = req.body as BookingDto;  
 });
 
 

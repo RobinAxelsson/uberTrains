@@ -11,7 +11,7 @@ export class RouteEvent {
   @Column()
   specifiedLocation: string; //Like platform "perrong 4b"
   @Column()
-  EventType: string; //arrival, departure (and extendable crossings etc)
+  event: string; //arrival, departure (and extendable crossings etc)
   @ManyToOne(()=>TravelPlan, travelPlan => travelPlan.routeEvents)
   travelPlan: TravelPlan
 }
