@@ -1,4 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { RouteEvent } from "./RouteEvent.entity";
 import { TrainUnit } from "./TrainUnit.entity";
 
 @Entity()
@@ -9,10 +10,10 @@ export class TravelPlan {
   planId: string;
   @Column()
   tripName: string;
-  @OneToMany(() => TrainUnit, trainUnit => trainUnit.travelPlan)
+  @OneToMany(() => TrainUnit, trainUnit => trainUnit.travelPlan, {nullable: true})
   trainUnits: TrainUnit[];
-  @Column({nullable: true})
-  routeEventIds: string;
+  @OneToMany(() => RouteEvent, routeEvent => routeEvent.travelPlan)
+  routeEvents: RouteEvent[];
   @Column()
   priceModel: string;
 }

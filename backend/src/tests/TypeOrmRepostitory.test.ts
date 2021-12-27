@@ -3,8 +3,7 @@ import { Booking } from "../models/Booking.entity";
 import { TravelPlan as TravelPlan } from "../models/TravelPlan.entity";
 import { TrainUnit } from '../models/TrainUnit.entity';
 import { Seat } from '../models/Seat.entity';
-import e from "express";
-import { stringify } from "querystring";
+import { RouteEvent } from "../models/RouteEvent.entity";
 function sum(a: number, b: number) {
   return a + b;
 }
@@ -18,7 +17,7 @@ beforeEach(async () => {
     type: "sqlite",
     database: ":memory:",
     dropSchema: true,
-    entities: [Booking, TravelPlan, TrainUnit, Seat],
+    entities: [Booking, TravelPlan, TrainUnit, Seat, RouteEvent],
     synchronize: true,
     logging: false,
   });
@@ -55,7 +54,6 @@ test("store, fetch, delete travelplan", async () => {
         seats: [{ seatNumber: "6a", booking: booking}, { seatNumber: "6b", booking: booking }],
       },
     ],
-    routeEventIds: "event1;event2",
     priceModel: "standard",
   } as TravelPlan;
 
