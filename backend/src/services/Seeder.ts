@@ -3,15 +3,37 @@ import { Seat } from "../models/Seat.entity";
 import { TrainUnit } from "../models/TrainUnit.entity";
 import { TravelPlan } from "../models/TravelPlan.entity";
 import { RouteEvent } from "../models/RouteEvent.entity";
+import { Booking } from "../models/Booking.entity";
 
 export async function seed() {
-  let seat = { seatNumber: "6a" } as Seat;
+let seatsA: Seat[] = [
+    { seatNumber: "6a" } as Seat,
+    { seatNumber: "7a" } as Seat
+];
+let seatsB: Seat[] = [
+  { seatNumber: "2a" } as Seat,
+  { seatNumber: "3a" } as Seat
+];
 
-  let trainUnit = {
+// let booking = {
+//   bookingNumber: "1111-1111-1111-1111",
+//   startStation: "Goteborg",
+//   endStation: "Stockholm",
+//   localDateTime: new Date().toUTCString(),
+//   totalPrice: 1337,
+//   bookedSeats: seatsA
+// } as Booking;
+
+  let trainUnits: TrainUnit[] = [{
     name: "Vagn 4",
-    seats: [seat],
+    seats: seatsA,
     type: "carriage",
-  } as TrainUnit;
+  } as TrainUnit,
+  {
+    name: "Vagn 5",
+    seats: seatsB,
+    type: "carriage",
+  } as TrainUnit];
 
   let routeEvents: RouteEvent[] = [
     {
@@ -20,28 +42,28 @@ export async function seed() {
       specifiedLocation: "Platform 5",
       event: "Departure",
     } as RouteEvent,
-    // {
-    //   dateTime: "2012-04-23T20:30:43.511Z",
-    //   specifiedLocation: "Platform 1",
-    //   location: "Jonkoping",
-    //   event: "Arrival",
-    // } as RouteEvent,
-    // {
-    //   dateTime: "2012-04-23T20:35:43.511Z",
-    //   specifiedLocation: "Platform 1",
-    //   location: "Jonkoping",
-    //   event: "Departure",
-    // } as RouteEvent,
-    // {
-    //   dateTime: "2012-04-23T22:30:43.511Z",
-    //   specifiedLocation: "Platform 10a",
-    //   location: "Stockholm",
-    //   event: "Arrival",
-    // } as RouteEvent,
+    {
+      dateTime: "2012-04-23T20:30:43.511Z",
+      specifiedLocation: "Platform 1",
+      location: "Jonkoping",
+      event: "Arrival",
+    } as RouteEvent,
+    {
+      dateTime: "2012-04-23T20:35:43.511Z",
+      specifiedLocation: "Platform 1",
+      location: "Jonkoping",
+      event: "Departure",
+    } as RouteEvent,
+    {
+      dateTime: "2012-04-23T22:30:43.511Z",
+      specifiedLocation: "Platform 10a",
+      location: "Stockholm",
+      event: "Arrival",
+    } as RouteEvent,
   ];
 
   let travelPlan = {
-    trainUnits: [trainUnit],
+    trainUnits: trainUnits,
     planId: "1111-1111-1111-1111",
     tripName: "X2000 GBG-Sthlm",
     priceModel: "default-winter",
@@ -49,13 +71,23 @@ export async function seed() {
   } as TravelPlan;
 
   let seatRepository = await getRepository(Seat);
-  await seatRepository.save(seat);
+  await seatRepository.save(seatsA[0]);
+  await seatRepository.save(seatsA[1]);
+  await seatRepository.save(seatsB[0]);
+  await seatRepository.save(seatsB[1]);
+
+  //let bookingRepository = await getRepository(Booking);
+  //await bookingRepository.save(booking);
 
   let trainUnitRepository = await getRepository(TrainUnit);
-  await trainUnitRepository.save(trainUnit);
+  await trainUnitRepository.save(trainUnits[0]);
+  await trainUnitRepository.save(trainUnits[1]);
 
-  let routeEventRepository = await getRepository(RouteEvent);
+let routeEventRepository = await getRepository(RouteEvent);
+
 await routeEventRepository.save(routeEvents[0]);
+await routeEventRepository.save(routeEvents[1]);
+await routeEventRepository.save(routeEvents[2]);
 
   // routeEvents.forEach(async (x) => {
   //   await routeEventRepository.save(x);
@@ -63,10 +95,4 @@ await routeEventRepository.save(routeEvents[0]);
 
   let travelPlanRepository = await getRepository(TravelPlan);
   await travelPlanRepository.save(travelPlan);
-}
-export async function getSeedSeats(){
-  let seatRepository = (await getRepository(Seat));
-  let seats = await seatRepository.find({relations: ["trainUnit", "trainUnit.travelPlan"]});
-  console.log(JSON.stringify(seats));
-  return seats;
 }

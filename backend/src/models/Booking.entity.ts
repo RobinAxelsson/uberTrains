@@ -20,8 +20,12 @@ export class Booking {
 
   @Column()
   endStation: string;
-
   @Column()
   totalPrice: number;
+  @Column({nullable: true})
+  email: string;
+
+  @Column({nullable: true})
+  stripeBookingNumber: string;
 
 }

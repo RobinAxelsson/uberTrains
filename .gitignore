@@ -1,4 +1,4 @@
-dev.sqlite3
+backend/src/database/dev*
 node_modules
 .DS_Store
 scripts/flow/*/.flowconfig

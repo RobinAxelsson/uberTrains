@@ -150,6 +150,8 @@ test("bind trainUnit and seat, then find", async () => {
 
   let booking = {
     bookingNumber: "1111-1111-1111-1111",
+    email: "alf@al.se",
+    stripeBookingNumber: "da-iogjaio-wjg",
     startStation: "Goteborg",
     endStation: "Stockholm",
     localDateTime: new Date().toUTCString(),
@@ -196,6 +198,8 @@ test("Get seats from travelPlan new booking", async()=> {
 
   let booking = {
     bookingNumber: "1111-1111-1111-1111",
+    email: "alf@al.se",
+    stripeBookingNumber: "da-iogjaio-wjg",
     startStation: "Goteborg",
     endStation: "Stockholm",
     localDateTime: new Date().toUTCString(),

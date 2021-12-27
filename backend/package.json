@@ -6,10 +6,10 @@
   "scripts": {
     "test": "npx jest",
     "watch:test": "npx jest --watch",
-    "watch:dev": "cross-env NODE_ENV=Development nodemon",
+    "watch:dev": "rimraf ./src/database && cross-env NODE_ENV=Development nodemon",
     "clean": "rimraf ./build",
     "build": "npm run clean && tsc && npm run copy-files",
-    "start": "NODE_ENV=Production npm run build && node build/index.js",
+    "start": "npm run build && node build/index.js",
     "postman-endpoints": "newman run https://www.getpostman.com/collections/6f53b526d0d5d072f9d3",
     "newman-sanity-check": "newman run https://www.getpostman.com/collections/88b293dc9db5aadca257",
     "test:unit": "ENV_FILE=./config/.env.test jest",
