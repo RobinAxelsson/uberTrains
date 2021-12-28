@@ -3,6 +3,7 @@ import StripeCheckout from 'react-stripe-checkout';
 import {toast} from 'react-toastify';
 
 
+
 toast.configure()
 
  function Checkout() {
