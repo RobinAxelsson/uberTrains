@@ -1,5 +1,4 @@
 import axios from "axios"
-import React, { useState } from 'react'
 import StripeCheckout from 'react-stripe-checkout';
 import {toast} from 'react-toastify';
 
