@@ -56,7 +56,6 @@ test("As user I want to be able to book seats", async () => {
 
   expect((await Booking.find()).length).toBe(0);
   expect((await Seat.find()).length).toBe(4);
-  const seat1 = await Seat.findOne(1) as Seat;
 
   const bookingDto = {
   seatIds: [1,2],
@@ -71,28 +70,19 @@ test("As user I want to be able to book seats", async () => {
   const travelPlanner = new TravelPlanner();
   const booking = await travelPlanner.bookSeats(bookingDto);
 
+  const seats = await createQueryBuilder(Seat)
+  .leftJoinAndSelect("Seat.booking", "Booking")
+  .where("Seat.id IN (:...ids)", {ids: bookingDto.seatIds})
+  .getMany() as Seat[];
 
-  let seats = await Seat.find({
-    relations: ["booking"],
-    // where: {
-    //   id: In(bookingDto.seatIds)
-    // }
-  }) as Seat[];
+  const dbBooking = await createQueryBuilder(Booking)
+  .leftJoinAndSelect("Booking.bookedSeats", "Seat")
+  .where("Booking.id = :id", {id: booking.id})
+  .getOne() as Booking;
 
-  expect(seats.length).toBe(4);
-
-  const bookings = await Booking.find({
-    relations:["bookedSeats"],
-    join: {
-      alias: "booking",
-      leftJoinAndSelect: {
-          bookedSeats: "booking.bookedSeats"
-      },
-  }
-  });
-
-  console.log(JSON.stringify({Seats: seats}, null, '\t'));
-  console.log(JSON.stringify({BookingWithSeats: bookings}, null, '\t'));
-
-  expect(bookings[0]?.bookedSeats[0]?.seatNumber).toBe("6a");
+  //console.log(JSON.stringify({Seats: seats}, null, '\t'));
+  // console.log(JSON.stringify({BookingWithSeats: bookings}, null, '\t'));
+  expect(seats.every(x =>x.booking !== null)).toBeTruthy();
+  expect(dbBooking?.bookedSeats[0]?.seatNumber).toBe("6a");
+  expect(dbBooking?.bookedSeats[1]?.seatNumber).toBe("7a");
 });

@@ -1,4 +1,4 @@
-import { createQueryBuilder } from "typeorm";
+import { createQueryBuilder, getRepository } from "typeorm";
 import { BookingDto } from "../dtos/BookingDto";
 import { Booking } from "../models/Booking.entity";
 import { Seat } from "../models/Seat.entity";
@@ -16,31 +16,27 @@ export class TravelPlanner {
     .getOne() as TravelPlan;
   }
 
-  //User can create booking
   async bookSeats(bookingDto: BookingDto){
-    const {seatIds, startStation, endStation, paymentInfo} = bookingDto;
-
-    const seats = await Seat.find({where: {id: seatIds}});
-
-    const booking = Booking.create({
+  
+    const booking = {
       bookingNumber: Guid.newGuid(),
-      startStation: startStation,
-      endStation: endStation,
-      localDateTime: new Date().toUTCString(),
-      totalPrice: paymentInfo.totalPrice,
-      email: paymentInfo.email,
-      bookedSeats: seats,
-      stripeBookingNumber: paymentInfo.stripeBookingNumber
-    });
-    await booking.save();
-    
-    for await (const seat of seats) {
-      seat.booking = booking;
-      await seat.save();
+      localDateTime: Date().toString(),
+      email: bookingDto.paymentInfo.email,
+      totalPrice: bookingDto.paymentInfo.totalPrice,
+      stripeBookingNumber: bookingDto.paymentInfo.stripeBookingNumber,
+      startStation: bookingDto.startStation,
+      endStation: bookingDto.endStation,
+      bookedSeats: [] as Seat[]
+    } as Booking;
+  
+    for (const id of bookingDto.seatIds) {
+      const seat = await Seat.findOne(id);
+      booking.bookedSeats.push(seat as Seat);
+      await Seat.save(seat as Seat);
     }
-
-    await booking.save();
-    return booking;
+  
+    const dbBooking = await Booking.save(booking);
+    return dbBooking;
   }
   async getBookingWithSeats(bookingId:number){
     return await Booking.findOne({

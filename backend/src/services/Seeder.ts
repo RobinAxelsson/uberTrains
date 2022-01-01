@@ -3,7 +3,6 @@ import { Seat } from "../models/Seat.entity";
 import { TrainUnit } from "../models/TrainUnit.entity";
 import { TravelPlan } from "../models/TravelPlan.entity";
 import { RouteEvent } from "../models/RouteEvent.entity";
-import { Booking } from "../models/Booking.entity";
 
 export async function seed() {
 let seatsA: Seat[] = [
@@ -14,15 +13,6 @@ let seatsB: Seat[] = [
   { seatNumber: "2a" } as Seat,
   { seatNumber: "3a" } as Seat
 ];
-
-// let booking = {
-//   bookingNumber: "1111-1111-1111-1111",
-//   startStation: "Goteborg",
-//   endStation: "Stockholm",
-//   localDateTime: new Date().toUTCString(),
-//   totalPrice: 1337,
-//   bookedSeats: seatsA
-// } as Booking;
 
   let trainUnits: TrainUnit[] = [{
     name: "Vagn 4",
