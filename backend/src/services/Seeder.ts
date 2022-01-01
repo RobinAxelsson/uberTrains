@@ -88,6 +88,7 @@ let routeEventRepository = await getRepository(RouteEvent);
 await routeEventRepository.save(routeEvents[0]);
 await routeEventRepository.save(routeEvents[1]);
 await routeEventRepository.save(routeEvents[2]);
+await routeEventRepository.save(routeEvents[3]);
 
   // routeEvents.forEach(async (x) => {
   //   await routeEventRepository.save(x);

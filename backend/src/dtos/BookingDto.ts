@@ -1,7 +1,7 @@
 export class BookingDto {
+  seatIds: number[];
   startStation: string;
   endStation: string;
-  seatIds: string[];
   paymentInfo: {
     stripeBookingNumber: string;
     email: string;
