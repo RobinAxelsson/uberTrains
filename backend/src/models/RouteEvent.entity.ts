@@ -1,7 +1,7 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { TravelPlan } from "./TravelPlan.entity";
 @Entity()
-export class RouteEvent {
+export class RouteEvent extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: string
   @Column()
