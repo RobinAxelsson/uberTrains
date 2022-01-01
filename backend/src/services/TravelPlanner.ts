@@ -16,7 +16,8 @@ export class TravelPlanner {
     .getOne() as TravelPlan;
   }
 
-  async createBooking(bookingDto: BookingDto){
+  //User can create booking
+  async bookSeats(bookingDto: BookingDto){
     const {seatIds, startStation, endStation, paymentInfo} = bookingDto;
 
     const seats = await Seat.find({where: {id: seatIds}});
@@ -28,14 +29,18 @@ export class TravelPlanner {
       localDateTime: new Date().toUTCString(),
       totalPrice: paymentInfo.totalPrice,
       email: paymentInfo.email,
+      bookedSeats: seats,
       stripeBookingNumber: paymentInfo.stripeBookingNumber
-    })
+    });
+    await booking.save();
     
     for await (const seat of seats) {
       seat.booking = booking;
-      await Seat.save(seat);
+      await seat.save();
     }
-    return await Booking.save(booking);
+
+    await booking.save();
+    return booking;
   }
   async getBookingWithSeats(bookingId:number){
     return await Booking.findOne({
@@ -45,7 +50,4 @@ export class TravelPlanner {
       },
     })
   }
-  // async getTravelPlanIdsByDate(date: string){
-
-  // }
 }
