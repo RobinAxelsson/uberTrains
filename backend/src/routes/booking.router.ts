@@ -1,14 +1,16 @@
 import express, { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
+import { createQueryBuilder, getRepository } from 'typeorm';
 import { BookingDto } from '../dtos/BookingDto';
 import { Booking } from '../models/Booking.entity';
 import { Seat } from '../models/Seat.entity';
+import { TravelPlanner } from '../services/TravelPlanner';
 import { Guid } from '../services/UtilityFunctions';
 
 const router = express.Router();
 router.get("/api/booking", async (req: Request, res: Response) => {
-  let bookingRepository = (await getRepository(Booking));
-  let bookings = await bookingRepository.find();
+  const bookings = await createQueryBuilder(Booking)
+  .leftJoinAndSelect("Booking.bookedSeats", "Seat")
+  .getMany() as Booking[];
   res.json(bookings);
 });
 
