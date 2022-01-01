@@ -1,4 +1,4 @@
-import { Any, Between, createConnection, createQueryBuilder, getConnection, getRepository, In, Raw } from "typeorm";
+import { Any, Between, createConnection, createQueryBuilder, getConnection, getRepository, In, Raw, TableForeignKey } from "typeorm";
 import { Booking } from "../models/Booking.entity";
 import { TravelPlan } from "../models/TravelPlan.entity";
 import { TrainUnit } from '../models/TrainUnit.entity';
@@ -51,8 +51,13 @@ test("Find RouteEvents between assert all", async () => {
   expect(events.length).toBe(2);
 });
 
-test("Book seat assert no exception", async () => {
+test("As user I want to be able to book seats", async () => {
   await seed();
+
+  expect((await Booking.find()).length).toBe(0);
+  expect((await Seat.find()).length).toBe(4);
+  const seat1 = await Seat.findOne(1) as Seat;
+
   const bookingDto = {
   seatIds: [1,2],
   startStation: "Goteborg",
@@ -64,10 +69,30 @@ test("Book seat assert no exception", async () => {
     }
 } as BookingDto; 
   const travelPlanner = new TravelPlanner();
-  const booking = await travelPlanner.createBooking(bookingDto);
-  const bookingWithSeats = await travelPlanner.getBookingWithSeats(1) as Booking;
-  
-  console.log(JSON.stringify({BookingWithSeats: bookingWithSeats}, null, '\t'));
+  const booking = await travelPlanner.bookSeats(bookingDto);
 
-  expect(bookingWithSeats.bookedSeats.length).toBe(2);
+
+  let seats = await Seat.find({
+    relations: ["booking"],
+    // where: {
+    //   id: In(bookingDto.seatIds)
+    // }
+  }) as Seat[];
+
+  expect(seats.length).toBe(4);
+
+  const bookings = await Booking.find({
+    relations:["bookedSeats"],
+    join: {
+      alias: "booking",
+      leftJoinAndSelect: {
+          bookedSeats: "booking.bookedSeats"
+      },
+  }
+  });
+
+  console.log(JSON.stringify({Seats: seats}, null, '\t'));
+  console.log(JSON.stringify({BookingWithSeats: bookings}, null, '\t'));
+
+  expect(bookings[0]?.bookedSeats[0]?.seatNumber).toBe("6a");
 });
