@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import ListTravels from "./ListTravels";
+import Seats from "./Seats";
 
 const TravelForm = ({}) => {
   const [showTravels, setShowTravels] = useState(false);
@@ -8,6 +9,9 @@ const TravelForm = ({}) => {
   const [start, setStart] = useState([]);
   const [end, setEnd] = useState([]);
   const [date, setDate] = useState([]);
+  const [seats, setSeats] = useState([]);
+  const [showSeats, setShowSeats] = useState(false);
+  const [choosenTravel, setChoosenTravel] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,10 +26,29 @@ const TravelForm = ({}) => {
         if (data) {
           setAvailableTravels(data);
           setShowTravels(true);
+          setShowSeats(false);
         }
       });
     console.log("travels", availableTravels);
   };
+
+  const getAvailableSeats = (id) => {
+    fetch("http://localhost:4000/api/seats")
+      .then((res) => {
+        // console.log(res);
+        return res.json();
+      })
+      .then((data) => {
+        if (data) {
+          setSeats(data);
+          setShowTravels(false);
+          setShowSeats(true);
+          setChoosenTravel(id);
+        }
+      });
+    // console.log("seats", seats);
+  };
+  console.log(choosenTravel);
 
   return (
     <div className="flex flex-col">
@@ -69,7 +92,15 @@ const TravelForm = ({}) => {
           </button>
         </form>
       </div>
-      {showTravels && <ListTravels availableTravels={availableTravels} />}
+      {showTravels && (
+        <ListTravels
+          availableTravels={availableTravels}
+          getAvailableSeats={getAvailableSeats}
+          showTravels={showTravels}
+          setChoosenTravel={setChoosenTravel}
+        />
+      )}
+      {showSeats && <Seats train={seats} />}
     </div>
   );
 };

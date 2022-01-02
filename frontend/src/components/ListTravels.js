@@ -1,25 +1,6 @@
 // import { Link } from "react-router-dom";
 
-import { useState } from "react";
-import Seats from "./Seats";
-
-const ListTravels = ({ availableTravels }) => {
-  const [seats, setSeats] = useState([]);
-
-  const getAvailableSeats = (id) => {
-    fetch("http://localhost:4000/api/seats")
-      .then((res) => {
-        console.log(res);
-        return res.json();
-      })
-      .then((data) => {
-        if (data) {
-          setSeats(data);
-        }
-      });
-    console.log("seats", seats);
-  };
-
+const ListTravels = ({ availableTravels, getAvailableSeats }) => {
   return (
     <div className="mt-2 flex justify-center items-center border-2 border-indigo-200">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -83,7 +64,7 @@ const ListTravels = ({ availableTravels }) => {
                           }}
                           className="mt-1 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                          Välj resa
+                          Välj platser
                         </button>
                         {/* </Link> */}
                       </td>
@@ -94,10 +75,6 @@ const ListTravels = ({ availableTravels }) => {
           </div>
         </div>
       </div>
-      <Seats train={seats} />
-      <button className="mt-1 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-        Betala
-      </button>
     </div>
   );
 };
