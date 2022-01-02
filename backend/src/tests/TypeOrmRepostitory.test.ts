@@ -1,4 +1,4 @@
-import { Any, Between, createConnection, createQueryBuilder, getConnection, getRepository, In, Raw, TableForeignKey } from "typeorm";
+import { Any, Between, createConnection, createQueryBuilder, getConnection, getRepository, In, Raw, SelectQueryBuilder, TableForeignKey } from "typeorm";
 import { Booking } from "../models/Booking.entity";
 import { TravelPlan } from "../models/TravelPlan.entity";
 import { TrainUnit } from '../models/TrainUnit.entity';
@@ -30,6 +30,17 @@ afterEach(() => {
   return conn.close();
 });
 
+test("Get travelPlan Id by start, stop, date", async () => {
+  await seed();
+  const ids = await (new TravelPlanner()).getTravelPlanIdsByInput("goteborg", "stockholm", "2012-04-23");
+  expect(ids).toStrictEqual([1]);
+});
+// test("Get travelPlan Id by start, stop, date", async () => {
+//   await seed();
+//   const ids = await (new TravelPlanner()).getTravelPlanIdsByInput("jonkoping", "stockholm", "2012-04-23");
+//   expect(ids).toStrictEqual([1]);
+// });
+
 test("TravelPlanner GetFullTravelPlanById, Load seeded travelplan id 1 expect 4 routeEvents", async () => {
   await seed();
   const travelPlan = await (new TravelPlanner()).getFullTravelPlanById(1);
@@ -45,7 +56,7 @@ test("Find RouteEvents between assert all", async () => {
     relations: ["travelPlan"],
     where:[
     { dateTime: Between("2012-04-23", "2012-04-24"),
-    location: In(["Goteborg", "Stockholm"])}],
+    location: In(["goteborg", "stockholm"])}],
   });
   //console.log(JSON.stringify({QuerybuilderBetweenAssertAll: events}, null, '\t'));
   expect(events.length).toBe(2);

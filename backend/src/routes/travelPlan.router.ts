@@ -1,33 +1,25 @@
 import express, { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
-import { RouteEvent } from '../models/RouteEvent.entity';
-import { Seat } from '../models/Seat.entity';
-import { TrainUnit } from '../models/TrainUnit.entity';
 import { TravelPlan } from '../models/TravelPlan.entity';
+import { TravelPlanner } from '../services/TravelPlanner';
 
 const router = express.Router();
-router.get("/api/journey", (req: Request, res: Response) => {
+router.get("/api/journey", async (req: Request, res: Response) => {
   const {end, start, date} = req.query;
+  const travelPlanner = new TravelPlanner();
+  const ids = await travelPlanner.getTravelPlanIdsByInput((start as string).toLowerCase(), (end as string).toLowerCase(), date as string);
   
+  let travelPlans = [] as TravelPlan[];
+  for (const id of ids) {
+    const plan = await travelPlanner.getFullTravelPlanById(id)  
+    travelPlans.push(plan);
+  }
   
-  res.json({});
+  res.json(travelPlans);
 });
 
-router.get("/api/travelPlan", async (req: Request, res: Response) => {
-  let travelPlanRepository = (await getRepository(TravelPlan));
-  let routeEventsRepository = (await getRepository(RouteEvent));
-  let trainUnitRepository = (await getRepository(TrainUnit));
-  let seatRepository = (await getRepository(Seat));
-
-  let travelPlan = (await travelPlanRepository.find())[0];
-  let routeEvents = await routeEventsRepository.find({where: {travelPlan: travelPlan}});
-  let trainUnits = await trainUnitRepository.find({where: {travelPlan: travelPlan}});
-
-  trainUnits[0].seats = await seatRepository.find({where:{trainUnit: trainUnits[0]}, relations: ["booking"]});
-  trainUnits[1].seats = await seatRepository.find({where:{trainUnit: trainUnits[1]}, relations: ["booking"]});
-
-  travelPlan.trainUnits = trainUnits;
-  travelPlan.routeEvents = routeEvents;
+router.get("/api/travelPlan/:id", async (req: Request, res: Response) => {
+  const travelPlanner = new TravelPlanner();
+  const travelPlan = await travelPlanner.getFullTravelPlanById(parseInt(req.params.id));
   res.json(travelPlan);
 });
 

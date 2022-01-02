@@ -4,7 +4,7 @@ import { seed } from "./services/Seeder";
 import { testRouter } from "./routes/test.router";
 import { travelPlanRouter } from "./routes/travelPlan.router";
 import { bookingRouter } from "./routes/booking.router";
-import { trainUnitRouter } from "./routes/trainunit.router";
+import { trainUnitRouter } from "./routes/trainUnit.router";
 import { seatRouter } from "./routes/seat.router";
 import { routeEventRouter } from "./routes/routeEvent.router";
 

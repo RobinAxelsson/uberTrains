@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity } from "typeorm";
 import { Seat } from "./Seat.entity";
+import { Entity } from "typeorm/decorator/entity/Entity";
+import { BaseEntity, Column, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Booking extends BaseEntity {
