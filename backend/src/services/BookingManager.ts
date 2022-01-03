@@ -1,32 +1,41 @@
 import { BookingDto } from "../dtos/BookingDto";
 import { Booking } from "../models/Booking.entity";
 import { Seat } from "../models/Seat.entity";
-import { TravelPlan } from "../models/TravelPlan.entity";
+import { PriceCalculator } from "./PriceCalculator";
 import { Guid } from "./UtilityFunctions";
 
 export class BookingManager {
-    async bookSeats(bookingDto: BookingDto) {
+  async bookSeats(bookingDto: BookingDto) {
+    const { paymentInfo, startStation, endStation, priceModel, seatIds } =
+      bookingDto;
 
-        const {paymentInfo, startStation, endStation} = bookingDto;
-        const booking = {
-          bookingNumber: Guid.newGuid(),
-          localDateTime: Date().toString(),
-          email: paymentInfo.email,
-          totalPrice: paymentInfo.totalPrice,
-          stripeBookingNumber: paymentInfo.stripeBookingNumber,
-          startStation: startStation,
-          endStation: endStation,
+    const priceCalculator = new PriceCalculator();
 
-          bookedSeats: [] as Seat[],
-        } as Booking;
-    
-        for (const id of bookingDto.seatIds) {
-          const seat = await Seat.findOne(id);
-          booking.bookedSeats.push(seat as Seat);
-          await Seat.save(seat as Seat);
-        }
-    
-        const dbBooking = await Booking.save(booking);
-        return dbBooking;
-      }
+    let distance = priceCalculator.getDistance(
+      startStation.coordinates,
+      endStation.coordinates
+    );
+    let price = priceCalculator.getPrice(priceModel, distance);
+    let totalPrice = price * seatIds.length;
+    const booking = {
+      bookingNumber: Guid.newGuid(),
+      localDateTime: Date().toString(),
+      email: paymentInfo.email,
+      totalPrice: totalPrice,
+      stripeBookingNumber: paymentInfo.stripeBookingNumber,
+      startStation: startStation.name,
+      endStation: endStation.name,
+
+      bookedSeats: [] as Seat[],
+    } as Booking;
+
+    for (const id of seatIds) {
+      const seat = await Seat.findOne(id);
+      booking.bookedSeats.push(seat as Seat);
+      await Seat.save(seat as Seat);
+    }
+
+    const dbBooking = await Booking.save(booking);
+    return dbBooking;
   }
+}

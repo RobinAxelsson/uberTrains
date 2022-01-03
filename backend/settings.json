@@ -1,5 +1,4 @@
 {
   "port": 4000,
-  "dbName": "stations.sqlite3",
   "allowWherePosts": true
 }

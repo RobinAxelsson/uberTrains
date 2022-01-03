@@ -3,6 +3,7 @@ import { Seat } from "../models/Seat.entity";
 import { TrainUnit } from "../models/TrainUnit.entity";
 import { TravelPlan } from "../models/TravelPlan.entity";
 import { RouteEvent } from "../models/RouteEvent.entity";
+import { PriceModel } from "../models/PriceModel.entity";
 
 export async function seed() {
 let seatsA: Seat[] = [
@@ -51,14 +52,22 @@ let seatsB: Seat[] = [
       event: "Arrival",
     } as RouteEvent,
   ];
+  
+  const priceModel: PriceModel = {
+    name: 'Commuter Train',
+    priceConstant: 2,
+    trainTypeMultiplyer: 0.8
+  } as PriceModel
 
   let travelPlan = {
     trainUnits: trainUnits,
     planId: "1111-1111-1111-1111",
     tripName: "X2000 GBG-Sthlm",
-    priceModel: "default-winter",
+    priceModel: priceModel,
     routeEvents: routeEvents
   } as TravelPlan;
+
+
 
   let seatRepository = await getRepository(Seat);
   await seatRepository.save(seatsA[0]);
@@ -72,6 +81,8 @@ let seatsB: Seat[] = [
   let trainUnitRepository = await getRepository(TrainUnit);
   await trainUnitRepository.save(trainUnits[0]);
   await trainUnitRepository.save(trainUnits[1]);
+
+await PriceModel.save(priceModel);
 
 let routeEventRepository = await getRepository(RouteEvent);
 
