@@ -9,6 +9,10 @@ const TravelForm = () => {
   const [start, setStart] = useState([]);
   const [end, setEnd] = useState([]);
   const [date, setDate] = useState([]);
+  const [choosenTravel, setChoosenTravel] = useState([])
+  const [choosenSeats, setChoosenSeats] = useState([])
+
+  //console.log("travel", choosenTravel)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -95,9 +99,9 @@ const TravelForm = () => {
         </form>
       </div>
       <div>
-      {showTravels && <ListTravels availableTravels={availableTravels} setShowTravels={setShowTravels} setShowSeats={setShowSeats} />}
+      {showTravels && <ListTravels availableTravels={availableTravels} setShowTravels={setShowTravels} setShowSeats={setShowSeats} setChoosenTravel={setChoosenTravel} />}
       </div>
-      <div>{ showSeats && <Seats availableTravels={availableTravels}/>}</div>
+      <div>{ showSeats && <Seats availableTravels={availableTravels} setChoosenSeats={setChoosenSeats}/>}</div>
     </div>
   );
 };

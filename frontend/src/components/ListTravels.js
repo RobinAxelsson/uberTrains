@@ -1,6 +1,6 @@
 // import { Link } from "react-router-dom";
 
-const ListTravels = ({ availableTravels, setShowTravels, setShowSeats }) => {
+const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoosenTravel }) => {
   return (
     <div className="mt-2 flex justify-center items-center border-2 border-indigo-200">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -61,10 +61,12 @@ const ListTravels = ({ availableTravels, setShowTravels, setShowSeats }) => {
                      
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         {/* <Link to="seats"> */}
+                        
                         <button
                           onClick={() => {
                             setShowTravels(false);
-                            setShowSeats(true)
+                            setShowSeats(true);
+                            setChoosenTravel(item)
                           }}
                           className="mt-1 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
