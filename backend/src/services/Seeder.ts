@@ -27,25 +27,25 @@ let seatsB: Seat[] = [
 
   let routeEvents: RouteEvent[] = [
     {
-      dateTime: "2012-04-23T18:30:43.511Z",
+      dateTime: "2022-02-22T18:30:00:000Z",
       location: "goteborg",
       specifiedLocation: "Platform 5",
       event: "Departure",
     } as RouteEvent,
     {
-      dateTime: "2012-04-23T20:30:43.511Z",
+      dateTime: "2022-02-22T20:30:00.000Z",
       specifiedLocation: "Platform 1",
       location: "jonkoping",
       event: "Arrival",
     } as RouteEvent,
     {
-      dateTime: "2012-04-23T20:35:43.511Z",
+      dateTime: "2022-02-22T20:35:00.000Z",
       specifiedLocation: "Platform 1",
       location: "jonkoping",
       event: "Departure",
     } as RouteEvent,
     {
-      dateTime: "2012-04-23T22:30:43.511Z",
+      dateTime: "2022-02-22T22:30:00.000Z",
       specifiedLocation: "Platform 10a",
       location: "stockholm",
       event: "Arrival",
