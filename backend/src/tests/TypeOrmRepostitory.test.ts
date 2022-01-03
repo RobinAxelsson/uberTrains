@@ -41,7 +41,7 @@ test("Get travelPlan Info by start, stop, date GBG-STHLM", async () => {
   const data = await new TravelPlanner().getTravelPlanInfo(
     "goteborg",
     "stockholm",
-    "2022-02-22"
+    "2012-04-23"
   );
   expect([...data].map((x) => x.travelPlanId)).toStrictEqual([1]);
 });
@@ -50,7 +50,7 @@ test("Get travelPlan Info by start, stop, date JKPNG-STHLM", async () => {
   const data = await new TravelPlanner().getTravelPlanInfo(
     "jonkoping",
     "stockholm",
-    "2022-02-22"
+    "2012-04-23"
   );
   expect([...data].map((x) => x.travelPlanId)).toStrictEqual([1]);
 });
@@ -60,7 +60,7 @@ test("Get FULL travelPlan by start, stop, date JKPNG-STHLM", async () => {
   const data = await new TravelPlanner().getFullTravelPlanByStartStopDate(
     "jonkoping",
     "stockholm",
-    "2022-02-22"
+    "2012-04-23"
   );
   expect(data?.map((x) => x.id)).toStrictEqual([1]);
   expect(data?.map((x) => x.priceModel)).toStrictEqual(["default-winter"]);
@@ -70,7 +70,7 @@ test("Get FULL travelPlan by start, stop, date STHLM-JKPNG, expect empty array",
   const data = await new TravelPlanner().getFullTravelPlanByStartStopDate(
     "stockholm",
     "jonkoping",
-    "2022-02-22"
+    "2012-04-23"
   );
   expect(data).toStrictEqual([]);
 });
@@ -89,7 +89,7 @@ test("Find RouteEvents between assert all", async () => {
     relations: ["travelPlan"],
     where: [
       {
-        dateTime: Between("2022-02-22", "2022-02-23"),
+        dateTime: Between("2012-04-23", "2012-04-24"),
         location: In(["goteborg", "stockholm"]),
       },
     ],
