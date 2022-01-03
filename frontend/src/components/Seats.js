@@ -1,10 +1,6 @@
-const Seats = ({ availableTravels}) => {
-
-  const handleChange = (e) => {
-    const checkedValue = e.target.value;
-    console.log("seats",checkedValue)
-
-  }
+const Seats = ({ availableTravels,setChoosenSeats, choosenSeats}) => {
+  
+ 
   return (
     <div>
       <div className="mt-2 flex justify-center border-2 border-indigo-200 justify-around">
@@ -21,7 +17,13 @@ const Seats = ({ availableTravels}) => {
                       type="checkbox"
                       value={s.id}
                       id="flexCheckDefault"
-                      onChange={handleChange}
+                      onChange={(e) => {
+                        if(e.target.checked) {
+                          setChoosenSeats([...choosenSeats,s.id])
+                        } else {
+                          setChoosenSeats(choosenSeats.filter((number) => number !== s.id ))
+                        }
+                      }}
                     />
                     <label
                       class="form-check-label inline-block text-gray-800"
@@ -40,7 +42,7 @@ const Seats = ({ availableTravels}) => {
           ))}
       </div>
       <div className="flex justify-end">
-        <button onClick={() => {handleChange()}} className="mr-8 mt-1 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        <button className="mr-8 mt-1 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
           Betala
         </button>
       </div>

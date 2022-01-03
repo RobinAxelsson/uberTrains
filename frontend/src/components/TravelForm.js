@@ -13,6 +13,7 @@ const TravelForm = () => {
   const [choosenSeats, setChoosenSeats] = useState([])
 
   //console.log("travel", choosenTravel)
+  console.log("seat", choosenSeats)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -101,7 +102,7 @@ const TravelForm = () => {
       <div>
       {showTravels && <ListTravels availableTravels={availableTravels} setShowTravels={setShowTravels} setShowSeats={setShowSeats} setChoosenTravel={setChoosenTravel} />}
       </div>
-      <div>{ showSeats && <Seats availableTravels={availableTravels} setChoosenSeats={setChoosenSeats}/>}</div>
+      <div>{ showSeats && <Seats availableTravels={availableTravels} setChoosenSeats={setChoosenSeats} choosenSeats={choosenSeats}/>}</div>
     </div>
   );
 };
