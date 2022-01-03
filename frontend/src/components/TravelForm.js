@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import ListTravels from "./ListTravels";
 
-const TravelForm = ({ }) => {
+const TravelForm = () => {
   const [showTravels, setShowTravels] = useState(false);
   const [availableTravels, setAvailableTravels] = useState([]);
   const [start, setStart] = useState([]);

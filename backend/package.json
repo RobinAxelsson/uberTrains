@@ -10,6 +10,7 @@
     "clean": "rimraf ./build",
     "build": "npm run clean && tsc && cross-env NODE_ENV=Production npm run copy-files",
     "start": "npm run build && node build/index.js",
+    "start:dev": "cross-env NODE_ENV=Development ts-node src/index.ts",
     "test:unit": "ENV_FILE=./config/.env.test jest",
     "copy-files": "copyfiles --flat ./src/database/** build/database"
   },
