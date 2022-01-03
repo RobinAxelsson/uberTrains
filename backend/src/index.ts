@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { TravelPlanner } from "./services/TravelPlanner";
 import "reflect-metadata";
-
 import { Connection, createConnection } from "typeorm";
 import { userInfo } from "os";
+
 
 const settings = require("../settings.json");
 const path = require("path");
@@ -61,7 +61,7 @@ webServer.post("/checkout", async (req:Request, res:Response) => {
 	  
 	  const charge = await stripe.charges.create(
 		{
-		  amount: 300 * 100,
+		  amount: 400*100,
 		  currency: "usd",
 		  customer: customer.id,
 		  receipt_email: token.email,
@@ -70,8 +70,10 @@ webServer.post("/checkout", async (req:Request, res:Response) => {
 		}
 		
 	  );
+
 	  console.log("Charge:", { charge });
 	  status = "success";
+	 
 	} catch (error) {
 	  console.error("Error:", error);
 	  status = "failure";
