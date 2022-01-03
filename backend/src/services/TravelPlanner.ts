@@ -4,12 +4,8 @@ import {
   getManager,
   getRepository,
 } from "typeorm";
-import { BookingDto } from "../dtos/BookingDto";
-import { Booking } from "../models/Booking.entity";
 import { RouteEvent } from "../models/RouteEvent.entity";
-import { Seat } from "../models/Seat.entity";
 import { TravelPlan } from "../models/TravelPlan.entity";
-import { Guid } from "./UtilityFunctions";
 
 export class TravelPlanner {
   async getFullTravelPlanById(id: number) {
@@ -96,27 +92,6 @@ export class TravelPlanner {
     let data = await builder.getRawMany();
     // console.log(data);
     return data;
-  }
-  async bookSeats(bookingDto: BookingDto) {
-    const booking = {
-      bookingNumber: Guid.newGuid(),
-      localDateTime: Date().toString(),
-      email: bookingDto.paymentInfo.email,
-      totalPrice: bookingDto.paymentInfo.totalPrice,
-      stripeBookingNumber: bookingDto.paymentInfo.stripeBookingNumber,
-      startStation: bookingDto.startStation,
-      endStation: bookingDto.endStation,
-      bookedSeats: [] as Seat[],
-    } as Booking;
-
-    for (const id of bookingDto.seatIds) {
-      const seat = await Seat.findOne(id);
-      booking.bookedSeats.push(seat as Seat);
-      await Seat.save(seat as Seat);
-    }
-
-    const dbBooking = await Booking.save(booking);
-    return dbBooking;
   }
   filterPlans(
     travelPlans: TravelPlan[],

@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import { createQueryBuilder } from 'typeorm';
 import { BookingDto } from '../dtos/BookingDto';
 import { Booking } from '../models/Booking.entity';
-import { TravelPlanner } from '../services/TravelPlanner';
+import { BookingManager } from '../services/BookingManager';
 
 const router = express.Router();
 router.get("/api/booking", async (req: Request, res: Response) => {
@@ -14,7 +14,7 @@ router.get("/api/booking", async (req: Request, res: Response) => {
 
 router.post("/api/booking", async (req: Request, res: Response) => {
   let bookingDto: BookingDto = req.body;
-  let booking = await (new TravelPlanner()).bookSeats(bookingDto);
+  let booking = await (new BookingManager()).bookSeats(bookingDto);
   res.json(booking);
 });
 
