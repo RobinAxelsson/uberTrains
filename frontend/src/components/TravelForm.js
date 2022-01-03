@@ -4,6 +4,7 @@ import ListTravels from "./ListTravels";
 
 const TravelForm = () => {
   const [showTravels, setShowTravels] = useState(false);
+  const [showSeats,setShowSeats] = useState(false)
   const [availableTravels, setAvailableTravels] = useState([]);
   const [start, setStart] = useState([]);
   const [end, setEnd] = useState([]);
@@ -94,9 +95,9 @@ const TravelForm = () => {
         </form>
       </div>
       <div>
-      {showTravels && <ListTravels availableTravels={availableTravels} />}
+      {showTravels && <ListTravels availableTravels={availableTravels} setShowTravels={setShowTravels} setShowSeats={setShowSeats} />}
       </div>
-      <div><Seats availableTravels={availableTravels}/></div>
+      <div>{ showSeats && <Seats availableTravels={availableTravels}/>}</div>
     </div>
   );
 };
