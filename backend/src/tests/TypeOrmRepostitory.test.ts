@@ -12,8 +12,11 @@ import { Seat } from "../models/Seat.entity";
 import { RouteEvent } from "../models/RouteEvent.entity";
 import { seed } from "../services/Seeder";
 import { TravelPlanner } from "../services/TravelPlanner";
-import { BookingDto } from "../dtos/BookingDto";
+import { BookingDto, station } from "../dtos/BookingDto";
 import { BookingManager } from "../services/BookingManager";
+import { Coordinates, PriceCalculator } from "../services/PriceCalculator";
+import { start } from "repl";
+import { PriceModel } from "../models/PriceModel.entity";
 function sum(a: number, b: number) {
   return a + b;
 }
@@ -26,7 +29,7 @@ beforeEach(async () => {
     type: "sqlite",
     database: ":memory:",
     dropSchema: true,
-    entities: [Booking, TravelPlan, TrainUnit, Seat, RouteEvent],
+    entities: [Booking, TravelPlan, TrainUnit, Seat, RouteEvent, PriceModel],
     synchronize: true,
     logging: false,
   }).catch((err) => console.log(JSON.stringify(err)));
@@ -36,23 +39,28 @@ afterEach(() => {
   let conn = getConnection();
   return conn.close();
 });
-test("Get travelPlan Info by start, stop, date GBG-STHLM", async () => {
+
+test("Calculate prize JKPNG-STHLM", async () => {
   await seed();
-  const data = await new TravelPlanner().getTravelPlanInfo(
-    "goteborg",
-    "stockholm",
-    "2012-04-23"
-  );
-  expect([...data].map((x) => x.travelPlanId)).toStrictEqual([1]);
-});
-test("Get travelPlan Info by start, stop, date JKPNG-STHLM", async () => {
-  await seed();
-  const data = await new TravelPlanner().getTravelPlanInfo(
-    "jonkoping",
-    "stockholm",
-    "2012-04-23"
-  );
-  expect([...data].map((x) => x.travelPlanId)).toStrictEqual([1]);
+  const priceCalculator = new PriceCalculator();
+  const priceModel: PriceModel = {
+    id: 1,
+    name: "Commuter Train",
+    priceConstant: 2,
+    trainTypeMultiplyer: 0.8,
+  } as PriceModel;
+  let startCoords = {
+    latitude: 57.7825634,
+    longitude: 14.165719,
+  } as Coordinates;
+  let endCoords = {
+    latitude: 59.3251172,
+    longitude: 18.0710935,
+  } as Coordinates;
+  let distance = priceCalculator.getDistance(startCoords, endCoords);
+  let price = priceCalculator.getPrice(priceModel, distance);
+  expect(distance).toStrictEqual(284.08);
+  expect(price).toStrictEqual(454.53);
 });
 
 test("Get FULL travelPlan by start, stop, date JKPNG-STHLM", async () => {
@@ -63,7 +71,7 @@ test("Get FULL travelPlan by start, stop, date JKPNG-STHLM", async () => {
     "2012-04-23"
   );
   expect(data?.map((x) => x.id)).toStrictEqual([1]);
-  expect(data?.map((x) => x.priceModel)).toStrictEqual(["default-winter"]);
+  expect(data?.map((x) => x.priceModel.priceConstant)).toStrictEqual([2]);
 });
 test("Get FULL travelPlan by start, stop, date STHLM-JKPNG, expect empty array", async () => {
   await seed();
@@ -105,13 +113,19 @@ test("As user I want to be able to book seats", async () => {
   expect((await Seat.find()).length).toBe(4);
 
   const bookingDto = {
+    priceModel: { priceConstant: 2, trainTypeMultiplyer: 0.8 },
     seatIds: [1, 2],
-    startStation: "Goteborg",
-    endStation: "Stockholm",
+    startStation: {
+      name: "Goteborg",
+      coordinates: { latitude: 57.7072326, longitude: 11.9670171 },
+    } as station,
+    endStation: {
+      name: "Stockholm",
+      coordinates: { latitude: 59.3251172, longitude: 18.0710935 },
+    },
     paymentInfo: {
       stripeBookingNumber: "stripe_1234",
       email: "post@man.se",
-      totalPrice: 1000,
     },
   } as BookingDto;
   const bookingManager = new BookingManager();

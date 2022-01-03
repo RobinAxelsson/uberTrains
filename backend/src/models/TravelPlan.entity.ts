@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { PriceModel } from "./PriceModel.entity";
 import { RouteEvent } from "./RouteEvent.entity";
 import { TrainUnit } from "./TrainUnit.entity";
 
@@ -14,6 +15,6 @@ export class TravelPlan extends BaseEntity {
   trainUnits: TrainUnit[];
   @OneToMany(() => RouteEvent, routeEvent => routeEvent.travelPlan)
   routeEvents: RouteEvent[];
-  @Column()
-  priceModel: string;
+  @ManyToOne(() => PriceModel, priceModel => priceModel.travelPlan)
+  priceModel: PriceModel;
 }

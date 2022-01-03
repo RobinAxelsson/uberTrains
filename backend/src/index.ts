@@ -7,7 +7,8 @@ import { bookingRouter } from "./routes/booking.router";
 import { trainUnitRouter } from "./routes/trainUnit.router";
 import { seatRouter } from "./routes/seat.router";
 import { routeEventRouter } from "./routes/routeEvent.router";
-
+import { PriceCalculator } from "./services/PriceCalculator";
+import { copyFileSync } from "fs";
 const settings = require("../settings.json");
 const express = require("express");
 const webServer = express();
