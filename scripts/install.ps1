@@ -3,6 +3,7 @@ npm install -g typescript
 npm install -g ts-node
 npm install -g typeorm
 npm install
+npm upgrade
 cd ..
 cd frontend
 npm install

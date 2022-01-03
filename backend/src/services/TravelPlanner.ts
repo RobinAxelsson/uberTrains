@@ -12,6 +12,7 @@ export class TravelPlanner {
     return (await createQueryBuilder(TravelPlan)
       .leftJoinAndSelect("TravelPlan.routeEvents", "RouteEvent")
       .leftJoinAndSelect("TravelPlan.trainUnits", "TrainUnit")
+      .leftJoinAndSelect("TravelPlan.priceModel", "PriceModel")
       .leftJoinAndSelect("TrainUnit.seats", "Seat")
       .leftJoinAndSelect("Seat.booking", "Booking")
       .where("travelPlan.id = :id", { id: id })
@@ -29,6 +30,7 @@ export class TravelPlanner {
     const travelPlans = (await createQueryBuilder(TravelPlan)
       .leftJoinAndSelect("TravelPlan.routeEvents", "RouteEvent")
       .leftJoinAndSelect("TravelPlan.trainUnits", "TrainUnit")
+      .leftJoinAndSelect("TravelPlan.priceModel", "PriceModel")
       .leftJoinAndSelect("TrainUnit.seats", "Seat")
       .leftJoinAndSelect("Seat.booking", "Booking")
       .where("RouteEvent.dateTime BETWEEN :date1 AND :date2", {
@@ -47,52 +49,7 @@ export class TravelPlanner {
 
       return this.filterPlans(travelPlans, date, start, end);
   }
-  async getTravelPlanInfo(start: string, end: string, date: string) {
-    const entityManager = getManager();
-
-    const startDate = new Date(date);
-    const addDay = new Date(date);
-    addDay.setDate(addDay.getDate() + 1);
-
-    let date1 = startDate.toISOString();
-    let date2 = addDay.toISOString();
-
-    const builder = await getRepository(RouteEvent)
-      .createQueryBuilder("route")
-      .select("GROUP_CONCAT(route.dateTime)", "eventDates")
-      .addSelect("GROUP_CONCAT(location)", "orderedLocations")
-      .addSelect(subQuery => {
-        return subQuery
-            .select("travelPlan.id", "travelPlanId")
-            .from(TravelPlan, "travelPlan")
-    }, "travelPlanId")
-    .addSelect(subQuery => {
-      return subQuery
-          .select("travelPlan.tripName", "tripName")
-          .from(TravelPlan, "travelPlan")
-  }, "tripName")
-      .where("route.dateTime BETWEEN :date1 AND :date2", {
-        date1: date1,
-        date2: date2,
-      })
-      .andWhere(
-        new Brackets((qb) => {
-          qb.where("route.location = :loc1", { loc1: start }).orWhere(
-            "route.location = :loc2",
-            { loc2: end }
-          );
-        })
-      )
-      //.orderBy("route.dateTime")
-      .groupBy("travelPlanId")
-
-    const sql = builder.getSql();
-    console.log(sql);
-
-    let data = await builder.getRawMany();
-    // console.log(data);
-    return data;
-  }
+  
   filterPlans(
     travelPlans: TravelPlan[],
     date: any,
