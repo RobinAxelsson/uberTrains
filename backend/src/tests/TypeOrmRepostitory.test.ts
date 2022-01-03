@@ -30,17 +30,28 @@ afterEach(() => {
   return conn.close();
 });
 
-test("Get travelPlan Id by start, stop, date", async () => {
+test("Get travelPlan Info by start, stop, date GBG-STHLM", async () => {
   await seed();
-  const ids = await (new TravelPlanner()).getTravelPlanIdsByInput("goteborg", "stockholm", "2012-04-23");
-  expect(ids).toStrictEqual([1]);
+  const data = await (new TravelPlanner()).getTravelPlanInfo("goteborg", "stockholm", "2012-04-23");
+  expect([...data].map(x => x.travelPlanId)).toStrictEqual([1]);
 });
-// test("Get travelPlan Id by start, stop, date", async () => {
-//   await seed();
-//   const ids = await (new TravelPlanner()).getTravelPlanIdsByInput("jonkoping", "stockholm", "2012-04-23");
-//   expect(ids).toStrictEqual([1]);
-// });
+test("Get travelPlan Info by start, stop, date JKPNG-STHLM", async () => {
+  await seed();
+  const data = await (new TravelPlanner()).getTravelPlanInfo("jonkoping", "stockholm", "2012-04-23");
+  expect([...data].map(x => x.travelPlanId)).toStrictEqual([1]);
+});
 
+test("Get FULL travelPlan by start, stop, date JKPNG-STHLM", async () => {
+  await seed();
+  const data = await (new TravelPlanner()).getFullTravelPlanByStartStopDate("jonkoping", "stockholm", "2012-04-23");
+  expect(data?.map(x => x.id)).toStrictEqual([1]);
+  expect(data?.map(x => x.priceModel)).toStrictEqual(["default-winter"]);
+});
+test("Get FULL travelPlan by start, stop, date STHLM-JKPNG, expect empty array", async () => {
+  await seed();
+  const data = await (new TravelPlanner()).getFullTravelPlanByStartStopDate("stockholm", "jonkoping", "2012-04-23");
+  expect(data).toStrictEqual([]);
+});
 test("TravelPlanner GetFullTravelPlanById, Load seeded travelplan id 1 expect 4 routeEvents", async () => {
   await seed();
   const travelPlan = await (new TravelPlanner()).getFullTravelPlanById(1);
