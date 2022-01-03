@@ -50,12 +50,15 @@ const ListTravels = ({ availableTravels, getAvailableSeats }) => {
                           </td>
                         </tr>
                       ))}
+                     
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {item.train}
+                        {item.tripName}
                       </td>
+                      
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         <p>199:-</p>
                       </td>
+                     
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         {/* <Link to="seats"> */}
                         <button

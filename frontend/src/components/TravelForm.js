@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import Seats from "./Seats";
 import ListTravels from "./ListTravels";
 
 const TravelForm = () => {
@@ -82,7 +82,7 @@ const TravelForm = () => {
             <input
               type="date"
               className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-48 sm:text-sm border-gray-300 rounded-md"
-              min={getTodaysDate()}
+              //min={getTodaysDate()}
               required
               value={date}
               onChange={(e) => setDate(e.target.value)}
@@ -93,7 +93,10 @@ const TravelForm = () => {
           </button>
         </form>
       </div>
+      <div>
       {showTravels && <ListTravels availableTravels={availableTravels} />}
+      </div>
+      <div><Seats availableTravels={availableTravels}/></div>
     </div>
   );
 };

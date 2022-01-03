@@ -1,30 +1,34 @@
-const Seats = ({ train }) => {
+const Seats = ({ availableTravels}) => {
   return (
     <div>
       <div className="mt-2 flex justify-center border-2 border-indigo-200 justify-around">
-        {train &&
-          train.map((item) => (
+        {availableTravels &&
+          availableTravels.map((item) => (
             <div>
-              <p> Vagn: {item.carrier}</p>
+              {item.trainUnits.map((t)=> <div> <p> {t.name}</p>
               <div className="grid grid-cols-3 gap-4 content-between">
-                {item.seats.map((seatNr) => (
+                {t.seats.map((s) => (
                   <div class="form-check">
                     {" "}
                     <input
                       class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                       type="checkbox"
-                      value={seatNr}
+                      value={s.seatNumber}
                       id="flexCheckDefault"
                     />
                     <label
                       class="form-check-label inline-block text-gray-800"
                       for="flexCheckDefault"
                     >
-                      {seatNr} ,
+                      {s.seatNumber} ,
                     </label>{" "}
                   </div>
                 ))}
               </div>
+               </div>
+              )}
+              
+              
             </div>
           ))}
       </div>
