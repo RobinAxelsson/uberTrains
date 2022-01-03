@@ -1,22 +1,24 @@
 import { useState } from "react";
 
 import ListTravels from "./ListTravels";
-import Seats from "./Seats";
 
-const TravelForm = ({}) => {
+const TravelForm = () => {
   const [showTravels, setShowTravels] = useState(false);
   const [availableTravels, setAvailableTravels] = useState([]);
   const [start, setStart] = useState([]);
   const [end, setEnd] = useState([]);
   const [date, setDate] = useState([]);
-  const [seats, setSeats] = useState([]);
-  const [showSeats, setShowSeats] = useState(false);
-  const [choosenTravel, setChoosenTravel] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     fetch(
-      `http://localhost:4000/api/journey?date=${date}&start=${start}&end=${end}`
+      `http://localhost:4000/api/journey?date=${date}&start=${start}&end=${end}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
     )
       .then((res) => {
         console.log(res);
@@ -26,29 +28,28 @@ const TravelForm = ({}) => {
         if (data) {
           setAvailableTravels(data);
           setShowTravels(true);
-          setShowSeats(false);
         }
       });
-    console.log("travels", availableTravels);
+    console.log(availableTravels);
   };
 
-  const getAvailableSeats = (id) => {
-    fetch("http://localhost:4000/api/seats")
-      .then((res) => {
-        // console.log(res);
-        return res.json();
-      })
-      .then((data) => {
-        if (data) {
-          setSeats(data);
-          setShowTravels(false);
-          setShowSeats(true);
-          setChoosenTravel(id);
-        }
-      });
-    // console.log("seats", seats);
-  };
-  console.log(choosenTravel);
+  function getTodaysDate() {
+    let today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; // Adding one since January is 0
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+      dd = '0' + dd;
+    }
+
+    if (mm < 10) {
+      mm = '0' + mm;
+    }
+
+    today = yyyy + '-' + mm + '-' + dd;
+    return today;
+  }
 
   return (
     <div className="flex flex-col">
@@ -79,9 +80,9 @@ const TravelForm = ({}) => {
           </div>
           <div className="mt-1">
             <input
-              type="text"
-              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-96 sm:text-sm border-gray-300 rounded-md"
-              placeholder="Datum:"
+              type="date"
+              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-48 sm:text-sm border-gray-300 rounded-md"
+              min={getTodaysDate()}
               required
               value={date}
               onChange={(e) => setDate(e.target.value)}
@@ -92,15 +93,7 @@ const TravelForm = ({}) => {
           </button>
         </form>
       </div>
-      {showTravels && (
-        <ListTravels
-          availableTravels={availableTravels}
-          getAvailableSeats={getAvailableSeats}
-          showTravels={showTravels}
-          setChoosenTravel={setChoosenTravel}
-        />
-      )}
-      {showSeats && <Seats train={seats} />}
+      {showTravels && <ListTravels availableTravels={availableTravels} />}
     </div>
   );
 };

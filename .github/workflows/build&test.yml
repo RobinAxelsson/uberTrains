@@ -5,10 +5,9 @@ name: UberTrains Build & Test
 
 on:
   push:
-#    branches: [ Dev ]
 
 jobs:
-  build-backend:
+  build-backend-ts-node:
       runs-on: ubuntu-latest
 
       steps:
@@ -20,7 +19,7 @@ jobs:
       - name: Run build
         run: cd backend && npm run build
 
-  build-frontend:
+  build-frontend-craco:
     runs-on: ubuntu-latest
     
     steps:
@@ -32,7 +31,7 @@ jobs:
     - name: Build Frontend
       run: cd frontend && npm run build
         
-  Unit-Testing-Jest-Backend:
+  Unit-Testing-Jest-Backend-ts:
     runs-on: ubuntu-latest
 
     steps:
@@ -44,7 +43,7 @@ jobs:
     - name: Run tests
       run: cd backend && npx jest
 
-  Newman-Integration-Tests:
+  Newman-Integration-Tests-ts-node:
     runs-on: ubuntu-latest
 
     steps:

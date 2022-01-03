@@ -11,7 +11,7 @@ npm install -g newman
 cd ./backend || exit
 
 # Build and start the backend server as a backgroundprocess
-npm run start &
+npm run start:dev &
 sleep 20
 
 # Backend Api endpoint tests
