@@ -12,7 +12,7 @@ const TravelForm = () => {
   const [choosenTravel, setChoosenTravel] = useState([])
   const [choosenSeats, setChoosenSeats] = useState([])
 
-  //console.log("travel", choosenTravel)
+  console.log("travel", choosenTravel)
   console.log("seat", choosenSeats)
 
   const handleSubmit = (e) => {
@@ -88,7 +88,7 @@ const TravelForm = () => {
             <input
               type="date"
               className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-48 sm:text-sm border-gray-300 rounded-md"
-              //min={getTodaysDate()}
+              min={getTodaysDate()}
               required
               value={date}
               onChange={(e) => setDate(e.target.value)}
