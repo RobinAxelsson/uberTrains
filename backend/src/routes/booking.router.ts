@@ -23,8 +23,6 @@ router.get("/api/getPrice", async (req: Request, res: Response) => {
   } catch(err) {
     console.log("Failed!\nError:\n",err);
   }
-  
-
 });
 
 router.post("/api/booking", async (req: Request, res: Response) => {
