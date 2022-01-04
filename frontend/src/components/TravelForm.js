@@ -18,7 +18,7 @@ const TravelForm = () => {
 }]
 
 
-  //console.log("travel", choosenTravel)
+  console.log("travel", choosenTravel)
   console.log("seat", choosenSeats)
 
   const confirmBooking = () => {
