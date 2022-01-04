@@ -20,11 +20,15 @@
   "dependencies": {
     "@babel/preset-typescript": "^7.16.5",
     "better-sqlite3": "^7.4.5",
+    "body-parser": "^1.19.1",
     "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "emailjs-com": "^3.2.0",
     "esbuild": "^0.14.5",
     "express": "^4.17.1",
     "reflect-metadata": "^0.1.13",
     "sqlite3": "^5.0.2",
+    "stripe": "^8.195.0",
     "typeorm": "^0.2.41"
   },
   "devDependencies": {
