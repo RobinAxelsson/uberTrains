@@ -4,7 +4,7 @@ import ListTravels from "./ListTravels";
 
 const TravelForm = () => {
   const [showTravels, setShowTravels] = useState(false);
-  const [showSeats,setShowSeats] = useState(false)
+  const [showSeats, setShowSeats] = useState(false)
   const [availableTravels, setAvailableTravels] = useState([]);
   const [start, setStart] = useState([]);
   const [end, setEnd] = useState([]);
@@ -58,13 +58,13 @@ const TravelForm = () => {
   }
 
   return (
-    <div className="flex flex-col">
-      <div className="flex justify-center items-center">
-        <form className="mt-6 justify-center" onSubmit={handleSubmit}>
-          <div>
-            <h2 className="font-bold text-4xl">Vart vill du resa?</h2>
+    <div className="flex flex-col justify-center items-center">
+      <div className="flex justify-center items-center w-11/12">
+        <form className="mt-6 w-11/12 flex flex-col justify-center items-center" onSubmit={handleSubmit}>
+          <div className="w-full flex justify-center items-center">
+            <h2 className="font-bold text-3xl">Vart vill du resa?</h2>
           </div>
-          <div className="mt-4">
+          <div className="mt-4 w-full flex justify-center items-center">
             <input
               type="text"
               className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-96 sm:text-sm border-gray-300 rounded-md"
@@ -74,7 +74,7 @@ const TravelForm = () => {
               onChange={(e) => setStart(e.target.value)}
             />
           </div>
-          <div className="mt-1">
+          <div className="mt-1 w-full flex justify-center items-center">
             <input
               type="text"
               className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-96 sm:text-sm border-gray-300 rounded-md"
@@ -84,25 +84,25 @@ const TravelForm = () => {
               onChange={(e) => setEnd(e.target.value)}
             />
           </div>
-          <div className="mt-1">
+          <div className="w-full flex justify-center items-center">
             <input
               type="date"
-              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-48 sm:text-sm border-gray-300 rounded-md"
+              className="m-1 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-48 sm:text-sm border-gray-300 rounded-md"
               //min={getTodaysDate()}
               required
               value={date}
               onChange={(e) => setDate(e.target.value)}
             />
+            <button className="m-1 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              Fortsätt
+            </button>
           </div>
-          <button className="mt-1 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Fortsätt
-          </button>
         </form>
       </div>
       <div>
-      {showTravels && <ListTravels availableTravels={availableTravels} setShowTravels={setShowTravels} setShowSeats={setShowSeats} setChoosenTravel={setChoosenTravel} />}
+        {showTravels && <ListTravels availableTravels={availableTravels} setShowTravels={setShowTravels} setShowSeats={setShowSeats} setChoosenTravel={setChoosenTravel} />}
       </div>
-      <div>{ showSeats && <Seats availableTravels={availableTravels} setChoosenSeats={setChoosenSeats} choosenSeats={choosenSeats}/>}</div>
+      <div>{showSeats && <Seats availableTravels={availableTravels} setChoosenSeats={setChoosenSeats} choosenSeats={choosenSeats} />}</div>
     </div>
   );
 };
