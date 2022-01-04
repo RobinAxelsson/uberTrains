@@ -26,7 +26,7 @@ toast.configure()
         if (status==='success'){
 
             emailjs.send(
-                "service_prtxame",
+                "service_mn8idh9",
                 "template_ovo61fm",
                
                templateParams ,
