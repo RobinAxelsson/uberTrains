@@ -18,8 +18,10 @@ const TravelForm = () => {
     totalPrice:1000
 }]
 
+
+
   console.log("travel", choosenTravel)
-  console.log("seat", choosenSeats)
+ // console.log("seat", choosenSeats)
 
   const confirmBooking = () => {
     fetch("http://localhost:4000/api/booking")
@@ -112,7 +114,7 @@ const TravelForm = () => {
       <div>
       {showTravels && <ListTravels availableTravels={availableTravels} setShowTravels={setShowTravels} setShowSeats={setShowSeats} setChoosenTravel={setChoosenTravel} />}
       </div>
-      <div>{ showSeats && <Seats availableTravels={availableTravels} setChoosenSeats={setChoosenSeats} choosenSeats={choosenSeats}/>}</div>
+      <div>{ showSeats && <Seats availableTravels={availableTravels} setChoosenSeats={setChoosenSeats} choosenSeats={choosenSeats} choosenTravel={choosenTravel}/>}</div>
       
     </div>
   );
