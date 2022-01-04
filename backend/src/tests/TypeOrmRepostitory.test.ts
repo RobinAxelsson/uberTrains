@@ -12,11 +12,11 @@ import { Seat } from "../models/Seat.entity";
 import { RouteEvent } from "../models/RouteEvent.entity";
 import { seed } from "../services/Seeder";
 import { TravelPlanner } from "../services/TravelPlanner";
-import { BookingDto } from "../dtos/BookingDto";
+import {BookingDto, StripeInfo} from "../dtos/BookingDto";
 import { BookingManager } from "../services/BookingManager";
 import { PriceCalculator } from "../services/PriceCalculator";
-import { start } from "repl";
 import { PriceModel } from "../models/PriceModel.entity";
+import { PaymentManagerStub } from '../services/PaymentManager';
 function sum(a: number, b: number) {
   return a + b;
 }
@@ -107,17 +107,18 @@ test("As user I want to be able to book seats", async () => {
   expect((await Seat.find()).length).toBe(4);
 
   const bookingDto = {
+    travelPlanId: 1,
+    seatIds: [1,2],
     startRouteEventId: 1,
   endRouteEventId: 4,
-  seatIds: [1,2],
-  travelPlanId: 1,
-  paymentInfo: {
-    stripeBookingNumber: "stripe_1234",
-    email: "post@man.se"
+  stripeInfo: {
+    id: "stripe_1234",
+    email: "post@man.se",
+    name: "KalleBanan"
     },
   } as BookingDto;
-
-  const bookingManager = new BookingManager();
+  
+  const bookingManager = new BookingManager(new PaymentManagerStub());
   const booking = await bookingManager.book(bookingDto);
 
   const seats = (await createQueryBuilder(Seat)
@@ -130,9 +131,10 @@ test("As user I want to be able to book seats", async () => {
     .where("Booking.id = :id", { id: booking.id })
     .getOne()) as Booking;
 
-  console.log(JSON.stringify({Seats: seats}, null, '\t'));
-  console.log(JSON.stringify({BookingWithSeats: booking}, null, '\t'));
+  // console.log(JSON.stringify({Seats: seats}, null, '\t'));
+  // console.log(JSON.stringify({BookingWithSeats: booking}, null, '\t'));
   expect(seats.every((x) => x.booking !== null)).toBeTruthy();
   expect(dbBooking?.bookedSeats[0]?.seatNumber).toBe("6a");
   expect(dbBooking?.bookedSeats[1]?.seatNumber).toBe("7a");
+  expect(booking.stripeId).toBe("stripe_1234");
 });

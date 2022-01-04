@@ -1,13 +1,15 @@
-import { StripeInfo } from "../dtos/BookingDto";
+import {StripeInfo} from "../dtos/BookingDto";
 
 const stripe = require("stripe")(
     "sk_test_51K7JpMAwp97GmluXslTTgNnwx2H7CBcUwDpIOjhZoR3gV6LxY6ZZIUnqVdlzdjOWGhVWS2owaJ3SACXg7F6G2Kqs00B1E5iMEs"
   );
 
 
-export class PaymentManager
-{
-    async Pay(stripeInfo:StripeInfo, price:number){
+export interface IPaymentManager {
+    Pay(stripeInfo:StripeInfo, price:number): Promise<string>
+}
+export class PaymentManager implements IPaymentManager {
+    public async Pay(stripeInfo:StripeInfo, price:number){
         const customer = await stripe.customers.create({
             email: stripeInfo.email,
             source: stripeInfo.id,
@@ -24,6 +26,14 @@ export class PaymentManager
             },
           });
           console.log("PaymentManager.Pay()=>Charge:", { charge });
-          return charge.id;
+          return charge?.id;
     }
 }
+export class PaymentManagerStub implements IPaymentManager{    
+  async Pay(stripeInfo:StripeInfo, price:number){
+      let promise = new Promise<string>((resolve, reject) =>{
+        setTimeout(() => resolve(stripeInfo.id), 100);
+      });
+      return await promise;
+  }
+  }

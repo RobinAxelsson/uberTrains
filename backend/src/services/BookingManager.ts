@@ -7,14 +7,14 @@ import { GetPriceDto } from "../dtos/GetPriceDto";
 import { TravelPlan } from "../models/TravelPlan.entity";
 import { RouteEvent } from "../models/RouteEvent.entity";
 import { createQueryBuilder } from "typeorm";
-import { PaymentManager } from './PaymentManager';
+import { IPaymentManager } from './PaymentManager';
 
 export class BookingManager {
   priceCalculator: PriceCalculator;
-  paymentManager: PaymentManager;
-  constructor() {
+  paymentManager: IPaymentManager;
+  constructor(paymentManager: IPaymentManager) {
     this.priceCalculator = new PriceCalculator();
-    this.paymentManager = new PaymentManager();
+    this.paymentManager = paymentManager;
   }
   async getPriceForBooking(calculatePriceDto: GetPriceDto) {
     const { amount, endRouteEventId, startRouteEventId, travelPlanId } =
@@ -76,7 +76,6 @@ export class BookingManager {
       stripeId: stripeId,
       startStation: startRouteEvent.location,
       endStation: endRouteEvent.location,
-
       bookedSeats: [] as Seat[],
     } as Booking;
 
