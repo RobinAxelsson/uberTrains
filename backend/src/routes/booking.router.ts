@@ -13,7 +13,8 @@ router.get("/api/booking", async (req: Request, res: Response) => {
 });
 
 router.post("/api/booking", async (req: Request, res: Response) => {
-  let bookingDto: BookingDto = req.body;
+
+  let bookingDto: BookingDto = await req.body;
   let booking = await (new BookingManager()).bookSeats(bookingDto);
   res.json(booking);
 });

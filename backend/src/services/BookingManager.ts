@@ -9,6 +9,8 @@ export class BookingManager {
     const { paymentInfo, startStation, endStation, priceModel, seatIds } =
       bookingDto;
 
+    console.log(JSON.stringify({bookingDto: bookingDto}, null, '\t'))
+
     const priceCalculator = new PriceCalculator();
 
     let distance = priceCalculator.getDistance(

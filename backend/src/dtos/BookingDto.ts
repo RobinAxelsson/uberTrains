@@ -2,9 +2,9 @@ import { PriceModel } from "../models/PriceModel.entity";
 import { Coordinates } from "../services/PriceCalculator";
 
 export class BookingDto {
+  seatIds: number[];
   startStation: station;
   endStation: station;
-  seatIds: number[];
   priceModel: PriceModel;
   paymentInfo: {
     stripeBookingNumber: string;

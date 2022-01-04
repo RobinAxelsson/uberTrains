@@ -15,7 +15,6 @@ export class PriceModel extends BaseEntity {
   priceConstant: number;
 }
 // export class PriceModel{
-//     id: number;
 //     name: string;
 //     trainTypeMultiplyer: number;
 //     priceConstant: number;
