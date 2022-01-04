@@ -29,7 +29,7 @@ jobs:
       run: cd frontend && npm install
     
     - name: Build Frontend
-      run: cd frontend && npm run build
+      run: cd frontend && npm run build-no-warn
         
   Unit-Testing-Jest-Backend-ts:
     runs-on: ubuntu-latest

@@ -12,9 +12,9 @@ import { Seat } from "../models/Seat.entity";
 import { RouteEvent } from "../models/RouteEvent.entity";
 import { seed } from "../services/Seeder";
 import { TravelPlanner } from "../services/TravelPlanner";
-import { BookingDto, station } from "../dtos/BookingDto";
+import { BookingDto } from "../dtos/BookingDto";
 import { BookingManager } from "../services/BookingManager";
-import { Coordinates, PriceCalculator } from "../services/PriceCalculator";
+import { PriceCalculator } from "../services/PriceCalculator";
 import { start } from "repl";
 import { PriceModel } from "../models/PriceModel.entity";
 function sum(a: number, b: number) {
@@ -43,22 +43,16 @@ afterEach(() => {
 test("Calculate prize JKPNG-STHLM", async () => {
   await seed();
   const priceCalculator = new PriceCalculator();
-  const priceModel: PriceModel = {
-    id: 1,
-    name: "Commuter Train",
-    priceConstant: 2,
-    trainTypeMultiplyer: 0.8,
-  } as PriceModel;
-  let startCoords = {
+  let startCoords = { //GBG
     latitude: 57.7825634,
     longitude: 14.165719,
-  } as Coordinates;
-  let endCoords = {
+  };
+  let endCoords = { //Sthlm
     latitude: 59.3251172,
     longitude: 18.0710935,
-  } as Coordinates;
-  let distance = priceCalculator.getDistance(startCoords, endCoords);
-  let price = priceCalculator.getPrice(priceModel, distance);
+  };
+  let distance = priceCalculator.calculateDistance(startCoords.latitude, startCoords.longitude, endCoords.latitude, endCoords.longitude);
+  let price = priceCalculator.calculatePrice(distance, 0.8, 2, 1);
   expect(distance).toStrictEqual(284.08);
   expect(price).toStrictEqual(454.53);
 });
@@ -113,23 +107,18 @@ test("As user I want to be able to book seats", async () => {
   expect((await Seat.find()).length).toBe(4);
 
   const bookingDto = {
-    priceModel: { priceConstant: 2, trainTypeMultiplyer: 0.8 },
-    seatIds: [1, 2],
-    startStation: {
-      name: "Goteborg",
-      coordinates: { latitude: 57.7072326, longitude: 11.9670171 },
-    } as station,
-    endStation: {
-      name: "Stockholm",
-      coordinates: { latitude: 59.3251172, longitude: 18.0710935 },
-    },
-    paymentInfo: {
-      stripeBookingNumber: "stripe_1234",
-      email: "post@man.se",
+    startRouteEventId: 1,
+  endRouteEventId: 4,
+  seatIds: [1,2],
+  travelPlanId: 1,
+  paymentInfo: {
+    stripeBookingNumber: "stripe_1234",
+    email: "post@man.se"
     },
   } as BookingDto;
+
   const bookingManager = new BookingManager();
-  const booking = await bookingManager.bookSeats(bookingDto);
+  const booking = await bookingManager.book(bookingDto);
 
   const seats = (await createQueryBuilder(Seat)
     .leftJoinAndSelect("Seat.booking", "Booking")
@@ -141,8 +130,8 @@ test("As user I want to be able to book seats", async () => {
     .where("Booking.id = :id", { id: booking.id })
     .getOne()) as Booking;
 
-  //console.log(JSON.stringify({Seats: seats}, null, '\t'));
-  // console.log(JSON.stringify({BookingWithSeats: bookings}, null, '\t'));
+  console.log(JSON.stringify({Seats: seats}, null, '\t'));
+  console.log(JSON.stringify({BookingWithSeats: booking}, null, '\t'));
   expect(seats.every((x) => x.booking !== null)).toBeTruthy();
   expect(dbBooking?.bookedSeats[0]?.seatNumber).toBe("6a");
   expect(dbBooking?.bookedSeats[1]?.seatNumber).toBe("7a");

@@ -21,7 +21,7 @@ export class Booking extends BaseEntity {
 
   @Column()
   endStation: string;
-  @Column()
+  @Column({nullable: true})
   totalPrice: number;
   @Column({nullable: true})
   email: string;

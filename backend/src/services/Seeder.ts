@@ -28,24 +28,32 @@ let seatsB: Seat[] = [
 
   let routeEvents: RouteEvent[] = [
     {
+      latitude: 57.7072326,
+      longitude: 11.9670171,
       dateTime: "2012-04-23T18:30:43.511Z",
       location: "goteborg",
       specifiedLocation: "Platform 5",
       event: "Departure",
     } as RouteEvent,
     {
+      latitude: 57.7825634,
+      longitude: 14.165719,
       dateTime: "2012-04-23T20:30:43.511Z",
       specifiedLocation: "Platform 1",
       location: "jonkoping",
       event: "Arrival",
     } as RouteEvent,
     {
+      latitude: 57.7825634,
+      longitude: 14.165719,
       dateTime: "2012-04-23T20:35:43.511Z",
       specifiedLocation: "Platform 1",
       location: "jonkoping",
       event: "Departure",
     } as RouteEvent,
     {
+      latitude: 59.3251172,
+      longitude: 18.0710935,
       dateTime: "2012-04-23T22:30:43.511Z",
       specifiedLocation: "Platform 10a",
       location: "stockholm",
@@ -53,21 +61,21 @@ let seatsB: Seat[] = [
     } as RouteEvent,
   ];
   
-  const priceModel: PriceModel = {
-    name: 'Commuter Train',
-    priceConstant: 2,
-    trainTypeMultiplyer: 0.8
-  } as PriceModel
-
+  
   let travelPlan = {
     trainUnits: trainUnits,
     planId: "1111-1111-1111-1111",
     tripName: "X2000 GBG-Sthlm",
-    priceModel: priceModel,
     routeEvents: routeEvents
   } as TravelPlan;
-
-
+  
+  let priceModel = {
+    name: 'Commuter Train',
+    priceConstant: 2,
+    trainTypeMultiplyer: 0.8,
+    travelPlans: [travelPlan]
+  } as PriceModel
+  
 
   let seatRepository = await getRepository(Seat);
   await seatRepository.save(seatsA[0]);
@@ -82,7 +90,7 @@ let seatsB: Seat[] = [
   await trainUnitRepository.save(trainUnits[0]);
   await trainUnitRepository.save(trainUnits[1]);
 
-await PriceModel.save(priceModel);
+
 
 let routeEventRepository = await getRepository(RouteEvent);
 
@@ -97,4 +105,6 @@ await routeEventRepository.save(routeEvents[3]);
 
   let travelPlanRepository = await getRepository(TravelPlan);
   await travelPlanRepository.save(travelPlan);
+
+  await PriceModel.save(priceModel);
 }

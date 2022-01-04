@@ -8,14 +8,9 @@ export class PriceModel extends BaseEntity {
   @Column()
   name: string;
   @OneToMany(() => TravelPlan, travelPlan => travelPlan.priceModel)
-  travelPlan: TravelPlan[];
+  travelPlans: TravelPlan[];
   @Column()
   trainTypeMultiplyer: number;
   @Column()
   priceConstant: number;
 }
-// export class PriceModel{
-//     name: string;
-//     trainTypeMultiplyer: number;
-//     priceConstant: number;
-// }
