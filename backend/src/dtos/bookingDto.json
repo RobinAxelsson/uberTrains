@@ -1,28 +1,10 @@
 {
+    "travelPlanId": 1,
     "seatIds": [3,4],
-    "startStation": {
-        "name": "Goteborg",
-        "coordinates":{
-            "latitude": 57.7825634,
-            "longitude": 14.165719
-        }
-    },
-    "priceModel": {
-        "id": 1,
-        "name": "Commuter Train",
-        "priceConstant": 2,
-        "trainTypeMultiplyer": 0.8 
-    },
-    "endStation": {
-        "name": "Stockholm",
-        "coordinates":{
-            "latitude": 59.3251172,
-            "longitude": 18.0710935
-            }
-        },
+    "startRouteEventId": 1,
+    "endRouteEventId": 4,
     "paymentInfo": {
         "stripeBookingNumber":"stripe_1234",
-        "email": "post@man.se",
-        "totalPrice": 0
+        "email": "post@man.se"
     }
 }
