@@ -15,6 +15,6 @@ export class TravelPlan extends BaseEntity {
   trainUnits: TrainUnit[];
   @OneToMany(() => RouteEvent, routeEvent => routeEvent.travelPlan)
   routeEvents: RouteEvent[];
-  @ManyToOne(() => PriceModel, priceModel => priceModel.travelPlan)
+  @ManyToOne(() => PriceModel, priceModel => priceModel.travelPlans)
   priceModel: PriceModel;
 }

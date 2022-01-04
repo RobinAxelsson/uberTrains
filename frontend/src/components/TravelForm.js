@@ -2,6 +2,7 @@ import { useState } from "react";
 import Seats from "./Seats";
 import ListTravels from "./ListTravels";
 
+
 const TravelForm = () => {
   const [showTravels, setShowTravels] = useState(false);
   const [showSeats, setShowSeats] = useState(false)
@@ -11,9 +12,18 @@ const TravelForm = () => {
   const [date, setDate] = useState([]);
   const [choosenTravel, setChoosenTravel] = useState([])
   const [choosenSeats, setChoosenSeats] = useState([])
+  const paymentInfo = [{
+    stripBookingNumber: "stripe_1234",
+    email: "post@man.se",
+    totalPrice: 1000
+  }]
 
-  //console.log("travel", choosenTravel)
+  console.log("travel", choosenTravel)
   console.log("seat", choosenSeats)
+
+  const confirmBooking = () => {
+    fetch("http://localhost:4000/api/booking")
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();

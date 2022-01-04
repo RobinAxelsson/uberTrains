@@ -3,28 +3,74 @@ import { Booking } from "../models/Booking.entity";
 import { Seat } from "../models/Seat.entity";
 import { PriceCalculator } from "./PriceCalculator";
 import { Guid } from "./UtilityFunctions";
+import { GetPriceDto } from "../dtos/GetPriceDto";
+import { TravelPlan } from "../models/TravelPlan.entity";
+import { RouteEvent } from "../models/RouteEvent.entity";
+import { createQueryBuilder } from "typeorm";
 
 export class BookingManager {
-  async bookSeats(bookingDto: BookingDto) {
-    const { paymentInfo, startStation, endStation, priceModel, seatIds } =
-      bookingDto;
-
-    const priceCalculator = new PriceCalculator();
-
-    let distance = priceCalculator.getDistance(
-      startStation.coordinates,
-      endStation.coordinates
+  priceCalculator: PriceCalculator;
+  constructor() {
+    this.priceCalculator = new PriceCalculator();
+  }
+  async getPriceForBooking(calculatePriceDto: GetPriceDto) {
+    const { amount, endRouteEventId, startRouteEventId, travelPlanId } =
+      calculatePriceDto;
+    let entities = await this.getEntities(
+      travelPlanId,
+      startRouteEventId,
+      endRouteEventId
     );
-    let price = priceCalculator.getPrice(priceModel, distance);
-    let totalPrice = price * seatIds.length;
+    const { startRouteEvent, endRouteEvent, travelPlan } = entities;
+    let distance = this.priceCalculator.calculateDistance(
+      startRouteEvent.latitude,
+      startRouteEvent.longitude,
+      endRouteEvent.latitude,
+      endRouteEvent.longitude
+    );
+
+    return this.priceCalculator.calculatePrice(
+      distance,
+      travelPlan?.priceModel.trainTypeMultiplyer as number,
+      travelPlan?.priceModel.priceConstant as number,
+      amount
+    );
+  }
+  async book(bookingDto: BookingDto) {
+    const {
+      startRouteEventId,
+      endRouteEventId,
+      paymentInfo,
+      seatIds,
+      travelPlanId,
+    } = bookingDto;
+
+    const { startRouteEvent, endRouteEvent, travelPlan } =
+      await this.getEntities(travelPlanId, startRouteEventId, endRouteEventId);
+
+    let distance = this.priceCalculator.calculateDistance(
+      startRouteEvent.latitude,
+      startRouteEvent.longitude,
+      endRouteEvent.latitude,
+      endRouteEvent.longitude
+    );
+
+    let price = this.priceCalculator.calculatePrice(
+      distance,
+      travelPlan?.priceModel.trainTypeMultiplyer as number,
+      travelPlan?.priceModel.priceConstant as number,
+      bookingDto.seatIds.length
+    );
+    console.log(JSON.stringify({price: price}), null, '\t');
+
     const booking = {
       bookingNumber: Guid.newGuid(),
       localDateTime: Date().toString(),
       email: paymentInfo.email,
-      totalPrice: totalPrice,
+      totalPrice: price,
       stripeBookingNumber: paymentInfo.stripeBookingNumber,
-      startStation: startStation.name,
-      endStation: endStation.name,
+      startStation: startRouteEvent.location,
+      endStation: endRouteEvent.location,
 
       bookedSeats: [] as Seat[],
     } as Booking;
@@ -37,5 +83,28 @@ export class BookingManager {
 
     const dbBooking = await Booking.save(booking);
     return dbBooking;
+  }
+  private async getEntities(
+    travelPlanId: number,
+    startRouteEventId: number,
+    endRouteEventId: number
+  ) {
+    const travelPlan = (await createQueryBuilder(TravelPlan)
+    .leftJoinAndSelect("TravelPlan.priceModel", "PriceModel")
+    .where("travelPlan.id = :id", {id: travelPlanId})
+    .getOne())
+
+    console.log(JSON.stringify({ BookingManagerGetEntities: travelPlan }, null, "\t"));
+    const startRouteEvent = (await RouteEvent.findOne(
+      startRouteEventId
+    )) as RouteEvent;
+    const endRouteEvent = (await RouteEvent.findOne(
+      endRouteEventId
+    )) as RouteEvent;
+    return {
+      travelPlan: travelPlan,
+      startRouteEvent: startRouteEvent,
+      endRouteEvent: endRouteEvent,
+    };
   }
 }

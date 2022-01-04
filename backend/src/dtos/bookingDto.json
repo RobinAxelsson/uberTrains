@@ -1,0 +1,10 @@
+{
+    "travelPlanId": 1,
+    "seatIds": [3,4],
+    "startRouteEventId": 1,
+    "endRouteEventId": 4,
+    "paymentInfo": {
+        "stripeBookingNumber":"stripe_1234",
+        "email": "post@man.se"
+    }
+}

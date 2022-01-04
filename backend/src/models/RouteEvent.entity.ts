@@ -7,7 +7,11 @@ export class RouteEvent extends BaseEntity {
   @Column()
   dateTime: string;
   @Column()
-  location: string; //Mostly Station Name
+  location: string;
+  @Column()
+  latitude: number
+  @Column()
+  longitude: number
   @Column()
   specifiedLocation: string; //Like platform "perrong 4b"
   @Column()
