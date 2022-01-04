@@ -17,7 +17,7 @@ toast.configure()
         });
 
         var templateParams = {
-            name: 'Customer',
+            name: token.card.name,
             email:token.email,
             message: 'Payment Done !'
         };
