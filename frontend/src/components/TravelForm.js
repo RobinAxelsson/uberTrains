@@ -2,6 +2,7 @@ import { useState } from "react";
 import Seats from "./Seats";
 import ListTravels from "./ListTravels";
 
+
 const TravelForm = () => {
   const [showTravels, setShowTravels] = useState(false);
   const [showSeats,setShowSeats] = useState(false)
@@ -11,9 +12,18 @@ const TravelForm = () => {
   const [date, setDate] = useState([]);
   const [choosenTravel, setChoosenTravel] = useState([])
   const [choosenSeats, setChoosenSeats] = useState([])
+  const paymentInfo = [ {
+    stripBookingNumber:"stripe_1234",
+    email:"post@man.se",
+    totalPrice:1000
+}]
 
   console.log("travel", choosenTravel)
   console.log("seat", choosenSeats)
+
+  const confirmBooking = () => {
+    fetch("http://localhost:4000/api/booking")
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -88,7 +98,7 @@ const TravelForm = () => {
             <input
               type="date"
               className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-48 sm:text-sm border-gray-300 rounded-md"
-              min={getTodaysDate()}
+             // min={getTodaysDate()}
               required
               value={date}
               onChange={(e) => setDate(e.target.value)}
@@ -103,6 +113,7 @@ const TravelForm = () => {
       {showTravels && <ListTravels availableTravels={availableTravels} setShowTravels={setShowTravels} setShowSeats={setShowSeats} setChoosenTravel={setChoosenTravel} />}
       </div>
       <div>{ showSeats && <Seats availableTravels={availableTravels} setChoosenSeats={setChoosenSeats} choosenSeats={choosenSeats}/>}</div>
+      
     </div>
   );
 };

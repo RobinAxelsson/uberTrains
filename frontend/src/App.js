@@ -10,7 +10,6 @@ function App() {
 
   return (
   <div>
-    <Checkout />
     <Router>
       <Navbar />
       <Routes>
