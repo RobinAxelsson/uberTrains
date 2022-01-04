@@ -69,7 +69,7 @@ webServer.post("/checkout", async (req: Request, res: Response) => {
 
     const charge = await stripe.charges.create({
       amount: 400 * 100,
-      currency: "usd",
+      currency: "sek",
       customer: customer.id,
       receipt_email: token.email,
       description: `Purchased the test`,

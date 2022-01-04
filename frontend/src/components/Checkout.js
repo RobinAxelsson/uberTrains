@@ -19,7 +19,7 @@ toast.configure()
         var templateParams = {
             name: token.card.name,
             email:token.email,
-            message: 'Payment Done !'
+            message: 'Payment Done !' + token.amount_captured + token.amount
         };
 
         const {status}= response.data
@@ -59,9 +59,8 @@ toast.configure()
             name="uberTrains"
             billingAddress
             shippingAddress
-            amount={400*100}
-           
-            
+           amount={400 * 100}
+           currency="sek"
          />
        
         </div>
