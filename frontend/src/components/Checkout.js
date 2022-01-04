@@ -5,17 +5,19 @@ import emailjs from "emailjs-com";
 
 toast.configure();
 
-function Checkout() {
+function Checkout({choosenSeats, choosenTravel}) {
+    
   async function handleToken(token) {
       
+      
     const { card, email, id } = token;
-
+    
     const response = await axios.post("http://localhost:4000/api/booking", {
       //TODO Get all params from frontend
-      startRouteEventId: 1, //Hardcoded
-      endRouteEventId: 4, //Hardcoded
-      seatIds: [1, 2], //Hardcoded
-      travelPlanId: 1, //Hardcoded
+      startRouteEventId: choosenTravel.routeEvents[0].id, 
+      endRouteEventId: choosenTravel.routeEvents[1].id, 
+      seatIds: choosenSeats, 
+      travelPlanId: choosenTravel.id, 
       stripeInfo: {
         id: id,
         email: email,
@@ -29,6 +31,7 @@ function Checkout() {
       message: "Payment Done !" + token.amount_captured + token.amount,
     };
 
+    console.log(response)
     const { status } = response.data;
     if (status === "success") {
       emailjs

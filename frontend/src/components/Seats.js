@@ -1,6 +1,6 @@
 import Checkout from "./Checkout";
 
-const Seats = ({ availableTravels,setChoosenSeats, choosenSeats}) => {
+const Seats = ({ availableTravels,setChoosenSeats, choosenSeats, choosenTravel}) => {
   
  
   return (
@@ -44,7 +44,7 @@ const Seats = ({ availableTravels,setChoosenSeats, choosenSeats}) => {
           ))}
       </div>
       <div className="mt-2 mr-4 flex justify-end">
-        <Checkout />
+        <Checkout choosenSeats={choosenSeats} choosenTravel={choosenTravel} />
       </div>
     </div>
   );
