@@ -11,15 +11,15 @@ toast.configure()
 
  function Checkout() {
 
-    async function handleToken(token){
+    async function handleToken(token, addresses){
         const response = await axios.post("http://localhost:4000/checkout",{
             token,
         });
 
         var templateParams = {
-            name: 'Customer',
+            name: token.card.name,
             email:token.email,
-            message: 'Payment Done !'
+            message: 'Payment Done ! \n You have paid : ' + token.amount
         };
 
         const {status}= response.data
@@ -36,7 +36,7 @@ toast.configure()
                   console.log(res);
               }).catch(err=> console.log(err));
             
-             toast('Success! check email for details',
+             toast('Success! check email for details' ,
 
               {type:'success'})
 
@@ -57,7 +57,9 @@ toast.configure()
             stripeKey="pk_test_51K7JpMAwp97GmluX8sVfd1zSkEGFdj6fAaqbqSH40qdWc4RcL12RSJ8jxNkHR2fDCpe1f3T3xzzEzuKZhsNQ8QKE00DVMxtEkG"
             token={handleToken}           
             name="uberTrains"
-           
+            billingAddress
+            shippingAddress
+            amount={400*100}
             
          />
        
