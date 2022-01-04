@@ -2,10 +2,10 @@
 
 const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoosenTravel }) => {
   return (
-    <div className="mt-2 flex justify-center items-center border-2 border-indigo-200">
-      <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div className="w-full mt-2 flex justify-center items-center">
+      <div className="w-full sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+          <div className="w-full min-w-full shadow border-b border-gray-200 sm:rounded-lg">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
@@ -50,18 +50,18 @@ const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoose
                           </td>
                         </tr>
                       ))}
-                     
+
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         {item.tripName}
                       </td>
-                      
+
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         <p>199:-</p>
                       </td>
-                     
+
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         {/* <Link to="seats"> */}
-                        
+
                         <button
                           onClick={() => {
                             setShowTravels(false);

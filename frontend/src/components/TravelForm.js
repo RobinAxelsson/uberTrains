@@ -109,7 +109,7 @@ const TravelForm = () => {
           </div>
         </form>
       </div>
-      <div>
+      <div className="w-10/12 overflow-x-auto">
         {showTravels && <ListTravels availableTravels={availableTravels} setShowTravels={setShowTravels} setShowSeats={setShowSeats} setChoosenTravel={setChoosenTravel} />}
       </div>
       <div>{showSeats && <Seats availableTravels={availableTravels} setChoosenSeats={setChoosenSeats} choosenSeats={choosenSeats} />}</div>
