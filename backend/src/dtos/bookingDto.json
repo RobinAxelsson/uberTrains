@@ -3,8 +3,9 @@
     "seatIds": [3,4],
     "startRouteEventId": 1,
     "endRouteEventId": 4,
-    "paymentInfo": {
-        "stripeBookingNumber":"stripe_1234",
-        "email": "post@man.se"
+    "stripeInfo": {
+        "id":"tok_1KEEZPAwp97GmluXFgXZXd2p",
+        "email": "domanee@hotmail.com",
+        "name": "Anas Shikh Aldaya"
     }
 }

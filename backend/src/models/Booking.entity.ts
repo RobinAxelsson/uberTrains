@@ -27,6 +27,6 @@ export class Booking extends BaseEntity {
   email: string;
 
   @Column({nullable: true})
-  stripeBookingNumber: string;
+  stripeId: string;
 
 }

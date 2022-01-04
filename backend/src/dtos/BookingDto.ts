@@ -3,8 +3,12 @@ export class BookingDto {
   endRouteEventId: number;
   seatIds: number[];
   travelPlanId: number;
-  paymentInfo: {
-    stripeBookingNumber: string;
-    email: string;
-  };
+  stripeInfo: StripeInfo;
+}
+
+export class StripeInfo
+{
+  email:string
+  id: string
+  name: string
 }

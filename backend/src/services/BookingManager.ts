@@ -7,11 +7,14 @@ import { GetPriceDto } from "../dtos/GetPriceDto";
 import { TravelPlan } from "../models/TravelPlan.entity";
 import { RouteEvent } from "../models/RouteEvent.entity";
 import { createQueryBuilder } from "typeorm";
+import { PaymentManager } from './PaymentManager';
 
 export class BookingManager {
   priceCalculator: PriceCalculator;
+  paymentManager: PaymentManager;
   constructor() {
     this.priceCalculator = new PriceCalculator();
+    this.paymentManager = new PaymentManager();
   }
   async getPriceForBooking(calculatePriceDto: GetPriceDto) {
     const { amount, endRouteEventId, startRouteEventId, travelPlanId } =
@@ -40,9 +43,9 @@ export class BookingManager {
     const {
       startRouteEventId,
       endRouteEventId,
-      paymentInfo,
       seatIds,
       travelPlanId,
+      stripeInfo: stripeToken
     } = bookingDto;
 
     const { startRouteEvent, endRouteEvent, travelPlan } =
@@ -62,13 +65,15 @@ export class BookingManager {
       bookingDto.seatIds.length
     );
     console.log(JSON.stringify({price: price}), null, '\t');
-
+    
+    let stripeId = await this.paymentManager.Pay(stripeToken, price);
+    
     const booking = {
       bookingNumber: Guid.newGuid(),
       localDateTime: Date().toString(),
-      email: paymentInfo.email,
+      email: stripeToken.email,
       totalPrice: price,
-      stripeBookingNumber: paymentInfo.stripeBookingNumber,
+      stripeId: stripeId,
       startStation: startRouteEvent.location,
       endStation: endRouteEvent.location,
 

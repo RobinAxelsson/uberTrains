@@ -1,11 +1,22 @@
 import express, { Request, Response } from 'express';
 import { createQueryBuilder } from 'typeorm';
-import { BookingDto } from '../dtos/BookingDto';
 import { Booking } from '../models/Booking.entity';
 import { BookingManager } from '../services/BookingManager';
 import { GetPriceDto } from '../dtos/GetPriceDto';
+import { BookingDto } from '../dtos/BookingDto';
 
 const router = express.Router();
+router.post("/api/booking", async (req: Request, res: Response) => {
+  try {
+    let bookingDto: BookingDto = await req.body;
+    let booking = await (new BookingManager()).book(bookingDto);
+    res.json(booking);
+  } catch (err) {
+    console.log("Failed!\nError:\n",err);
+    res.json(err)
+  }
+});
+
 router.get("/api/booking", async (req: Request, res: Response) => {
   const bookings = await createQueryBuilder(Booking)
   .leftJoinAndSelect("Booking.bookedSeats", "Seat")
@@ -22,13 +33,8 @@ router.get("/api/getPrice", async (req: Request, res: Response) => {
     console.log("Success:\nPrice:\n" + price);
   } catch(err) {
     console.log("Failed!\nError:\n",err);
+    res.json(err)
   }
-});
-
-router.post("/api/booking", async (req: Request, res: Response) => {
-  let bookingDto: BookingDto = await req.body;
-  let booking = await (new BookingManager()).book(bookingDto);
-  res.json(booking);
 });
 
 export {router as bookingRouter}
