@@ -1,10 +1,7 @@
 import {
   Brackets,
   createQueryBuilder,
-  getManager,
-  getRepository,
 } from "typeorm";
-import { RouteEvent } from "../models/RouteEvent.entity";
 import { TravelPlan } from "../models/TravelPlan.entity";
 
 export class TravelPlanner {
@@ -18,7 +15,7 @@ export class TravelPlanner {
       .where("travelPlan.id = :id", { id: id })
       .getOne()) as TravelPlan;
   }
-  async getFullTravelPlanByStartStopDate(start: string, end: string, date: string) {
+  async getFullTravelPlansByStartStopDate(start: string, end: string, date: string) {
     
     const startDate = new Date(date);
     const addDay = new Date(date);
@@ -47,32 +44,9 @@ export class TravelPlanner {
       )
       .getMany()) as TravelPlan[];
 
-      return this.filterPlans(travelPlans, date, start, end);
-  }
-  
-  filterPlans(
-    travelPlans: TravelPlan[],
-    date: any,
-    startLocation: any,
-    endLocation: any
-  ) {
-    if (
-      typeof date !== "string" ||
-      typeof startLocation !== "string" ||
-      typeof endLocation !== "string"
-    )
-      return null;
+      console.log({travelPlans0TripName: travelPlans[0].tripName})
 
-    return travelPlans
-      .filter((x) => this.hasCorrectDate(x, date))
-      .filter((x) =>
-        this.containsStartStopInOrder(x, startLocation, endLocation)
-      );
-  }
-  private hasCorrectDate(travelPlan: TravelPlan, date: string) {
-    return travelPlan.routeEvents.some(
-      (x) => new Date(x.dateTime).getDay() === new Date(date).getDay()
-    );
+      return travelPlans;
   }
 
   private containsStartStopInOrder(

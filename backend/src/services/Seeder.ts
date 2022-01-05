@@ -4,6 +4,8 @@ import { TrainUnit } from "../models/TrainUnit.entity";
 import { TravelPlan } from "../models/TravelPlan.entity";
 import { RouteEvent } from "../models/RouteEvent.entity";
 import { PriceModel } from "../models/PriceModel.entity";
+import { DbEntityManager } from './DbEntityManager';
+const fs = require('fs');
 
 export async function seed() {
   let seatsA: Seat[] = [
@@ -94,4 +96,11 @@ export async function seed() {
 
   await TravelPlan.save(travelPlan);
   await PriceModel.save(priceModel);
+
+  let dbEntityManager = new DbEntityManager();
+
+  let rawdata = fs.readFileSync('src/dtos/travelPlanDto.json');
+  let travelPlanDto = JSON.parse(rawdata);
+
+  await dbEntityManager.InsertTravelPlan(travelPlanDto);
 }

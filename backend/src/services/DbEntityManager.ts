@@ -14,7 +14,7 @@ export class DbEntityManager {
     let travelPlan = {
       planId: planId,
       tripName: tripName,
-      priceModel: await this.getPriceModel(priceModelId),
+      priceModel: await PriceModel.findOne(priceModelId),
       routeEvents: routeEvents,
     } as TravelPlan;
 
@@ -51,11 +51,5 @@ export class DbEntityManager {
   async InsertRouteEvent(routeEventDto: RouteEventDto){
     const routeEvent = routeEventDto as RouteEvent
     return await RouteEvent.save(routeEvent);
-  }
-  async getPriceModel(id: number) {
-    return await createQueryBuilder(PriceModel)
-      .leftJoinAndSelect("TravelPlan.priceModel", "PriceModel")
-      .where("travelPlan.id = :id", { id: id })
-      .getOne();
   }
 }
