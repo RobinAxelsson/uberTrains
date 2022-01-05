@@ -42,7 +42,7 @@ router.get("/api/booking/:id", async (req: Request, res: Response) => {
       .leftJoinAndSelect("Booking.bookedSeats", "Seat")
       .where("booking.id = :id", { id: parseInt(req.params.id) })
       .getOne()) as Booking;
-    res.json(booking);
+    res.json({booking: booking, status: "success"});
   } catch (err) {
     console.log("Failed!\nError:\n", err);
     res.json(err);

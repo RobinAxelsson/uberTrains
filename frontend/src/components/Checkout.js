@@ -24,16 +24,31 @@ function Checkout({choosenSeats, choosenTravel}) {
         name: card.name,
       },
     });
+    console.log(response);
+
+    const {bookingNumber, localDateTime, startStation, endStation, totalPrice, bookedSeats} = response.data;
+    
+    const seatString = bookedSeats.reduce((prev, curr) => {
+      prev += ` ${curr.seatNumber}`
+      return prev
+    },"Sittplats:")
 
     var templateParams = {
       name: card.name,
       email: email,
-      message: "Payment Done !" + token.amount_captured + token.amount,
+      message: `Din betalning är genomförd,\n\n
+      bokningsnummer: ${bookingNumber}\n
+      datum: ${localDateTime}\n
+      startstation: ${startStation}\n
+      slutstation: ${endStation}\n
+      pris: ${totalPrice} kr\n
+      vagn: 1\n
+      ${seatString}`
     };
 
     console.log(response)
-    const { status } = response.data;
-    if (status === "success") {
+
+    if (response.status === 200) {
       emailjs
         .send(
           "service_mn8idh9",
