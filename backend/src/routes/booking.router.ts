@@ -17,7 +17,7 @@ router.post("/api/booking", async (req: Request, res: Response) => {
     res.json(booking);
   } catch (err) {
     console.log("Failed!\nError:\n", err);
-    res.json(err);
+    res.json((err as Error).message);
   }
 });
 
@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === "Development") {
       res.json(booking);
     } catch (err) {
       console.log("Failed!\nError:\n", err);
-      res.json(err);
+      res.json((err as Error).message);
     }
   });
 }
@@ -44,10 +44,25 @@ router.get("/api/booking/:id", async (req: Request, res: Response) => {
       .leftJoinAndSelect("Booking.endStation", "endStation")
       .where("booking.id = :id", { id: parseInt(req.params.id) })
       .getOne()) as Booking;
+    if(booking === undefined) throw new Error("No booking found!");
+
     res.json({booking: booking, status: "success"});
   } catch (err) {
     console.log("Failed!\nError:\n", err);
-    res.json(err);
+    res.json((err as Error).message);
+  }
+});
+router.delete("/api/booking/:id", async (req: Request, res: Response) => {
+  try {
+    let reply = await Booking.delete(parseInt(req.params.id));
+
+    if(reply.affected === 0) throw new Error("Bookings affected: 0")
+
+    console.log();
+    res.send("Booking deleted");
+  } catch (err) {
+    console.log("Failed!\nError:\n", err);
+    res.json((err as Error).message);
   }
 });
 
