@@ -39,6 +39,19 @@ export class BookingManager {
       amount
     );
   }
+  async seatsAreFree(seatIds: number[]){
+
+    const seats = await createQueryBuilder(Seat)
+    .leftJoinAndSelect("Seat.booking", "Booking")
+    .whereInIds(seatIds)
+    .getMany();
+    console.log({seats: seats});
+    return seats.reduce((prev, cur) => {
+      console.log({prev: prev});
+      console.log({cur: cur});
+      return prev && cur.booking === null
+    }, true)
+  }
   async book(bookingDto: BookingDto) {
     const {
       startRouteEventId,
@@ -47,6 +60,8 @@ export class BookingManager {
       travelPlanId,
       stripeInfo: stripeToken
     } = bookingDto;
+
+    if((await this.seatsAreFree(seatIds)) === false) throw new Error('Seats are booked');
 
     const { startRouteEvent, endRouteEvent, travelPlan } =
       await this.getEntities(travelPlanId, startRouteEventId, endRouteEventId);
@@ -57,6 +72,8 @@ export class BookingManager {
       endRouteEvent.latitude,
       endRouteEvent.longitude
     );
+    
+
 
     let price = this.priceCalculator.calculatePrice(
       distance,
@@ -67,6 +84,8 @@ export class BookingManager {
     console.log(JSON.stringify({price: price}), null, '\t');
     
     let stripeId = await this.paymentManager.Pay(stripeToken, price);
+
+
     
     const booking = {
       bookingNumber: Guid.newGuid(),

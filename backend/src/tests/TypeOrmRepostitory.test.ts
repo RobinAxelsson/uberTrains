@@ -122,7 +122,7 @@ test("As user I want to be able to book seats", async () => {
 
   const bookingDto = {
     travelPlanId: 1,
-    seatIds: [1,2],
+    seatIds: [3,4],
     startRouteEventId: 1,
   endRouteEventId: 4,
   stripeInfo: {
@@ -148,7 +148,30 @@ test("As user I want to be able to book seats", async () => {
   // console.log(JSON.stringify({Seats: seats}, null, '\t'));
   // console.log(JSON.stringify({BookingWithSeats: booking}, null, '\t'));
   expect(seats.every((x) => x.booking !== null)).toBeTruthy();
-  expect(dbBooking?.bookedSeats[0]?.seatNumber).toBe("6a");
-  expect(dbBooking?.bookedSeats[1]?.seatNumber).toBe("7a");
+  expect(dbBooking?.bookedSeats[0]).not.toBeNull();
+  expect(dbBooking?.bookedSeats[1]).not.toBeNull();
   expect(booking.stripeId).toBe("stripe_1234");
+});
+
+test("As user I dont want to be able to book occupied seats", async () => {
+  await seed();
+
+  const bookingDto = {
+    travelPlanId: 1,
+    seatIds: [1,2],
+    startRouteEventId: 1,
+  endRouteEventId: 4,
+  stripeInfo: {
+    id: "stripe_1234",
+    email: "post@man.se",
+    name: "KalleBanan"
+    },
+  } as BookingDto;
+  
+  const bookingManager = new BookingManager(new PaymentManagerStub());
+  await bookingManager.book(bookingDto);
+
+  await expect(bookingManager.book(bookingDto))
+  .rejects
+  .toThrow('Seats are booked');
 });
