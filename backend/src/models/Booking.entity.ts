@@ -1,6 +1,7 @@
 import { Seat } from "./Seat.entity";
 import { Entity } from "typeorm/decorator/entity/Entity";
-import { BaseEntity, Column, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { RouteEvent } from "./RouteEvent.entity";
 
 @Entity()
 export class Booking extends BaseEntity {
@@ -16,11 +17,10 @@ export class Booking extends BaseEntity {
   @OneToMany(() => Seat, seat => seat.booking, {onDelete: 'SET NULL'})
   bookedSeats: Seat[];
 
-  @Column()
-  startStation: string;
-
-  @Column()
-  endStation: string;
+  @ManyToOne(() => RouteEvent, routeEvent => routeEvent.startBookings)
+  startStation: RouteEvent;
+  @ManyToOne(() => RouteEvent, routeEvent => routeEvent.endBookings)
+  endStation: RouteEvent;
   @Column({nullable: true})
   totalPrice: number;
   @Column({nullable: true})

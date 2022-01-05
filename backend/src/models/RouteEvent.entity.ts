@@ -1,9 +1,14 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Booking } from "./Booking.entity";
 import { TravelPlan } from "./TravelPlan.entity";
 @Entity()
 export class RouteEvent extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: string
+  @OneToMany(() => Booking, booking => booking.startStation, {onDelete: 'SET NULL'})
+  startBookings: Booking[]
+  @OneToMany(() => Booking, booking => booking.endStation, {onDelete: 'SET NULL'})
+  endBookings: Booking[]
   @Column()
   dateTime: string;
   @Column()

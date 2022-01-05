@@ -40,6 +40,8 @@ router.get("/api/booking/:id", async (req: Request, res: Response) => {
   try {
     const booking = (await createQueryBuilder(Booking)
       .leftJoinAndSelect("Booking.bookedSeats", "Seat")
+      .leftJoinAndSelect("Booking.startStation", "startStation")
+      .leftJoinAndSelect("Booking.endStation", "endStation")
       .where("booking.id = :id", { id: parseInt(req.params.id) })
       .getOne()) as Booking;
     res.json({booking: booking, status: "success"});

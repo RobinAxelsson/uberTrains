@@ -72,8 +72,6 @@ export class BookingManager {
       endRouteEvent.latitude,
       endRouteEvent.longitude
     );
-    
-
 
     let price = this.priceCalculator.calculatePrice(
       distance,
@@ -85,16 +83,14 @@ export class BookingManager {
     
     let stripeId = await this.paymentManager.Pay(stripeToken, price);
 
-
-    
     const booking = {
       bookingNumber: Guid.newGuid(),
       localDateTime: Date().toString(),
       email: stripeToken.email,
       totalPrice: price,
       stripeId: stripeId,
-      startStation: startRouteEvent.location,
-      endStation: endRouteEvent.location,
+      startStation: startRouteEvent,
+      endStation: endRouteEvent,
       bookedSeats: [] as Seat[],
     } as Booking;
 
@@ -117,7 +113,8 @@ export class BookingManager {
     .where("travelPlan.id = :id", {id: travelPlanId})
     .getOne())
 
-    console.log(JSON.stringify({ BookingManagerGetEntities: travelPlan }, null, "\t"));
+    //console.log(JSON.stringify({ BookingManagerGetEntities: travelPlan }, null, "\t"));
+
     const startRouteEvent = (await RouteEvent.findOne(
       startRouteEventId
     )) as RouteEvent;
