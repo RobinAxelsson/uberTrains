@@ -6,25 +6,27 @@ import { RouteEvent } from "../models/RouteEvent.entity";
 import { PriceModel } from "../models/PriceModel.entity";
 
 export async function seed() {
-let seatsA: Seat[] = [
+  let seatsA: Seat[] = [
     { seatNumber: "6a" } as Seat,
-    { seatNumber: "7a" } as Seat
-];
-let seatsB: Seat[] = [
-  { seatNumber: "2a" } as Seat,
-  { seatNumber: "3a" } as Seat
-];
+    { seatNumber: "7a" } as Seat,
+  ];
+  let seatsB: Seat[] = [
+    { seatNumber: "2a" } as Seat,
+    { seatNumber: "3a" } as Seat,
+  ];
 
-  let trainUnits: TrainUnit[] = [{
-    name: "Vagn 4",
-    seats: seatsA,
-    type: "carriage",
-  } as TrainUnit,
-  {
-    name: "Vagn 5",
-    seats: seatsB,
-    type: "carriage",
-  } as TrainUnit];
+  let trainUnits: TrainUnit[] = [
+    {
+      name: "Vagn 4",
+      seats: seatsA,
+      type: "carriage",
+    } as TrainUnit,
+    {
+      name: "Vagn 5",
+      seats: seatsB,
+      type: "carriage",
+    } as TrainUnit,
+  ];
 
   let routeEvents: RouteEvent[] = [
     {
@@ -60,51 +62,36 @@ let seatsB: Seat[] = [
       event: "Arrival",
     } as RouteEvent,
   ];
-  
-  
+
   let travelPlan = {
     trainUnits: trainUnits,
     planId: "1111-1111-1111-1111",
     tripName: "X2000 GBG-Sthlm",
-    routeEvents: routeEvents
+    routeEvents: routeEvents,
   } as TravelPlan;
-  
+
   let priceModel = {
-    name: 'Commuter Train',
+    name: "Commuter Train",
     priceConstant: 2,
     trainTypeMultiplyer: 0.8,
-    travelPlans: [travelPlan]
-  } as PriceModel
+    travelPlans: [travelPlan],
+  } as PriceModel;
   
+  for (const s of seatsA) {
+    await Seat.save(s);
+  }
+  for (const s of seatsB) {
+    await Seat.save(s);
+  }
 
-  let seatRepository = await getRepository(Seat);
-  await seatRepository.save(seatsA[0]);
-  await seatRepository.save(seatsA[1]);
-  await seatRepository.save(seatsB[0]);
-  await seatRepository.save(seatsB[1]);
+  for (const tu of trainUnits) {
+    await TrainUnit.save(tu);
+  }
 
-  //let bookingRepository = await getRepository(Booking);
-  //await bookingRepository.save(booking);
+  for (const re of routeEvents) {
+    await RouteEvent.save(re);
+  }
 
-  let trainUnitRepository = await getRepository(TrainUnit);
-  await trainUnitRepository.save(trainUnits[0]);
-  await trainUnitRepository.save(trainUnits[1]);
-
-
-
-let routeEventRepository = await getRepository(RouteEvent);
-
-await routeEventRepository.save(routeEvents[0]);
-await routeEventRepository.save(routeEvents[1]);
-await routeEventRepository.save(routeEvents[2]);
-await routeEventRepository.save(routeEvents[3]);
-
-  // routeEvents.forEach(async (x) => {
-  //   await routeEventRepository.save(x);
-  // })
-
-  let travelPlanRepository = await getRepository(TravelPlan);
-  await travelPlanRepository.save(travelPlan);
-
+  await TravelPlan.save(travelPlan);
   await PriceModel.save(priceModel);
 }

@@ -12,11 +12,12 @@ import { Seat } from "../models/Seat.entity";
 import { RouteEvent } from "../models/RouteEvent.entity";
 import { seed } from "../services/Seeder";
 import { TravelPlanner } from "../services/TravelPlanner";
-import {BookingDto, StripeInfo} from "../dtos/BookingDto";
+import {BookingDto} from "../dtos/BookingDto";
 import { BookingManager } from "../services/BookingManager";
 import { PriceCalculator } from "../services/PriceCalculator";
 import { PriceModel } from "../models/PriceModel.entity";
 import { PaymentManagerStub } from '../services/PaymentManager';
+import { GetPriceDto } from '../dtos/GetPriceDto';
 function sum(a: number, b: number) {
   return a + b;
 }
@@ -43,7 +44,7 @@ afterEach(() => {
 test("Calculate prize JKPNG-STHLM", async () => {
   await seed();
   const priceCalculator = new PriceCalculator();
-  let startCoords = { //GBG
+  let startCoords = { //JKPNG
     latitude: 57.7825634,
     longitude: 14.165719,
   };
@@ -56,7 +57,20 @@ test("Calculate prize JKPNG-STHLM", async () => {
   expect(distance).toStrictEqual(284.08);
   expect(price).toStrictEqual(454.53);
 });
+test("Calculate prize witch CalculateDto JKPNG-STHLM", async () => {
+  await seed();
+  const bookingManager = new BookingManager(new PaymentManagerStub());
 
+  const calculateDto = {
+    travelPlanId: 1,
+    startRouteEventId: 3,
+    endRouteEventId: 4,
+    amount: 1
+  } as GetPriceDto;
+
+  const price = await bookingManager.getPriceForBooking(calculateDto);
+  expect(price).toStrictEqual(454.53);
+});
 test("Get FULL travelPlan by start, stop, date JKPNG-STHLM", async () => {
   await seed();
   const data = await new TravelPlanner().getFullTravelPlanByStartStopDate(

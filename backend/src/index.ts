@@ -7,6 +7,7 @@ import { bookingRouter } from "./routes/booking.router";
 import { trainUnitRouter } from "./routes/trainUnit.router";
 import { seatRouter } from "./routes/seat.router";
 import { routeEventRouter } from "./routes/routeEvent.router";
+import { priceModelRouter } from "./routes/priceModel.router";
 
 const settings = require("../settings.json");
 const path = require("path");
@@ -52,3 +53,4 @@ webServer.use(bookingRouter);
 webServer.use(trainUnitRouter);
 webServer.use(seatRouter);
 webServer.use(routeEventRouter);
+webServer.use(priceModelRouter);
