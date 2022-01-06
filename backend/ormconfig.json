@@ -6,7 +6,7 @@
    "password": "ostkakamedsylt",
    "database": "src/database/dev.sqlite3",
    "synchronize": true,
-   "logging": true,
+   "logging": false,
    "entities": [
       "src/models/**/*.ts"
    ],

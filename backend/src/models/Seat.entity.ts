@@ -11,6 +11,6 @@ export class Seat extends BaseEntity {
   seatNumber: string;
   @ManyToOne(() => TrainUnit, trainUnit => trainUnit.seats)
   trainUnit: TrainUnit;
-  @ManyToOne(() => Booking, booking => booking.bookedSeats)
+  @ManyToOne(() => Booking, booking => booking.bookedSeats, {onDelete: "SET NULL"})
   booking!:Booking
 }

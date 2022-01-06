@@ -6,7 +6,10 @@ export class RouteEvent extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: string
   @ManyToMany(() => Booking, booking => booking.routeEvents)
-  @JoinTable()
+  @JoinTable({
+    name: "routeevent_booking",
+    
+  })
   bookings: Booking[]
   @Column()
   dateTime: string;
