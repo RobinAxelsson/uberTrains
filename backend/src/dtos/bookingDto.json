@@ -1,8 +1,7 @@
 {
     "travelPlanId": 1,
     "seatIds": [3,4],
-    "startRouteEventId": 1,
-    "endRouteEventId": 4,
+    "routeEvents": [1,2,3,4],
     "stripeInfo": {
         "id":"tok_1KEEZPAwp97GmluXFgXZXd2p",
         "email": "domanee@hotmail.com",
