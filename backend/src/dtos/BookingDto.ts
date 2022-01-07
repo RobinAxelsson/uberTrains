@@ -1,6 +1,5 @@
 export class BookingDto {
-  startRouteEventId: number;
-  endRouteEventId: number;
+  routeEventIds: number[]
   seatIds: number[];
   travelPlanId: number;
   stripeInfo: StripeInfo;

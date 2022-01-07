@@ -43,6 +43,18 @@ jobs:
     - name: Run tests
       run: cd backend && npx jest
 
+  Unit-Testing-Craco-Jest-Frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install modules
+      run: cd frontend && npm install
+
+    - name: Run tests
+      run: cd frontend && npm run test
+
   Newman-Integration-Tests-ts-node:
     runs-on: ubuntu-latest
 
@@ -53,4 +65,4 @@ jobs:
       run: cd backend && npm install # NOTE: casing of Backend backend is error source.
 
     - name: Test Api Endpoints with Newman
-      run: bash ./scripts/newman-endpoint-job.sh ${{ secrets.COLLECTION_UID }} ${{ secrets.POSTMAN_APIKEY }}
+      run: bash ./scripts/newman-endpoint-job.sh ${{ secrets.COLLECTION_UID_V2 }} ${{ secrets.POSTMAN_APIKEY }}

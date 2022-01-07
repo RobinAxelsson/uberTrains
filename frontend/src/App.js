@@ -4,10 +4,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import BookingReceipt from "./components/BookingReceipt";
 import Navbar from "./components/Navbar";
 import Seats from "./components/Seats";
-import Checkout from "./components/Checkout";
-
+//import { postBooking } from "./services/BookingClient";
 function App() {
-
   return (
   <div>
     <Router>
