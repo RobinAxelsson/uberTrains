@@ -5,6 +5,7 @@ import { BookingManager } from "../services/BookingManager";
 import { GetPriceDto } from "../dtos/GetPriceDto";
 import { BookingDto } from "../dtos/BookingDto";
 import { PaymentManager, PaymentManagerStub } from "../services/PaymentManager";
+import { mailService, mailServiceStub } from "../services/MailService";
 
 const router = express.Router();
 router.post("/api/booking", async (req: Request, res: Response) => {
@@ -14,9 +15,10 @@ router.post("/api/booking", async (req: Request, res: Response) => {
 
       console.log({parsedRequestBody: JSON.stringify((await bookingDto), null, '\t')});
 
-    let booking = await new BookingManager(new PaymentManager()).book(
-      bookingDto
-    );
+    let booking = await new BookingManager(
+      new PaymentManager(),
+      new mailService()
+    ).book(bookingDto);
     res.json(booking);
   } catch (err) {
     console.log("Failed!\nError:\n", err);
@@ -33,9 +35,10 @@ if (process.env.NODE_ENV === "Development") {
 
       console.log({parsedRequestBody: JSON.stringify((await bookingDto), null, '\t')});
 
-      let booking = await new BookingManager(new PaymentManagerStub()).book(
-        bookingDto
-      );
+      let booking = await new BookingManager(
+        new PaymentManagerStub(),
+        new mailServiceStub()
+      ).book(bookingDto);
       res.json(booking);
     } catch (err) {
       console.log("Failed!\nError:\n", err);
@@ -117,12 +120,27 @@ router.get("/api/price", async (req: Request, res: Response) => {
 
     console.log(calculatePriceDto);
 
-    let bookingManager = new BookingManager(new PaymentManager());
+    let bookingManager = new BookingManager(
+      new PaymentManager(),
+      new mailService()
+    );
     const price = await bookingManager.getPriceForBooking(calculatePriceDto);
-    if(isNaN(price)) throw new Error(JSON.stringify({message: "Server could not calculate price", requestBody: req.body}));
-    console.log(JSON.stringify({message: "Server could not calculate price", requestBody: req.body, price: price}))
+    if (isNaN(price))
+      throw new Error(
+        JSON.stringify({
+          message: "Server could not calculate price",
+          requestBody: req.body,
+        })
+      );
+    console.log(
+      JSON.stringify({
+        message: "Server could not calculate price",
+        requestBody: req.body,
+        price: price,
+      })
+    );
 
-    res.json({price});
+    res.json({ price });
     console.log("Success:\nPrice:\n" + price);
   } catch (err) {
     console.log("Failed!\nError:\n", err);
