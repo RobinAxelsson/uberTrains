@@ -10,7 +10,9 @@ const router = express.Router();
 router.post("/api/booking", async (req: Request, res: Response) => {
   try {
 
-    let bookingDto: BookingDto = await req.body;
+    let bookingDto = await req.body;
+
+      console.log({parsedRequestBody: JSON.stringify((await bookingDto), null, '\t')});
 
     let booking = await new BookingManager(new PaymentManager()).book(
       bookingDto

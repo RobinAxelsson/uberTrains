@@ -117,7 +117,11 @@ export class BookingManager {
     .where("travelPlan.id = :id", {id: travelPlanId})
     .getOne())
 
-   if(travelPlan instanceof TravelPlan === false) throw new Error("TravelPlan not found!")
+   if(travelPlan instanceof TravelPlan === false) {
+     console.log(JSON.stringify({travelPlanWhenNotFound: travelPlan, travelPlanId:travelPlanId, routeEventIds:routeEventIds}, null, '\t'));
+     
+     throw new Error("TravelPlan not found!")
+   }
 
     const routeEvents = [] as RouteEvent[];
 
