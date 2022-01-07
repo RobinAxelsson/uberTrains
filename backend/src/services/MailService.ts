@@ -1,11 +1,12 @@
 import nodemailer from "nodemailer";
 import { Booking } from "../models/Booking.entity";
 import * as fs from "fs";
+import { Seat } from "../models/Seat.entity";
 export interface IMailService {
-  sendEmail(booking: Booking): Promise<string>;
+  sendEmail(booking: Booking, seats: Seat[]): Promise<string>;
 }
 export class mailService implements IMailService {
-  async sendEmail(booking: Booking) {
+  async sendEmail(booking: Booking, seats: Seat[]) {
     let sender = "ubertrainsteam@gmail.com";
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -21,7 +22,7 @@ export class mailService implements IMailService {
     });
 
     let htmlData = fs.readFileSync("./src/resources/template.html", "utf8");
-    htmlData = await this.formatHTML(booking, htmlData);
+    htmlData = await this.formatHTML(booking, seats, htmlData);
     let info = await transporter.sendMail({
       from: sender,
       to: booking.email,
@@ -30,34 +31,49 @@ export class mailService implements IMailService {
     });
     return info.response;
   }
-  private async formatHTML(booking: Booking, htmlData: string) {
+  private async formatHTML(booking: Booking, seats: Seat[], htmlData: string) {
     htmlData = htmlData
       .replace("BOOKINGNUMBER", booking.bookingNumber)
       .replace("BOOKINGDATE", booking.localDateTime)
       .replace("BOOKINGPRICE", booking.totalPrice.toString() + ":-");
-    htmlData = await this.formatSeats(booking, htmlData);
+    htmlData = await this.formatSeats(seats, htmlData);
     htmlData = await this.formatStations(booking, htmlData);
     return htmlData;
   }
 
-  private async formatSeats(booking: Booking, htmlData: string) {
-    if (booking.bookedSeats.length == 1) {
-      htmlData = htmlData.replace(
-        "BOOKINGSEAT",
-        "Vagn " +
-          booking.bookedSeats[0].trainUnit.name +
-          ": Seat " +
-          booking.bookedSeats[0].seatNumber
-      );
+  private async formatSeats(seats: Seat[], htmlData: string) {
+    console.log(seats);
+
+    if (seats.length == 1) {
+      if (seats[0].trainUnit.name.startsWith("Vagn")) {
+        htmlData = htmlData.replace(
+          "BOOKINGSEAT",
+          seats[0].trainUnit.name + ": Säte " + seats[0].seatNumber
+        );
+      } else {
+        htmlData = htmlData.replace(
+          "BOOKINGSEAT",
+          "Vagn " + seats[0].trainUnit.name + ": Säte " + seats[0].seatNumber
+        );
+      }
     } else {
       let seatText = "";
-      booking.bookedSeats.forEach((seat) => {
-        if (seatText == "") {
-          seatText +=
-            "Vagn " + seat.trainUnit.name + ": Seat " + seat.seatNumber;
+      seats.forEach((seat) => {
+        if (seats[0].trainUnit.name.startsWith("Vagn")) {
+          if (seatText == "") {
+            seatText += seat.trainUnit.name + ": Säte " + seat.seatNumber;
+          } else {
+            seatText +=
+              ", " + seat.trainUnit.name + ": Säte " + seat.seatNumber;
+          }
         } else {
-          seatText +=
-            ", Vagn " + seat.trainUnit.name + ": Seat " + seat.seatNumber;
+          if (seatText == "") {
+            seatText +=
+              "Vagn " + seat.trainUnit.name + ": Säte " + seat.seatNumber;
+          } else {
+            seatText +=
+              ", Vagn " + seat.trainUnit.name + ": Säte " + seat.seatNumber;
+          }
         }
       });
       htmlData = htmlData.replace("BOOKINGSEAT", seatText);
@@ -76,6 +92,7 @@ export class mailService implements IMailService {
   }
 }
 export class mailServiceStub implements IMailService {
+  //Dummy, doesn't & shouldn't do anything
   async sendEmail(booking: Booking) {
     return booking.email;
   }
