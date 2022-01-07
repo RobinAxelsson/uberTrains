@@ -1,0 +1,71 @@
+{
+    "planId": 1,
+    "tripName": "X-2000",
+    "priceModelId": 1,
+    "trainUnits": [
+        {
+            "name": "Vagn 1",
+            "type": "carriage",
+            "seats": [
+                {
+                    "seatNumber": "1A"
+                },
+                {
+                    "seatNumber": "1B"
+                },
+                {
+                    "seatNumber": "1C"
+                }
+            ]
+        },
+        {
+            "name": "Vagn 2",
+            "type": "carriage",
+            "seats": [
+                {
+                    "seatNumber": "2A"
+                },
+                {
+                    "seatNumber": "2B"
+                },
+                {
+                    "seatNumber": "2C"
+                }
+            ]
+        }
+    ],
+    "routeEvents": [
+        {
+            "dateTime": "2022-02-T08:30:00.000Z",
+            "location": "Göteborg",
+            "latitude": 57.7072326,
+            "longitude": 11.9670171,
+            "specifiedLocation": "Platform 5",
+            "event": "Departure"
+        },
+        {
+            "latitude": 57.7825634,
+            "longitude": 14.165719,
+            "dateTime": "2022-02-T10:30:00.000Z",
+            "specifiedLocation": "Platform 1",
+            "location": "jonkoping",
+            "event": "Arrival"
+        },
+        {
+            "latitude": 57.7825634,
+            "longitude": 14.165719,
+            "dateTime": "2022-02-T10:35:00.000Z",
+            "specifiedLocation": "Platform 1",
+            "location": "jonkoping",
+            "event": "Departure"
+        },
+        {
+            "latitude": 59.3251172,
+            "longitude": 18.0710935,
+            "dateTime": "2022-02-T12:30:00.000Z",
+            "specifiedLocation": "Platform 10a",
+            "location": "stockholm",
+            "event": "Arrival"
+          }
+    ]
+}

@@ -1,35 +1,30 @@
-import { useState, useEffect } from "react";
 import "./App.css";
-function App() {
-  const [stations, setStations] = useState([]);
+import TravelForm from "./components/TravelForm";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import BookingReceipt from "./components/BookingReceipt";
+import Navbar from "./components/Navbar";
+import Seats from "./components/Seats";
+import Checkout from "./components/Checkout";
 
-  useEffect(() => {
-    let canceled = false;
-    fetch("http://localhost:4000/api/stations")
-      .then((res) => res.json())
-      .catch((error) => console.log("error", error))
-      .then((data) => {
-        if (canceled) {
-          return;
-        }
-        setStations(data);
-        console.log(stations);
-      });
-    return () => {
-      canceled = true;
-    };
-  }, []);
+function App() {
 
   return (
-    <div className="App">
-      {stations &&
-        stations.map((station) => (
-          <div>
-            <p className="station-name">{station.name}</p>
-          </div>
-        ))}
+  <div>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/seats" element={<Seats />} />
+        <Route path="/" element={<TravelForm />} />
+        <Route path="/receipt" element={<BookingReceipt />} />
+        
+      </Routes>
+    </Router>
     </div>
   );
 }
 
 export default App;
+
+
+
+

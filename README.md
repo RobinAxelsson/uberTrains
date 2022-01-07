@@ -5,6 +5,20 @@ Systemet är webbaserat och använder sig av följande teknologier:
 
 `Node.js | Express.js | React | Sqlite | Tailwind | TypeORM`
 
+- [UberTrains Grupp 6](#ubertrains-grupp-6)
+  - [Verktyg som behövs](#verktyg-som-behövs)
+- [Komma igång med projektet](#komma-igång-med-projektet)
+  - [Kloning av Github-projekt](#kloning-av-github-projekt)
+  - [Projektgrenar](#projektgrenar)
+  - [Installation av dependencies](#installation-av-dependencies)
+    - [Automatiserad installation](#automatiserad-installation)
+    - [Manuell installation](#manuell-installation)
+  - [Körning av projekt](#körning-av-projekt)
+    - [Starta backend](#starta-backend)
+    - [Starta frontend](#starta-frontend)
+    - [Avsluta sessioner](#avsluta-sessioner)
+  - [Dev Notes](#dev-notes)
+
 ## Verktyg som behövs
 
 - Skapa konto på github.com
@@ -44,10 +58,10 @@ För att växla mellan grenar så trycker ni längst ner i det vänstra hörnet 
 **I denna bilden har vi t.ex 3st grenar:** <br>
 
 <ul>
-  <li><strong>TypeORMImplementation</strong>: Detta är en gren som en utvecklare skapat för att utveckla en user story. På namnet intyder den att man arbetat med databashantering. Denna branch vill ni hoppa till om ni ska testa den koden som exempel</li>
+  <li><strong>TypeORMImplementation</strong>: Detta är en gren som en utvecklare skapat för att utveckla en user story. På namnet antyder den att man arbetat med databashantering. Denna branch vill ni hoppa till om ni ska testa den koden som exempel</li>
   <li><strong>dev</strong>: Detta är vår gren där vi lägger färdiga funktioner innan de går till demo</li>
   <li><strong>main</strong>: Detta är vår live-gren. I ett verkligt projekt är alltså detta grenen som användarna ser. Denna vill vi alltså inte pusha till om vi inte är 100 på att implementationen fungerar.</li>
-  <li><strong>handleTrainInfrastructure</strong>: Detta är en gren som en utvecklare skapat för att utveckla en user story. På namnet intyder den att man arbetat med infrastruktur för tåg. Denna branch vill ni hoppa till om ni ska testa den koden som exempel</li>
+  <li><strong>handleTrainInfrastructure</strong>: Detta är en gren som en utvecklare skapat för att utveckla en user story. På namnet antyder den att man arbetat med infrastruktur för tåg. Denna branch vill ni hoppa till om ni ska testa den koden som exempel</li>
 </ul>
 
 ## Installation av dependencies
@@ -57,7 +71,7 @@ Välj vilken sektion av guiden du vill följa för manuellt respektive automatis
 
 ### Automatiserad installation
 
-Öppna ett nytt terminalfösnster i VSCode genom att välja "Terminal" i översta menyraden och sedan klicka "New Terminal" <br>
+Öppna ett nytt terminalfönster i VSCode genom att välja "Terminal" i översta menyraden och sedan klicka "New Terminal" <br>
 Därefter kör nedan kod en rad i taget genom att klistra in och sedan klicka enter: <br>
 
 ```powershell
@@ -78,7 +92,7 @@ Installationsskriptet uppdateras löpande och ska innehålla samtliga nödvändi
 
 Om du hellre vill lära dig och installera dependencies manuellt gör enligt nedan: <br> <br>
 
-Öppna ett nytt terminalfösnster i VSCode genom att välja "Terminal" i översta menyraden och sedan klicka "New Terminal" <br>
+Öppna ett nytt terminalfönster i VSCode genom att välja "Terminal" i översta menyraden och sedan klicka "New Terminal" <br>
 Därefter kör nedan kod **en rad i taget** genom att klistra in och sedan klicka enter: <br>
 
 ```powershell
@@ -120,7 +134,7 @@ npm run start:dev
 
 Nu ska du få ett meddelande som säger något dylikt: `Listening on port:4000` 
 <br>
-Får du instället felmeddelanden ha gärna kvar dom och fråga en utvecklare, eller Googla dom om du vill försöka lösa det själv. <br> 
+Får du istället felmeddelanden ha gärna kvar dom och fråga en utvecklare, eller Googla dom om du vill försöka lösa det själv. <br> 
 **Man kan aldrig förstöra något, det går alltid att backa!!**
 
 ### Starta frontend
@@ -138,13 +152,9 @@ npm start
 <br>
 Nu ska det öppnas ett webbläsarfönster med vår frontend. Får du felmeddelanden, som sagt kontakta oss.
 
-
 ### Avsluta sessioner
 
 För att avsluta går du till respektive terminalfönster och klickar `"ctrl+c"`
-
-
-
 
 ## Dev Notes
 

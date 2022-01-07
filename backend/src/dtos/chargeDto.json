@@ -1,0 +1,83 @@
+{
+  "id": "ch_3KEEWc2eZvKYlo2C1PaVnHPk",
+  "object": "charge",
+  "amount": 2000,
+  "amount_captured": 0,
+  "amount_refunded": 0,
+  "application": null,
+  "application_fee": null,
+  "application_fee_amount": null,
+  "balance_transaction": "txn_1032HU2eZvKYlo2CEPtcnUvl",
+  "billing_details": {
+    "address": {
+      "city": null,
+      "country": null,
+      "line1": null,
+      "line2": null,
+      "postal_code": null,
+      "state": null
+    },
+    "email": null,
+    "name": "ALEKSEY PETROV",
+    "phone": null
+  },
+  "calculated_statement_descriptor": null,
+  "captured": false,
+  "created": 1641308530,
+  "currency": "usd",
+  "customer": null,
+  "description": "My First Test Charge (created for API docs)",
+  "disputed": false,
+  "failure_code": null,
+  "failure_message": null,
+  "fraud_details": {},
+  "invoice": null,
+  "livemode": false,
+  "metadata": {},
+  "on_behalf_of": null,
+  "order": null,
+  "outcome": null,
+  "paid": true,
+  "payment_intent": null,
+  "payment_method": "card_1KEEWb2eZvKYlo2Cgl33sztk",
+  "payment_method_details": {
+    "card": {
+      "brand": "visa",
+      "checks": {
+        "address_line1_check": null,
+        "address_postal_code_check": null,
+        "cvc_check": "pass"
+      },
+      "country": "CA",
+      "exp_month": 11,
+      "exp_year": 2031,
+      "fingerprint": "CzzwE1ax7qiHgw16",
+      "funding": "credit",
+      "installments": null,
+      "last4": "1881",
+      "network": "visa",
+      "three_d_secure": null,
+      "wallet": null
+    },
+    "type": "card"
+  },
+  "receipt_email": null,
+  "receipt_number": null,
+  "receipt_url": "https://pay.stripe.com/receipts/acct_1032D82eZvKYlo2C/ch_3KEEWc2eZvKYlo2C1PaVnHPk/rcpt_Ku2bUr4c9nkh2y1156yANuRik6d2GHW",
+  "refunded": false,
+  "refunds": {
+    "object": "list",
+    "data": [],
+    "has_more": false,
+    "url": "/v1/charges/ch_3KEEWc2eZvKYlo2C1PaVnHPk/refunds"
+  },
+  "review": null,
+  "shipping": null,
+  "source_transfer": null,
+  "statement_descriptor": null,
+  "statement_descriptor_suffix": null,
+  "status": "succeeded",
+  "transfer_data": null,
+  "transfer_group": null,
+  "source": "tok_amex"
+}
