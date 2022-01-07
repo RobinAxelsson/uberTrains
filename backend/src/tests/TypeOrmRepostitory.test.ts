@@ -123,8 +123,7 @@ test("As user I want to be able to book seats", async () => {
   const bookingDto = {
     travelPlanId: 1,
     seatIds: [3,4],
-    startRouteEventId: 1,
-  endRouteEventId: 4,
+    routeEventIds: [1,2,3,4],
   stripeInfo: {
     id: "stripe_1234",
     email: "post@man.se",
@@ -159,8 +158,7 @@ test("As user I dont want to be able to book occupied seats", async () => {
   const bookingDto = {
     travelPlanId: 1,
     seatIds: [1,2],
-    startRouteEventId: 1,
-  endRouteEventId: 4,
+    routeEventIds: [1,2,3,4],
   stripeInfo: {
     id: "stripe_1234",
     email: "post@man.se",
@@ -173,5 +171,5 @@ test("As user I dont want to be able to book occupied seats", async () => {
 
   await expect(bookingManager.book(bookingDto))
   .rejects
-  .toThrow('Seats are booked');
+  .toThrow('All seats are not free with the selected options');
 });
