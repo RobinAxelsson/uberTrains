@@ -7,7 +7,6 @@ export interface IMailService {
 export class mailService implements IMailService {
   async sendEmail(booking: Booking) {
     let sender = "ubertrainsteam@gmail.com";
-    console.log(process.env);
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
@@ -35,10 +34,9 @@ export class mailService implements IMailService {
     htmlData = htmlData
       .replace("BOOKINGNUMBER", booking.bookingNumber)
       .replace("BOOKINGDATE", booking.localDateTime)
-      .replace("BOOKINGSTARTSTATION", booking.startStation)
-      .replace("BOOKINGENDSTATION", booking.endStation)
       .replace("BOOKINGPRICE", booking.totalPrice.toString() + ":-");
     htmlData = await this.formatSeats(booking, htmlData);
+    htmlData = await this.formatStations(booking, htmlData);
     return htmlData;
   }
 
@@ -64,6 +62,16 @@ export class mailService implements IMailService {
       });
       htmlData = htmlData.replace("BOOKINGSEAT", seatText);
     }
+
+    return htmlData;
+  }
+  private async formatStations(booking: Booking, htmlData: string) {
+    htmlData = htmlData
+      .replace("BOOKINGSTARTSTATION", booking.routeEvents[0].location)
+      .replace(
+        "BOOKINGENDSTATION",
+        booking.routeEvents[booking.routeEvents.length - 1].location
+      );
     return htmlData;
   }
 }
