@@ -5,13 +5,13 @@ const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoose
     <div className="w-full mt-2 flex justify-center items-center">
       <div className="w-full sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          <div className="w-full min-w-full shadow border-b border-gray-200 sm:rounded-lg">
+          <div className="w-full min-w-full shadow border-b border-gray-200 sm:rounded-lg bg-white bg-opacity-75">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider "
                   >
                     Resa
                   </th>

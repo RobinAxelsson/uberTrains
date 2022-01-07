@@ -1,8 +1,7 @@
 import { useState } from "react";
 import Seats from "./Seats";
 import ListTravels from "./ListTravels";
-
-
+import LogoForm from "./LogoForm";
 const TravelForm = () => {
   const [showTravels, setShowTravels] = useState(false);
   const [showSeats,setShowSeats] = useState(false)
@@ -70,10 +69,14 @@ const TravelForm = () => {
   }
 
   return (
+
+ 
     <div className="flex flex-col">
+       <LogoForm></LogoForm>
       <div className="flex justify-center items-center">
-        <form className="mt-6 justify-center" onSubmit={handleSubmit}>
-          <div>
+   
+        <form className="rounded-md border-white border-8 border-opacity-5 bg-white bg-opacity-75 mt-6 justify-center" onSubmit={handleSubmit}>
+          <div className="border-white border-8 border-opacity-5 ">
             <h2 className="font-bold text-4xl">Vart vill du resa?</h2>
           </div>
           <div className="mt-4">
@@ -121,6 +124,7 @@ const TravelForm = () => {
       choosenTravel={choosenTravel}/>}</div>
       
     </div>
+
   );
 };
 

@@ -20,7 +20,7 @@ function BookingCheckout({ choosenSeats, choosenTravel }) {
   }
 
   return (
-    <div>
+    <div className="mb-3 mt-3">
       <StripeCheckout
         stripeKey="pk_test_51K7JpMAwp97GmluX8sVfd1zSkEGFdj6fAaqbqSH40qdWc4RcL12RSJ8jxNkHR2fDCpe1f3T3xzzEzuKZhsNQ8QKE00DVMxtEkG"
         token={handleToken}
@@ -28,7 +28,8 @@ function BookingCheckout({ choosenSeats, choosenTravel }) {
         billingAddress
         shippingAddress
         amount={400 * 100}
-        currency="sek"
+        currency="SEK"
+        
       />
     </div>
   );
