@@ -67,3 +67,8 @@ export class mailService implements IMailService {
     return htmlData;
   }
 }
+export class mailServiceStub implements IMailService {
+  async sendEmail(booking: Booking) {
+    return booking.email;
+  }
+}
