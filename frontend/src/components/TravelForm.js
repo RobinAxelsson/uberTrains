@@ -12,20 +12,6 @@ const TravelForm = () => {
   const [date, setDate] = useState([]);
   const [choosenTravel, setChoosenTravel] = useState([])
   const [choosenSeats, setChoosenSeats] = useState([])
-  const paymentInfo = [ {
-    stripBookingNumber:"stripe_1234",
-    email:"post@man.se",
-    totalPrice:1000
-}]
-
-
-
-  console.log("travel", choosenTravel)
- // console.log("seat", choosenSeats)
-
-  const confirmBooking = () => {
-    fetch("http://localhost:4000/api/booking")
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -70,7 +56,7 @@ const TravelForm = () => {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col flex-grow">
       <div className="flex justify-center items-center">
         <form className="mt-6 justify-center" onSubmit={handleSubmit}>
           <div>
