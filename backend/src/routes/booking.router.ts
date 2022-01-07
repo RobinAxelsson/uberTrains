@@ -49,7 +49,7 @@ router.get("/api/booking/:id", async (req: Request, res: Response) => {
   }
 });
 
-router.get("/api/price", async (req: Request, res: Response) => {
+router.post("/api/price", async (req: Request, res: Response) => {
   try {
     const calculatePriceDto = (await req.body) as GetPriceDto;
 
@@ -60,7 +60,7 @@ router.get("/api/price", async (req: Request, res: Response) => {
     if(isNaN(price)) throw new Error(JSON.stringify({message: "Server could not calculate price", requestBody: req.body}));
     console.log(JSON.stringify({message: "Server could not calculate price", requestBody: req.body, price: price}))
 
-    res.json({price});
+    res.json(price);
     console.log("Success:\nPrice:\n" + price);
   } catch (err) {
     console.log("Failed!\nError:\n", err);

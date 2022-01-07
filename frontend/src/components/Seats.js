@@ -1,11 +1,12 @@
 import Checkout from "./Checkout";
 
-const Seats = ({ availableTravels,setChoosenSeats, choosenSeats, choosenTravel}) => {
-  
+const Seats = ({ availableTravels,setChoosenSeats, choosenSeats, choosenTravel,price, getPrice}) => {
+
  
   return (
     <div>
       <div className="mt-2 flex justify-center border-2 border-indigo-200 justify-around">
+        
         {availableTravels &&
           availableTravels.map((item) => (
             <div>
@@ -20,6 +21,7 @@ const Seats = ({ availableTravels,setChoosenSeats, choosenSeats, choosenTravel})
                       value={s.id}
                       id="flexCheckDefault"
                       onChange={(e) => {
+                        getPrice()
                         if(e.target.checked) {
                           setChoosenSeats([...choosenSeats,s.id])
                         } else {
@@ -44,8 +46,11 @@ const Seats = ({ availableTravels,setChoosenSeats, choosenSeats, choosenTravel})
           ))}
       </div>
       <div className="mt-2 mr-4 flex justify-end">
+      <div className="mr-2"><p>Totalt: {price && price}kr</p></div>    
         <Checkout choosenSeats={choosenSeats} choosenTravel={choosenTravel} />
+         
       </div>
+                 
     </div>
   );
 };

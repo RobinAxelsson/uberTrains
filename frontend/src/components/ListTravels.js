@@ -24,12 +24,6 @@ const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoose
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    Pris
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   ></th>
                 </tr>
               </thead>
@@ -53,10 +47,6 @@ const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoose
 
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         {item.tripName}
-                      </td>
-
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        <p>199:-</p>
                       </td>
 
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

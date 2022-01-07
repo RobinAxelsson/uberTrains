@@ -12,6 +12,32 @@ const TravelForm = () => {
   const [date, setDate] = useState([]);
   const [choosenTravel, setChoosenTravel] = useState([])
   const [choosenSeats, setChoosenSeats] = useState([])
+  const [price,setPrice] = useState([])
+ 
+  const getPrice = () => {
+    fetch("http://localhost:4000/api/price", {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        travelPlanId: choosenTravel.id,
+        startRouteEventId: choosenTravel.routeEvents[0].id,
+        endRouteEventId: choosenTravel.routeEvents[1].id,
+        amount: choosenSeats.length
+    })
+    }).then((res) => {
+      console.log(res);
+      return res.json();
+    })
+    .then((data) => {
+      if (data) {
+        setPrice(data)
+      }
+    })
+  }
+  console.log(price)
+  console.log(choosenSeats.length)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -100,7 +126,7 @@ const TravelForm = () => {
       <div>
       {showTravels && <ListTravels availableTravels={availableTravels} setShowTravels={setShowTravels} setShowSeats={setShowSeats} setChoosenTravel={setChoosenTravel} />}
       </div>
-      <div>{ showSeats && <Seats availableTravels={availableTravels} setChoosenSeats={setChoosenSeats} choosenSeats={choosenSeats} choosenTravel={choosenTravel}/>}</div>
+      <div>{ showSeats && <Seats availableTravels={availableTravels} setChoosenSeats={setChoosenSeats} choosenSeats={choosenSeats} choosenTravel={choosenTravel} price={price} getPrice={getPrice}/>}</div>
       
     </div>
   );
