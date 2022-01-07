@@ -48,12 +48,17 @@ export class mailService implements IMailService {
       if (seats[0].trainUnit.name.startsWith("Vagn")) {
         htmlData = htmlData.replace(
           "BOOKINGSEAT",
-          seats[0].trainUnit.name + ": Säte " + seats[0].seatNumber
+          seats[0].trainUnit.name +
+            ": Säte " +
+            seats[0].seatNumber.toUpperCase()
         );
       } else {
         htmlData = htmlData.replace(
           "BOOKINGSEAT",
-          "Vagn " + seats[0].trainUnit.name + ": Säte " + seats[0].seatNumber
+          "Vagn " +
+            seats[0].trainUnit.name +
+            ": Säte " +
+            seats[0].seatNumber.toUpperCase()
         );
       }
     } else {

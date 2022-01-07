@@ -4,18 +4,20 @@ const Seats = ({ availableTravels,setChoosenSeats, choosenSeats, choosenTravel})
   
  
   return (
-    <div>
-      <div className="mt-2 flex justify-center border-2 border-indigo-200 justify-around">
+    <div className="w-full mt-2 flex justify-center items-center">
+      <div className="mt-2 flex justify-center justify-around bg-white bg-opacity-75 rounded-md shadow-md w-4/5">
+        <div className="">
+        <div className="mt-1">
         {availableTravels &&
           availableTravels.map((item) => (
-            <div>
-              {item.trainUnits.map((t)=> <div> <p> {t.name}</p>
+            <div className="">
+              {item.trainUnits.map((t)=> <div> <p className="font-bold"> {t.name}</p>
               <div className="grid grid-cols-3 gap-4 content-between">
                 {t.seats.map((s) => (
                   <div class="form-check">
                     {" "}
                     <input
-                      class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                      class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer "
                       type="checkbox"
                       value={s.id}
                       id="flexCheckDefault"
@@ -33,7 +35,7 @@ const Seats = ({ availableTravels,setChoosenSeats, choosenSeats, choosenTravel})
                       class="form-check-label inline-block text-gray-800"
                       for="flexCheckDefault"
                     >
-                      {s.seatNumber} ,
+                      {s.seatNumber.toUpperCase()}
                     </label>{" "}
                   </div>
                 ))}
@@ -44,11 +46,18 @@ const Seats = ({ availableTravels,setChoosenSeats, choosenSeats, choosenTravel})
               
             </div>
           ))}
-      </div>
-      <div className="mt-2 mr-4 flex justify-end">
+          
+        </div>
+      
+        <div className="mt-2 mr-12 -ml-3 flex justify-end">
         <BookingCheckout choosenSeats={choosenSeats} choosenTravel={choosenTravel} />
       </div>
+        </div>
+       
+      </div>
+     
     </div>
+    
   );
 };
 

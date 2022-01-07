@@ -98,7 +98,7 @@ export class BookingManager {
     let stripeId = await this.paymentManager.Pay(stripeToken, price);
 
     const booking = {
-      bookingNumber: Guid.newGuid(),
+      bookingNumber: Guid.newShortGuid(),
       localDateTime: Date().toString(),
       email: stripeToken.email,
       totalPrice: price,
