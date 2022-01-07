@@ -1,4 +1,4 @@
-import Checkout from "./Checkout";
+import BookingCheckout from "./BookingCheckout";
 
 const Seats = ({ availableTravels,setChoosenSeats, choosenSeats, choosenTravel}) => {
   
@@ -21,7 +21,9 @@ const Seats = ({ availableTravels,setChoosenSeats, choosenSeats, choosenTravel})
                       id="flexCheckDefault"
                       onChange={(e) => {
                         if(e.target.checked) {
-                          setChoosenSeats([...choosenSeats,s.id])
+                          let input = [...choosenSeats,s.id];
+                          setChoosenSeats(input)
+                          //setChoosenSeats([...choosenSeats,s.id])
                         } else {
                           setChoosenSeats(choosenSeats.filter((number) => number !== s.id ))
                         }
@@ -44,7 +46,7 @@ const Seats = ({ availableTravels,setChoosenSeats, choosenSeats, choosenTravel})
           ))}
       </div>
       <div className="mt-2 mr-4 flex justify-end">
-        <Checkout choosenSeats={choosenSeats} choosenTravel={choosenTravel} />
+        <BookingCheckout choosenSeats={choosenSeats} choosenTravel={choosenTravel} />
       </div>
     </div>
   );
