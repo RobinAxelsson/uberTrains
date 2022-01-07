@@ -81,7 +81,7 @@ Set-ExecutionPolicy -ExecutionPolicy unrestricted -Scope CurrentUser
 <br>
 
 ```powershell
-./install.ps1
+./scripts/install.ps1
 ```
 
 <br><br>
