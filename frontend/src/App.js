@@ -5,6 +5,7 @@ import BookingReceipt from "./components/BookingReceipt";
 import Seats from "./components/Seats";
 //import { postBooking } from "./services/BookingClient";
 function App() {
+  document.title = "UberTrains - Boka resa"
   return (
   <div>
     <Router>
@@ -19,6 +20,7 @@ function App() {
     </div>
   );
 }
+
 
 export default App;
 
