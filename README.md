@@ -97,10 +97,8 @@ Därefter kör nedan kod **en rad i taget** genom att klistra in och sedan klick
 
 ```powershell
 cd backend
-npm install -g typescript
-npm install -g ts-node
-npm install -g typeorm
 npm install
+npm upgrade
 cd ..
 cd frontend
 npm install
