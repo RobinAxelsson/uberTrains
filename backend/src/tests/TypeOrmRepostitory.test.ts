@@ -18,6 +18,7 @@ import { PriceCalculator } from "../services/PriceCalculator";
 import { PriceModel } from "../models/PriceModel.entity";
 import { PaymentManagerStub } from '../services/PaymentManager';
 import { GetPriceDto } from '../dtos/GetPriceDto';
+import { mailServiceStub } from "../services/MailService";
 function sum(a: number, b: number) {
   return a + b;
 }
@@ -59,7 +60,7 @@ test("Calculate prize JKPNG-STHLM", async () => {
 });
 test("Calculate prize witch CalculateDto JKPNG-STHLM", async () => {
   await seed();
-  const bookingManager = new BookingManager(new PaymentManagerStub());
+  const bookingManager = new BookingManager(new PaymentManagerStub(), new mailServiceStub());
 
   const calculateDto = {
     travelPlanId: 1,
@@ -123,16 +124,15 @@ test("As user I want to be able to book seats", async () => {
   const bookingDto = {
     travelPlanId: 1,
     seatIds: [3,4],
-    startRouteEventId: 1,
-  endRouteEventId: 4,
+    routeEventIds: [1,2,3,4],
   stripeInfo: {
     id: "stripe_1234",
     email: "post@man.se",
     name: "KalleBanan"
     },
   } as BookingDto;
+  const bookingManager = new BookingManager(new PaymentManagerStub(), new mailServiceStub());
   
-  const bookingManager = new BookingManager(new PaymentManagerStub());
   const booking = await bookingManager.book(bookingDto);
 
   const seats = (await createQueryBuilder(Seat)
@@ -159,19 +159,18 @@ test("As user I dont want to be able to book occupied seats", async () => {
   const bookingDto = {
     travelPlanId: 1,
     seatIds: [1,2],
-    startRouteEventId: 1,
-  endRouteEventId: 4,
+    routeEventIds: [1,2,3,4],
   stripeInfo: {
     id: "stripe_1234",
     email: "post@man.se",
     name: "KalleBanan"
     },
   } as BookingDto;
+  const bookingManager = new BookingManager(new PaymentManagerStub(), new mailServiceStub());
   
-  const bookingManager = new BookingManager(new PaymentManagerStub());
   await bookingManager.book(bookingDto);
 
   await expect(bookingManager.book(bookingDto))
   .rejects
-  .toThrow('Seats are booked');
+  .toThrow('All seats are not free with the selected options');
 });

@@ -1,11 +1,10 @@
 {
-    "travelPlanId": 1,
+    "routeEventIds": [1,2,3,4],
     "seatIds": [3,4],
-    "startRouteEventId": 1,
-    "endRouteEventId": 4,
+    "travelPlanId": 1,
     "stripeInfo": {
-        "id":"tok_1KEEZPAwp97GmluXFgXZXd2p",
         "email": "domanee@hotmail.com",
-        "name": "Anas Shikh Aldaya"
+        "id":"tok_1KEEZPAwp97GmluXFgXZXd2p",
+        "name": "Bobby Smith"
     }
 }

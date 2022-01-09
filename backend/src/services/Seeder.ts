@@ -1,4 +1,3 @@
-import { getRepository } from "typeorm";
 import { Seat } from "../models/Seat.entity";
 import { TrainUnit } from "../models/TrainUnit.entity";
 import { TravelPlan } from "../models/TravelPlan.entity";

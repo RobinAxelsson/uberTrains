@@ -1,15 +1,13 @@
 import "./App.css";
 import TravelForm from "./components/TravelForm";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-
 function App() {
-
+  document.title = "UberTrains - Boka resa"
   return (
   <div className="flex flex-col min-h-screen" >
     <Router>
-      <Navbar />
+      
       <Routes>
         <Route path="/" element={<TravelForm />} />
       </Routes>
@@ -18,6 +16,7 @@ function App() {
     </div>
   );
 }
+
 
 export default App;
 

@@ -1,15 +1,14 @@
 import { useState } from "react";
 import Seats from "./Seats";
 import ListTravels from "./ListTravels";
-
-
+import LogoForm from "./LogoForm";
 const TravelForm = () => {
   const [showTravels, setShowTravels] = useState(false);
   const [showSeats,setShowSeats] = useState(false)
   const [availableTravels, setAvailableTravels] = useState([]);
-  const [start, setStart] = useState([]);
-  const [end, setEnd] = useState([]);
-  const [date, setDate] = useState([]);
+  const [start, setStart] = useState(['goteborg']);
+  const [end, setEnd] = useState(['stockholm']);
+  const [date, setDate] = useState(['2012-04-23']);
   const [choosenTravel, setChoosenTravel] = useState([])
   const [choosenSeats, setChoosenSeats] = useState([])
   const [price,setPrice] = useState([])
@@ -82,10 +81,14 @@ const TravelForm = () => {
   }
 
   return (
-    <div className="flex flex-col flex-grow">
+
+ 
+    <div className="flex flex-col">
+       <LogoForm></LogoForm>
       <div className="flex justify-center items-center">
-        <form className="mt-6 justify-center" onSubmit={handleSubmit}>
-          <div>
+   
+        <form className="rounded-md border-white border-8 border-opacity-5 bg-white bg-opacity-75 mt-6 justify-center" onSubmit={handleSubmit}>
+          <div className="border-white border-8 border-opacity-5 ">
             <h2 className="font-bold text-4xl">Vart vill du resa?</h2>
           </div>
           <div className="mt-4">
@@ -126,9 +129,15 @@ const TravelForm = () => {
       <div>
       {showTravels && <ListTravels availableTravels={availableTravels} setShowTravels={setShowTravels} setShowSeats={setShowSeats} setChoosenTravel={setChoosenTravel} />}
       </div>
-      <div>{ showSeats && <Seats availableTravels={availableTravels} setChoosenSeats={setChoosenSeats} choosenSeats={choosenSeats} choosenTravel={choosenTravel} price={price} getPrice={getPrice}/>}</div>
-      
+      <div>{ showSeats && <Seats 
+      availableTravels={availableTravels} 
+      setChoosenSeats={setChoosenSeats} 
+      choosenSeats={choosenSeats} 
+      choosenTravel={choosenTravel}
+      price={price}
+      getPrice={getPrice}/>}</div>
     </div>
+
   );
 };
 
