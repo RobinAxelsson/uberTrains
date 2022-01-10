@@ -23,7 +23,7 @@ const TravelForm = () => {
         travelPlanId: choosenTravel.id,
         startRouteEventId: choosenTravel.routeEvents[0].id,
         endRouteEventId: choosenTravel.routeEvents[1].id,
-        amount: choosenSeats.length
+        amount: 1
     })
     }).then((res) => {
       console.log(res);
@@ -83,18 +83,18 @@ const TravelForm = () => {
   return (
 
  
-    <div className="flex flex-col">
+    <div className="mb-4 flex flex-col">
        <LogoForm></LogoForm>
       <div className="flex justify-center items-center">
    
         <form className="rounded-md border-white border-8 border-opacity-5 bg-white bg-opacity-75 mt-6 justify-center" onSubmit={handleSubmit}>
           <div className="border-white border-8 border-opacity-5 ">
-            <h2 className="font-bold text-4xl">Vart vill du resa?</h2>
+            <h2 className="font-bold text-4xl text-gray-400">Vart vill du resa?</h2>
           </div>
           <div className="mt-4">
             <input
               type="text"
-              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-96 sm:text-sm border-gray-300 rounded-md"
+              className="shadow-sm focus:ring-orange-500 focus:border-orange-500 block w-96 sm:text-sm border-gray-300 rounded-md"
               placeholder="Från:"
               required
               value={start}
@@ -104,7 +104,7 @@ const TravelForm = () => {
           <div className="mt-1">
             <input
               type="text"
-              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-96 sm:text-sm border-gray-300 rounded-md"
+              className="shadow-sm focus:ring-orange-500 focus:border-orange-500 block w-96 sm:text-sm border-gray-300 rounded-md"
               placeholder="Till:"
               required
               value={end}
@@ -114,7 +114,7 @@ const TravelForm = () => {
           <div className="mt-1">
             <input
               type="date"
-              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-48 sm:text-sm border-gray-300 rounded-md"
+              className="shadow-sm focus:ring-orange-500 focus:border-orange-500 block w-48 sm:text-sm border-gray-300 rounded-md"
              // min={getTodaysDate()}
               required
               value={date}

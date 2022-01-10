@@ -57,7 +57,7 @@ export class BookingManager {
       .filter((x) => x !== null);
 
     if (seatBookingRouteEvents.length === 0) return;
-    let dbSeatEventIds = seatBookingRouteEvents.map((x) => parseInt(x.id));
+    let dbSeatEventIds = seatBookingRouteEvents.map((x) => x.id);
     if (routeEventIds.filter((x) => dbSeatEventIds.includes(x)).length > 0)
       throw new Error("All seats are not free with the selected options");
     return;

@@ -4,7 +4,7 @@ import { TravelPlan } from "./TravelPlan.entity";
 @Entity()
 export class RouteEvent extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id: string
+  id: number
   @ManyToMany(() => Booking, booking => booking.routeEvents)
   @JoinTable({
     name: "routeevent_booking",

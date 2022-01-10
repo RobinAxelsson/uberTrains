@@ -19,7 +19,13 @@ const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoose
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Tåg
+                  Tåg
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                  Pris
                   </th>
                   <th
                     scope="col"
@@ -48,7 +54,10 @@ const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoose
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         {item.tripName}
                       </td>
-
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {item.price.toFixed(2) + ":-"}
+                      </td>
+                      
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         {/* <Link to="seats"> */}
 
