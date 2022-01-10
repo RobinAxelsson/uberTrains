@@ -13,4 +13,19 @@ export class Guid {
   static newShortGuid() {
     return Math.random().toString(36).slice(-6).toUpperCase();
   }
+  static returnCurrencyString(input: number | string) {
+    let result = "";
+    if (typeof input === "number") {
+      result = new Intl.NumberFormat("sv-se", {
+        style: "currency",
+        currency: "SEK",
+      }).format(input);
+    } else if (typeof input === "string") {
+      result = new Intl.NumberFormat("sv-se", {
+        style: "currency",
+        currency: "SEK",
+      }).format(Number.parseFloat(input));
+    }
+    return result;
+  }
 }

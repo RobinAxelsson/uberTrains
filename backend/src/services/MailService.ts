@@ -2,6 +2,7 @@ import nodemailer from "nodemailer";
 import { Booking } from "../models/Booking.entity";
 import * as fs from "fs";
 import { Seat } from "../models/Seat.entity";
+import { Guid } from "./UtilityFunctions";
 export interface IMailService {
   sendEmail(booking: Booking, seats: Seat[]): Promise<string>;
 }
@@ -35,7 +36,7 @@ export class mailService implements IMailService {
     htmlData = htmlData
       .replace("BOOKINGNUMBER", booking.bookingNumber)
       .replace("BOOKINGDATE", booking.localDateTime)
-      .replace("BOOKINGPRICE", booking.totalPrice.toString() + ":-");
+      .replace("BOOKINGPRICE", Guid.returnCurrencyString(booking.totalPrice));
     htmlData = await this.formatSeats(seats, htmlData);
     htmlData = await this.formatStations(booking, htmlData);
     return htmlData;
