@@ -6,8 +6,8 @@ const TravelForm = () => {
   const [showTravels, setShowTravels] = useState(false);
   const [showSeats, setShowSeats] = useState(false);
   const [availableTravels, setAvailableTravels] = useState([]);
-  const [start, setStart] = useState(['goteborg']);
-  const [end, setEnd] = useState(['stockholm']);
+  const [start, setStart] = useState(['Göteborg']);
+  const [end, setEnd] = useState(['Stockholm']);
   const [date, setDate] = useState(['2022-02-22']);
   const [choosenTravel, setChoosenTravel] = useState([]);
   const [choosenSeats, setChoosenSeats] = useState([]);
@@ -41,7 +41,9 @@ const TravelForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`http://localhost:4000/api/journey?date=${date}&start=${start}&end=${end}`, {
+    let urlStart = encodeURIComponent(start).toLowerCase();
+    let urlEnd = encodeURIComponent(end).toLowerCase();
+    fetch(`http://localhost:4000/api/journey?date=${date}&start=${urlStart}&end=${urlEnd}`, {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
@@ -134,7 +136,7 @@ const TravelForm = () => {
           />
         )}
       </div>
-      <div className='flex justify-center items-center'>
+      <div className="flex justify-center items-center">
         {showSeats && (
           <Seats
             availableTravels={availableTravels}

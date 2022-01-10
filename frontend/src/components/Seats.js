@@ -7,12 +7,12 @@ const Seats = ({ setChoosenSeats, choosenSeats, choosenTravel }) => {
         <div className="">
           <div className="mt-1">
             {choosenTravel &&
-              choosenTravel.trainUnits.map((t) => (
+              choosenTravel.trainUnits.filter(t => t.seats.some(x => x.booking === null)).map((t) => (
                 <div>
                   {' '}
                   <p className="font-bold"> {t.name}</p>
                   <div className="grid grid-cols-3 gap-4 content-between">
-                    {t.seats.map((s) => (
+                    {t.seats.filter(x => x.booking === null).map((s) => (
                       <div class="form-check">
                         {' '}
                         <input

@@ -29,7 +29,7 @@ export async function seedTravelPlan(isoDate:String){
       latitude: 57.7072326,
       longitude: 11.9670171,
       dateTime: isoDate+'T18:30:43.511Z',
-      location: 'goteborg',
+      location: 'göteborg',
       specifiedLocation: 'Platform 5',
       event: 'Departure',
     } as RouteEvent,
@@ -38,7 +38,7 @@ export async function seedTravelPlan(isoDate:String){
       longitude: 14.165719,
       dateTime: isoDate+'T20:30:43.511Z',
       specifiedLocation: 'Platform 1',
-      location: 'jonkoping',
+      location: 'jönköping',
       event: 'Arrival',
     } as RouteEvent,
     {
@@ -46,7 +46,7 @@ export async function seedTravelPlan(isoDate:String){
       longitude: 14.165719,
       dateTime: isoDate +'T20:35:43.511Z',
       specifiedLocation: 'Platform 1',
-      location: 'jonkoping',
+      location: 'jönköping',
       event: 'Departure',
     } as RouteEvent,
     {
