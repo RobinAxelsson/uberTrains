@@ -12,7 +12,7 @@ const TravelForm = () => {
   const [choosenTravel, setChoosenTravel] = useState([])
   const [choosenSeats, setChoosenSeats] = useState([])
   const [price,setPrice] = useState([])
- 
+  const [showTravelForm, setTravelForm] = useState(false);
   const getPrice = () => {
     fetch("http://localhost:4000/api/price", {
       method: 'POST',
@@ -83,8 +83,8 @@ const TravelForm = () => {
   return (
 
  
-    <div className="mb-4 flex flex-col">
-       <LogoForm></LogoForm>
+    <div className="">
+  
       <div className="flex justify-center items-center">
    
         <form className="w-11/12 tablet:w-6/12 laptop:w-4/12 rounded-md border-white border-8 border-opacity-5 bg-white bg-opacity-75 mt-6 flex-col flex justify-center items-center" onSubmit={handleSubmit}>
