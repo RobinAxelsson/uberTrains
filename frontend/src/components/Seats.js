@@ -7,17 +7,17 @@ const Seats = ({
 
 }) => {
   return (
-    <div className="w-full mt-2 flex justify-center items-center">
+    <div className="w-11/12 tablet:w-6/12 laptop:w-4/12 mt-2 flex justify-center items-center">
       <div className="mt-2 flex justify-center justify-around bg-white bg-opacity-75 rounded-md shadow-md w-4/5">
         <div className="">
           <div className="mt-1">
             {choosenTravel &&
-              choosenTravel.trainUnits.map((t) => (
+              choosenTravel.trainUnits.filter(t => t.seats.some(x => x.booking === null)).map((t) => (
                 <div>
                   {" "}
                   <p className="font-bold"> {t.name}</p>
                   <div className="grid grid-cols-3 gap-4 content-between">
-                    {t.seats.map((s) => (
+                    {t.seats.filter(x => x.booking === null).map((s) => (
                       <div class="form-check">
                         {" "}
                         <input

@@ -100,16 +100,37 @@ test("TravelPlanner GetFullTravelPlanById, Load seeded travelplan id 1 expect 4 
   expect(travelPlan.trainUnits[1].seats.length).toBe(2);
 });
 
-test("Find RouteEvents between assert all", async () => {
-  await seed();
-  let events = await RouteEvent.find({
-    relations: ["travelPlan"],
-    where: [
-      {
-        dateTime: Between("2012-04-23", "2012-04-24"),
-        location: In(["goteborg", "stockholm"]),
-      },
-    ],
+describe('SQLite interaction with TypeOrm API', () => {
+  describe('api/journey, Fetching TravelPlane by start, stop, date', () => {
+    test('Get FULL travelPlan by start, stop, date JKPNG-STHLM', async () => {
+      await seed();
+      const data = await new TravelPlanner().getFullTravelPlanByStartStopDate(
+        'jönköping',
+        'stockholm',
+        '2012-04-23',
+      );
+      expect(data?.map((x) => x.id)).toStrictEqual([1]);
+      expect(data?.map((x) => x.priceModel.priceConstant)).toStrictEqual([2]);
+    });
+    test('Get FULL travelPlan by start, stop, date STHLM-JKPNG, expect empty array', async () => {
+      await seed();
+      const data = await new TravelPlanner().getFullTravelPlanByStartStopDate(
+        'stockholm',
+        'jönköping',
+        '2012-04-23',
+      );
+      expect(data).toStrictEqual([]);
+    });
+  });
+  describe('api/travelPlan', () => {
+    test('TravelPlanner GetFullTravelPlanById, Load seeded travelplan id 1 expect 4 routeEvents', async () => {
+      await seed();
+      const travelPlan = await new TravelPlanner().getFullTravelPlanById(1);
+      expect(travelPlan.routeEvents.length).toBe(4);
+      expect(travelPlan.trainUnits.length).toBe(2);
+      expect(travelPlan.trainUnits[0].seats.length).toBe(2);
+      expect(travelPlan.trainUnits[1].seats.length).toBe(2);
+    });
   });
   //console.log(JSON.stringify({QuerybuilderBetweenAssertAll: events}, null, '\t'));
   expect(events.length).toBe(2);

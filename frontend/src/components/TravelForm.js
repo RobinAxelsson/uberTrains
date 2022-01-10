@@ -1,54 +1,28 @@
 import { useState } from "react";
 import Seats from "./Seats";
 import ListTravels from "./ListTravels";
-import LogoForm from "./LogoForm";
 const TravelForm = () => {
   const [showTravels, setShowTravels] = useState(false);
   const [showSeats,setShowSeats] = useState(false)
   const [availableTravels, setAvailableTravels] = useState([]);
-  const [start, setStart] = useState(['goteborg']);
-  const [end, setEnd] = useState(['stockholm']);
+  const [start, setStart] = useState(['Göteborg']);
+  const [end, setEnd] = useState(['Stockholm']);
   const [date, setDate] = useState(['2012-04-23']);
   const [choosenTravel, setChoosenTravel] = useState([])
   const [choosenSeats, setChoosenSeats] = useState([])
-  const [price,setPrice] = useState([])
-  const [showTravelForm, setTravelForm] = useState(false);
-  const getPrice = () => {
-    fetch("http://localhost:4000/api/price", {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        travelPlanId: choosenTravel.id,
-        startRouteEventId: choosenTravel.routeEvents[0].id,
-        endRouteEventId: choosenTravel.routeEvents[1].id,
-        amount: 1
-    })
-    }).then((res) => {
-      console.log(res);
-      return res.json();
-    })
-    .then((data) => {
-      if (data) {
-        setPrice(data)
-      }
-    })
-  }
-  console.log(price)
+
   console.log(choosenSeats.length)
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(
-      `http://localhost:4000/api/journey?date=${date}&start=${start}&end=${end}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      }
-    )
+    let urlStart = encodeURIComponent(start).toLowerCase();
+    let urlEnd = encodeURIComponent(end).toLowerCase();
+    fetch(`http://localhost:4000/api/journey?date=${date}&start=${urlStart}&end=${urlEnd}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
       .then((res) => {
         console.log(res);
         return res.json();
@@ -127,15 +101,31 @@ const TravelForm = () => {
         </form>
       </div>
       <div>
-      {showTravels && <ListTravels availableTravels={availableTravels} setShowTravels={setShowTravels} setShowSeats={setShowSeats} setChoosenTravel={setChoosenTravel} />}
+        {showTravels && (
+          <ListTravels
+            availableTravels={availableTravels}
+            setShowTravels={setShowTravels}
+            setShowSeats={setShowSeats}
+            setChoosenTravel={setChoosenTravel}
+          />
+        )}
+      </div>
+      <div className="flex justify-center items-center">
+        {showSeats && (
+          <Seats
+            availableTravels={availableTravels}
+            setChoosenSeats={setChoosenSeats}
+            choosenSeats={choosenSeats}
+            choosenTravel={choosenTravel}
+          />
+        )}
       </div>
       <div>{ showSeats && <Seats 
       availableTravels={availableTravels} 
       setChoosenSeats={setChoosenSeats} 
       choosenSeats={choosenSeats} 
       choosenTravel={choosenTravel}
-      price={price}
-      getPrice={getPrice}/>}</div>
+      />}</div>
     </div>
 
   );

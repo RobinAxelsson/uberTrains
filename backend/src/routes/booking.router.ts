@@ -12,8 +12,9 @@ router.post("/api/booking", async (req: Request, res: Response) => {
   try {
 
     let bookingDto = await req.body;
+    if (bookingDto instanceof BookingDto  === false) throw new Error("input invalid");
 
-      console.log({parsedRequestBody: JSON.stringify((await bookingDto), null, '\t')});
+    console.log({ parsedRequestBody: JSON.stringify(bookingDto, null, '\t') });
 
     let booking = await new BookingManager(
       new PaymentManager(),
