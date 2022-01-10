@@ -81,7 +81,7 @@ describe('SQLite interaction with TypeOrm API', () => {
     test('Get FULL travelPlan by start, stop, date JKPNG-STHLM', async () => {
       await seed();
       const data = await new TravelPlanner().getFullTravelPlanByStartStopDate(
-        'jonkoping',
+        'jönköping',
         'stockholm',
         '2012-04-23',
       );
@@ -92,7 +92,7 @@ describe('SQLite interaction with TypeOrm API', () => {
       await seed();
       const data = await new TravelPlanner().getFullTravelPlanByStartStopDate(
         'stockholm',
-        'jonkoping',
+        'jönköping',
         '2012-04-23',
       );
       expect(data).toStrictEqual([]);
