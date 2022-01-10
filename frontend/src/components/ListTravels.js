@@ -39,13 +39,13 @@ const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoose
                     <tr key={item.trainId}>
                       {item.routeEvents.map((i) => (
                         <tr key={item.dateTime}>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {i.location}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {i.dateTime}
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            {new Date(i.dateTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + " | " + new Date(i.dateTime).toLocaleDateString()}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {i.eventType}
                           </td>
                         </tr>
