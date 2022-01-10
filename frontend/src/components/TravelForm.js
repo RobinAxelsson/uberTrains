@@ -12,6 +12,7 @@ const TravelForm = () => {
   const [choosenTravel, setChoosenTravel] = useState([])
   const [choosenSeats, setChoosenSeats] = useState([])
   const [price,setPrice] = useState([])
+  const [showForm,setShowForm] = useState(true)
  
   const getPrice = () => {
     fetch("http://localhost:4000/api/price", {
@@ -57,6 +58,7 @@ const TravelForm = () => {
         if (data) {
           setAvailableTravels(data);
           setShowTravels(true);
+          setShowForm(false)
         }
       });
     console.log(availableTravels);
@@ -82,11 +84,13 @@ const TravelForm = () => {
 
   return (
 
- 
+    
     <div className="mb-4 flex flex-col">
+      
        <LogoForm></LogoForm>
+       {showForm && 
       <div className="flex justify-center items-center">
-   
+
         <form className="w-11/12 tablet:w-6/12 laptop:w-4/12 rounded-md border-white border-8 border-opacity-5 bg-white bg-opacity-75 mt-6 flex-col flex justify-center items-center" onSubmit={handleSubmit}>
           <div className="w-full border-white border-8 border-opacity-5 flex justify-center items-center">
             <h2 className="font-bold text-4xl">Vart vill du resa?</h2>
@@ -125,7 +129,7 @@ const TravelForm = () => {
             Fortsätt
           </button>
         </form>
-      </div>
+      </div> }
       <div>
       {showTravels && <ListTravels availableTravels={availableTravels} setShowTravels={setShowTravels} setShowSeats={setShowSeats} setChoosenTravel={setChoosenTravel} />}
       </div>
