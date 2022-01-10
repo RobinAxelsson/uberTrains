@@ -1,34 +1,42 @@
 import { TravelPlan } from '../models/TravelPlan.entity';
 export class PriceCalculator {
-
-  addJourneyPrice(travelPlans: TravelPlan[], start:string, end:string){
-    
+  addJourneyPrice(travelPlans: TravelPlan[], start: string, end: string) {
     let prices = [] as number[];
 
     for (const travelPlan of travelPlans) {
-      let routeEvents = travelPlan.routeEvents.filter(t => t.location === start || t.location === end);
-      let distance = this.calculateDistance(routeEvents[0].latitude, routeEvents[0].longitude, routeEvents[1].latitude, routeEvents[1].longitude);
-      let price = this.calculatePrice(distance, travelPlan.priceModel.trainTypeMultiplyer, travelPlan.priceModel.priceConstant, 1);
+      let routeEvents = travelPlan.routeEvents.filter(
+        (t) => t.location === start || t.location === end,
+      );
+      let distance = this.calculateDistance(
+        routeEvents[0].latitude,
+        routeEvents[0].longitude,
+        routeEvents[1].latitude,
+        routeEvents[1].longitude,
+      );
+      let price = this.calculatePrice(
+        distance,
+        travelPlan.priceModel.trainTypeMultiplyer,
+        travelPlan.priceModel.priceConstant,
+        1,
+      );
       prices.push(price);
     }
 
     for (let i = 0; i < prices.length; i++) {
-        (travelPlans[i] as any).price = prices[i];
+      (travelPlans[i] as any).price = prices[i];
     }
-    return {travelPlans: travelPlans};
+    return { travelPlans: travelPlans };
   }
-  calculatePrice(distance: number, trainTypeMultiplyer: number, priceConstant: number, amount: number) {
-    return (
-      (Math.round(priceConstant * (distance * trainTypeMultiplyer * amount) * 100) / 100)
-    );
+  calculatePrice(
+    distance: number,
+    trainTypeMultiplyer: number,
+    priceConstant: number,
+    amount: number,
+  ) {
+    return Math.round(priceConstant * (distance * trainTypeMultiplyer * amount) * 100) / 100;
   }
 
-  calculateDistance(
-    startLat: number,
-    startLong: number,
-    endLat: number,
-    endLong: number
-  ) {
+  calculateDistance(startLat: number, startLong: number, endLat: number, endLong: number) {
     var R = 6371; // Radius of the earth in km
     var dLat = this.deg2rad(endLat - startLat); // deg2rad below
     var dLon = this.deg2rad(endLong - startLong);

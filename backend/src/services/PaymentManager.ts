@@ -1,7 +1,7 @@
-import { StripeInfo } from "../dtos/BookingDto";
+import { StripeInfo } from '../dtos/BookingDto';
 
-const stripe = require("stripe")(
-  "sk_test_51K7JpMAwp97GmluXslTTgNnwx2H7CBcUwDpIOjhZoR3gV6LxY6ZZIUnqVdlzdjOWGhVWS2owaJ3SACXg7F6G2Kqs00B1E5iMEs"
+const stripe = require('stripe')(
+  'sk_test_51K7JpMAwp97GmluXslTTgNnwx2H7CBcUwDpIOjhZoR3gV6LxY6ZZIUnqVdlzdjOWGhVWS2owaJ3SACXg7F6G2Kqs00B1E5iMEs',
 );
 
 export interface IPaymentManager {
@@ -16,7 +16,7 @@ export class PaymentManager implements IPaymentManager {
 
     const charge = await stripe.charges.create({
       amount: Math.round(price * 100),
-      currency: "sek",
+      currency: 'sek',
       customer: customer.id,
       receipt_email: stripeInfo.email,
       description: `Purchased the test`,
@@ -31,7 +31,7 @@ export class PaymentManager implements IPaymentManager {
         },
       },
     });
-    console.log("PaymentManager.Pay()=>Charge:", { charge });
+    console.log('PaymentManager.Pay()=>Charge:', { charge });
     return charge?.id;
   }
 }

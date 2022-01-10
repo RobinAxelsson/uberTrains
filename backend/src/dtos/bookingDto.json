@@ -1,10 +1,18 @@
 {
-    "routeEventIds": [1,2,3,4],
-    "seatIds": [3,4],
+    "routeEventIds": [
+        1,
+        2,
+        3,
+        4
+    ],
+    "seatIds": [
+        3,
+        4
+    ],
     "travelPlanId": 1,
     "stripeInfo": {
         "email": "domanee@hotmail.com",
-        "id":"tok_1KEEZPAwp97GmluXFgXZXd2p",
+        "id": "tok_1KEEZPAwp97GmluXFgXZXd2p",
         "name": "Bobby Smith"
     }
 }
