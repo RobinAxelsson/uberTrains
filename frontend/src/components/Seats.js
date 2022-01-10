@@ -57,7 +57,9 @@ const Seats = ({
           </div>
         </div>
       </div>
+     
     </div>
+    
   );
 };
 
