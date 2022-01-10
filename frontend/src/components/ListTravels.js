@@ -43,7 +43,7 @@ const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoose
                             {i.location}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {i.dateTime}
+                            {i.dateTime.split('T')[1].split('.')[0]}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             {i.eventType}

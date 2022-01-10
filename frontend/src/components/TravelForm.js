@@ -8,7 +8,7 @@ const TravelForm = () => {
   const [availableTravels, setAvailableTravels] = useState([]);
   const [start, setStart] = useState(['goteborg']);
   const [end, setEnd] = useState(['stockholm']);
-  const [date, setDate] = useState(['2012-04-23']);
+  const [date, setDate] = useState(['2022-02-22']);
   const [choosenTravel, setChoosenTravel] = useState([]);
   const [choosenSeats, setChoosenSeats] = useState([]);
   const [price, setPrice] = useState([]);
@@ -134,7 +134,7 @@ const TravelForm = () => {
           />
         )}
       </div>
-      <div>
+      <div className='flex justify-center items-center'>
         {showSeats && (
           <Seats
             availableTravels={availableTravels}
