@@ -87,34 +87,34 @@ const TravelForm = () => {
        <LogoForm></LogoForm>
       <div className="flex justify-center items-center">
    
-        <form className="rounded-md border-white border-8 border-opacity-5 bg-white bg-opacity-75 mt-6 justify-center" onSubmit={handleSubmit}>
-          <div className="border-white border-8 border-opacity-5 ">
-            <h2 className="font-bold text-4xl text-gray-400">Vart vill du resa?</h2>
+        <form className="w-11/12 tablet:w-6/12 laptop:w-4/12 rounded-md border-white border-8 border-opacity-5 bg-white bg-opacity-75 mt-6 flex-col flex justify-center items-center" onSubmit={handleSubmit}>
+          <div className="w-full border-white border-8 border-opacity-5 flex justify-center items-center">
+            <h2 className="font-bold text-4xl">Vart vill du resa?</h2>
           </div>
-          <div className="mt-4">
+          <div className="mt-4 w-11/12">
             <input
               type="text"
-              className="shadow-sm focus:ring-orange-500 focus:border-orange-500 block w-96 sm:text-sm border-gray-300 rounded-md"
+              className="w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
               placeholder="Från:"
               required
               value={start}
               onChange={(e) => setStart(e.target.value)}
             />
           </div>
-          <div className="mt-1">
+          <div className="mt-1 w-11/12">
             <input
               type="text"
-              className="shadow-sm focus:ring-orange-500 focus:border-orange-500 block w-96 sm:text-sm border-gray-300 rounded-md"
+              className="w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
               placeholder="Till:"
               required
               value={end}
               onChange={(e) => setEnd(e.target.value)}
             />
           </div>
-          <div className="mt-1">
+          <div className="mt-1 w-11/12">
             <input
               type="date"
-              className="shadow-sm focus:ring-orange-500 focus:border-orange-500 block w-48 sm:text-sm border-gray-300 rounded-md"
+              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-7/12 sm:text-sm border-gray-300 rounded-md"
              // min={getTodaysDate()}
               required
               value={date}
