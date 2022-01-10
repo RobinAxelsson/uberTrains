@@ -19,13 +19,13 @@ const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoose
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                  Tåg
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                  Pris
+                    Tåg
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Pris
                   </th>
                   <th
                     scope="col"
@@ -55,9 +55,9 @@ const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoose
                         {item.tripName}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {item.price.toFixed(2) + ":-"}
+                        {item.price.toFixed(2) + ':-'}
                       </td>
-                      
+
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         {/* <Link to="seats"> */}
 
@@ -65,7 +65,7 @@ const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoose
                           onClick={() => {
                             setShowTravels(false);
                             setShowSeats(true);
-                            setChoosenTravel(item)
+                            setChoosenTravel(item);
                           }}
                           className="mt-1 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >

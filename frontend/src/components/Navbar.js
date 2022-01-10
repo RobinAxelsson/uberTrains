@@ -1,15 +1,15 @@
-import { Fragment } from "react";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { LoginIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
-import UberTrainIcon from "./UberTrainIcon";
+import { Fragment } from 'react';
+import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { LoginIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
+import UberTrainIcon from './UberTrainIcon';
 
 const navigation = [
-  { name: "Resor", href: "/", current: true },
-  { name: "Om oss", href: "#", current: false },
+  { name: 'Resor', href: '/', current: true },
+  { name: 'Om oss', href: '#', current: false },
 ];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ');
 }
 
 export default function Navbar() {
@@ -42,11 +42,11 @@ export default function Navbar() {
                         href={item.href}
                         className={classNames(
                           item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                          "px-3 py-2 rounded-md text-sm font-medium"
+                            ? 'bg-gray-900 text-white'
+                            : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                          'px-3 py-2 rounded-md text-sm font-medium',
                         )}
-                        aria-current={item.current ? "page" : undefined}
+                        aria-current={item.current ? 'page' : undefined}
                       >
                         {item.name}
                       </a>
@@ -80,8 +80,8 @@ export default function Navbar() {
                           <a
                             href="/"
                             className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              active ? 'bg-gray-100' : '',
+                              'block px-4 py-2 text-sm text-gray-700',
                             )}
                           >
                             Your Profile
@@ -93,8 +93,8 @@ export default function Navbar() {
                           <a
                             href="/"
                             className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              active ? 'bg-gray-100' : '',
+                              'block px-4 py-2 text-sm text-gray-700',
                             )}
                           >
                             Settings
@@ -106,8 +106,8 @@ export default function Navbar() {
                           <a
                             href="/"
                             className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              active ? 'bg-gray-100' : '',
+                              'block px-4 py-2 text-sm text-gray-700',
                             )}
                           >
                             Sign out
@@ -130,11 +130,11 @@ export default function Navbar() {
                   href={item.href}
                   className={classNames(
                     item.current
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                    "block px-3 py-2 rounded-md text-base font-medium"
+                      ? 'bg-gray-900 text-white'
+                      : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                    'block px-3 py-2 rounded-md text-base font-medium',
                   )}
-                  aria-current={item.current ? "page" : undefined}
+                  aria-current={item.current ? 'page' : undefined}
                 >
                   {item.name}
                 </Disclosure.Button>
