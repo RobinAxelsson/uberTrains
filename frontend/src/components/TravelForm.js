@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Seats from "./Seats";
 import ListTravels from "./ListTravels";
 import { JOURNEY_URL } from "../constants/urls";
@@ -23,9 +23,35 @@ const TravelForm = () => {
   const [date, setDate] = useState([dateVal]);
   const [choosenTravel, setChoosenTravel] = useState([]);
   const [choosenSeats, setChoosenSeats] = useState([]);
+  const [allLocations,setAllLocations] = useState([])
+
+  console.log("loc", allLocations.map((arr) => {return arr}))
 
   console.log(choosenSeats.length);
 
+  useEffect (()=> {
+    let canceled = false;
+    getAllTravelPlans().then((data)=>{
+      if (canceled) {
+        return;
+      }
+      let location = data.map((item)=> item.routeEvents.map((items)=> {return items})
+      )
+      setAllLocations(location)
+    });
+    return () => {
+      canceled = true;
+    }
+  }, []);
+
+   const filterLocation = e => {
+    const search = e.target.value.toLowerCase()
+    console.log(search)
+    const filteredLocations = allLocations.map((arr) => arr.filter(f => f.location.toLowerCase().includes(search)))
+    
+    setAllLocations(filteredLocations)
+  } 
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -68,9 +94,15 @@ const TravelForm = () => {
               placeholder="Från:"
               required
               value={start}
-              onChange={(e) => setStart(e.target.value)}
+              onChange={(e) => {setStart(e.target.value); filterLocation(e)}}
             />
           </div>
+          <ul>
+            {allLocations.map((arr)=>
+             arr.map((item) =>
+              <li key={item.id}>{item.location}</li>
+            ))}
+          </ul>
           <div className="mt-1 w-11/12">
             <input
               type="text"
