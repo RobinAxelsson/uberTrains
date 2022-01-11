@@ -27,7 +27,7 @@ function BookingCheckout({ choosenSeats, choosenTravel }) {
         name="uberTrains"
         billingAddress
         shippingAddress
-        amount={400 * 100}
+        amount={choosenSeats.length * choosenTravel.price * 100}
         currency="SEK"
         
       />
