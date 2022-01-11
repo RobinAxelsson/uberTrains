@@ -3,49 +3,38 @@ import { createQueryBuilder } from "typeorm";
 import { Booking } from "../models/Booking.entity";
 import { BookingManager } from "../services/BookingManager";
 import { GetPriceDto } from "../dtos/GetPriceDto";
-import { PaymentManager, PaymentManagerStub } from "../services/PaymentManager";
-import { mailService, mailServiceStub } from "../services/MailService";
+import { PaymentManager, PaymentManagerStub, IPaymentManager } from '../services/PaymentManager';
+import { mailService, mailServiceStub, IMailService } from '../services/MailService';
 
 const router = express.Router();
-router.post("/api/booking", async (req: Request, res: Response) => {
+
+async function routerBook(bookingDto: any, res: Response, paymentManager:IPaymentManager, mailService:IMailService){
   try {
+  console.log({ parsedRequestBody: JSON.stringify(bookingDto, null, '\t') });
 
+  let booking = await new BookingManager(
+    paymentManager,
+    mailService
+  ).book(bookingDto);
+  res.json(booking);
+} catch (err) {
+  console.log("Failed!\nError:\n", err);
+  res.status(404);
+  res.json((err as Error).message);
+}
+}
+router.post("/api/booking", async (req: Request, res: Response) => {
     let bookingDto = await req.body;
-
-    console.log({ parsedRequestBody: JSON.stringify(bookingDto, null, '\t') });
-
-    let booking = await new BookingManager(
-      new PaymentManager(),
-      new mailService()
-    ).book(bookingDto);
-    res.json(booking);
-  } catch (err) {
-    console.log("Failed!\nError:\n", err);
-    res.status(404);
-    res.json((err as Error).message);
-  }
+    routerBook(bookingDto, res, new PaymentManager, new mailService);
 });
 
 if (process.env.NODE_ENV === "Development") {
   router.post("/api/fakebooking", async (req: Request, res: Response) => {
-    try {
-
-      let bookingDto = await req.body;
-
-      console.log({parsedRequestBody: JSON.stringify((await bookingDto), null, '\t')});
-
-      let booking = await new BookingManager(
-        new PaymentManagerStub(),
-        new mailServiceStub()
-      ).book(bookingDto);
-      res.json(booking);
-    } catch (err) {
-      console.log("Failed!\nError:\n", err);
-      res.status(404);
-      res.json((err as Error).message);
-    }
+    let bookingDto = await req.body;
+    routerBook(bookingDto, res, new PaymentManagerStub, new mailServiceStub);
   });
-}
+};
+
 router.get("/api/booking", async (req: Request, res: Response) => {
   try {
     const allBookings = (await createQueryBuilder(Booking)
