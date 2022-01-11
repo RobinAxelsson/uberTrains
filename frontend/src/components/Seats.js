@@ -4,7 +4,7 @@ import BookingCheckout from "./BookingCheckout";
 
 const Seats = ({ setChoosenSeats, choosenSeats, choosenTravel }) => {
   return (
-    <div className="w-11/12 tablet:w-6/12 laptop:w-4/12 mt-2 flex justify-center items-center">
+    <div className="mb-6 w-11/12 tablet:w-6/12 laptop:w-4/12 mt-2 flex justify-center items-center">
       <div className="mt-2 flex justify-center justify-around bg-white bg-opacity-75 rounded-md shadow-md w-4/5">
         <div className="">
           <div className="mt-1">

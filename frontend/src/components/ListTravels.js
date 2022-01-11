@@ -3,7 +3,7 @@
 const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoosenTravel }) => {
   return (
     <div className="w-full mt-2 flex justify-center items-center">
-      <div className="w-full sm:-mx-6 lg:-mx-8">
+      <div className="overflow-x-auto w-full sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           <div className="w-full min-w-full shadow border-b border-gray-200 sm:rounded-lg bg-white bg-opacity-75">
             <table className="min-w-full divide-y divide-gray-200">
@@ -43,7 +43,7 @@ const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoose
                             {i.location}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 ">
-                            {new Date(i.dateTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + " | " + new Date(i.dateTime).toLocaleDateString()}
+                            {new Date(i.dateTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " | " + new Date(i.dateTime).toLocaleDateString()}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {i.eventType}

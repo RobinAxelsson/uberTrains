@@ -45,6 +45,7 @@ const TravelForm = () => {
         if (data) {
           setAvailableTravels(data);
           setShowTravels(true);
+          //setShowForm(false)
         }
       });
     console.log(availableTravels);
