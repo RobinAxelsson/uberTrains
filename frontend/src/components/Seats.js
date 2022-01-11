@@ -7,7 +7,7 @@ const Seats = ({
 
 }) => {
   return (
-    <div className="w-11/12 tablet:w-6/12 laptop:w-4/12 mt-2 flex justify-center items-center">
+    <div className="mb-6 w-11/12 tablet:w-6/12 laptop:w-4/12 mt-2 flex justify-center items-center">
       <div className="mt-2 flex justify-center justify-around bg-white bg-opacity-75 rounded-md shadow-md w-4/5">
         <div className="">
           <div className="mt-1">
@@ -15,8 +15,8 @@ const Seats = ({
               choosenTravel.trainUnits.filter(t => t.seats.some(x => x.booking === null)).map((t) => (
                 <div>
                   {" "}
-                  <p className="font-bold"> {t.name}</p>
-                  <div className="grid grid-cols-3 gap-4 content-between">
+                  <p className="font-bold text-center"> {t.name}</p>
+                  <div className="grid grid-cols-2 gap-4 content-center">
                     {t.seats.filter(x => x.booking === null).map((s) => (
                       <div class="form-check">
                         {" "}
@@ -49,7 +49,7 @@ const Seats = ({
                 </div>
               ))}
           </div>
-          <div className="mt-2 mr-12 -ml-3 flex justify-end">
+          <div className="flex justify-end">
             <BookingCheckout
               choosenSeats={choosenSeats}
               choosenTravel={choosenTravel}
@@ -57,9 +57,9 @@ const Seats = ({
           </div>
         </div>
       </div>
-     
+
     </div>
-    
+
   );
 };
 
