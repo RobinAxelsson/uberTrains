@@ -10,7 +10,7 @@ const TravelForm = () => {
   const [date, setDate] = useState(['2022-02-22']);
   const [choosenTravel, setChoosenTravel] = useState([])
   const [choosenSeats, setChoosenSeats] = useState([])
-
+  const [showForm,setShowForm] = useState(true)
   console.log(choosenSeats.length)
 
   const handleSubmit = (e) => {
@@ -31,6 +31,7 @@ const TravelForm = () => {
         if (data) {
           setAvailableTravels(data);
           setShowTravels(true);
+          setShowForm(false)
         }
       });
     console.log(availableTravels);
@@ -56,11 +57,13 @@ const TravelForm = () => {
 
   return (
 
- 
-    <div className="">
-  
+    
+    <div className="mb-4 flex flex-col">
+      
+      
+       {showForm && 
       <div className="flex justify-center items-center">
-   
+
         <form className="w-11/12 tablet:w-6/12 laptop:w-4/12 rounded-md border-white border-8 border-opacity-5 bg-white bg-opacity-75 mt-6 flex-col flex justify-center items-center" onSubmit={handleSubmit}>
           <div className="w-full border-white border-8 border-opacity-5 flex justify-center items-center">
             <h2 className="font-bold text-4xl">Vart vill du resa?</h2>
@@ -99,7 +102,7 @@ const TravelForm = () => {
             Fortsätt
           </button>
         </form>
-      </div>
+      </div> }
       <div>
         {showTravels && (
           <ListTravels
