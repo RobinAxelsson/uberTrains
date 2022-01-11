@@ -3,7 +3,6 @@ import { createQueryBuilder } from "typeorm";
 import { Booking } from "../models/Booking.entity";
 import { BookingManager } from "../services/BookingManager";
 import { GetPriceDto } from "../dtos/GetPriceDto";
-import { BookingDto } from "../dtos/BookingDto";
 import { PaymentManager, PaymentManagerStub } from "../services/PaymentManager";
 import { mailService, mailServiceStub } from "../services/MailService";
 
@@ -12,7 +11,6 @@ router.post("/api/booking", async (req: Request, res: Response) => {
   try {
 
     let bookingDto = await req.body;
-    if (bookingDto instanceof BookingDto  === false) throw new Error("input invalid");
 
     console.log({ parsedRequestBody: JSON.stringify(bookingDto, null, '\t') });
 

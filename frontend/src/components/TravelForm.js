@@ -7,7 +7,7 @@ const TravelForm = () => {
   const [availableTravels, setAvailableTravels] = useState([]);
   const [start, setStart] = useState(['Göteborg']);
   const [end, setEnd] = useState(['Stockholm']);
-  const [date, setDate] = useState(['2012-04-23']);
+  const [date, setDate] = useState(['2022-02-22']);
   const [choosenTravel, setChoosenTravel] = useState([])
   const [choosenSeats, setChoosenSeats] = useState([])
 
@@ -120,12 +120,6 @@ const TravelForm = () => {
           />
         )}
       </div>
-      <div>{ showSeats && <Seats 
-      availableTravels={availableTravels} 
-      setChoosenSeats={setChoosenSeats} 
-      choosenSeats={choosenSeats} 
-      choosenTravel={choosenTravel}
-      />}</div>
     </div>
 
   );
