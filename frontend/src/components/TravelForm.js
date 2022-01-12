@@ -24,11 +24,7 @@ const TravelForm = () => {
   const [choosenTravel, setChoosenTravel] = useState([]);
   const [choosenSeats, setChoosenSeats] = useState([]);
   const [allLocations,setAllLocations] = useState([])
-  const [searchTerm,setSearchTerm] = useState("")
-
-  console.log("loc", allLocations.map((arr) => {return arr}))
-
-  console.log(choosenSeats.length);
+  const [filteredData, setFilteredData] = useState([])
 
   useEffect (()=> {
     let canceled = false;
@@ -45,23 +41,12 @@ const TravelForm = () => {
     }
   }, []);
 
-  /* const filterLocation = e => {
+   const filterLocation = e => {
     const search = e.target.value.toLowerCase()
     console.log(search)
     const filteredLocations = allLocations.map((arr) => arr.filter(f => f.location.toLowerCase().includes(search)))
-    return filteredLocations;
-   // setAllLocations(filteredLocations)
-  } */
-
-  const filterByLocation = (val) => {
- // const filteredItems = val.filter((f) => {return f.location})
-  console.log("searc",searchTerm)
-    if (searchTerm === ""){
-      return val;
-    } else if (val.filter((f) => f.location.toLowerCase().includes(searchTerm.toLowerCase()))){
-      return val;
-    } else {
-      return false;}
+    
+    setFilteredData(filteredLocations)
   } 
   
   const handleSubmit = (e) => {
@@ -88,6 +73,7 @@ const TravelForm = () => {
       });
     console.log(availableTravels);
   };
+  console.log("filter",filteredData)
 
   return (
     <div className="">
@@ -105,13 +91,12 @@ const TravelForm = () => {
               className="w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
               placeholder="Från:"
               required
-              value={searchTerm}
-              onChange={(e) => {setStart(e.target.value); setSearchTerm(e.target.value) /*filterLocation(e)*/}}
+              value={start}
+              onChange={(e) => {setStart(e.target.value);  filterLocation(e)}}
             />
           </div>
           <ul>
-            {allLocations && allLocations
-            .filter(filterByLocation)
+            {filteredData && filteredData
             .map((arr)=>
              arr
              .map((item) =>
