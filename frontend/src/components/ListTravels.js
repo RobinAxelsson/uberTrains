@@ -17,6 +17,12 @@ const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoose
                   </th>
                   <th
                     scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider "
+                  >
+                    Restid
+                  </th>
+                  <th
+                    scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
                     Tåg
@@ -45,12 +51,11 @@ const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoose
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 ">
                             {new Date(i.dateTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " | " + new Date(i.dateTime).toLocaleDateString()}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {i.eventType}
-                          </td>
                         </tr>
                       ))}
-
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        4 h 0 min (hard coded)
+                      </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         {item.tripName}
                       </td>
