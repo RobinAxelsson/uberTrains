@@ -141,7 +141,9 @@ Nu ska det öppnas ett webbläsarfönster med vår frontend. Får du felmeddelan
 ### Avsluta sessioner
 
 För att avsluta går du till respektive terminalfönster och klickar `"ctrl+c"`
+## Hur testar man i mobilen?
 
+Det går att köra projektet över ditt lokala nätverk så att andra devices uppkopplade till ditt nätverk kan anropa appen. Se [GUIDE](./how-to-test-mobile.md)
 ## Dev Notes
 
 >[How to setup a typescript project for node](https://khalilstemmler.com/blogs/typescript/node-starter-project/)
