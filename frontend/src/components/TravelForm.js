@@ -24,6 +24,7 @@ const TravelForm = () => {
   const [choosenTravel, setChoosenTravel] = useState([]);
   const [choosenSeats, setChoosenSeats] = useState([]);
   const [allLocations,setAllLocations] = useState([])
+  const [searchTerm,setSearchTerm] = useState("")
 
   console.log("loc", allLocations.map((arr) => {return arr}))
 
@@ -44,12 +45,23 @@ const TravelForm = () => {
     }
   }, []);
 
-   const filterLocation = e => {
+  /* const filterLocation = e => {
     const search = e.target.value.toLowerCase()
     console.log(search)
     const filteredLocations = allLocations.map((arr) => arr.filter(f => f.location.toLowerCase().includes(search)))
-    
-    setAllLocations(filteredLocations)
+    return filteredLocations;
+   // setAllLocations(filteredLocations)
+  } */
+
+  const filterByLocation = (val) => {
+ // const filteredItems = val.filter((f) => {return f.location})
+  console.log("searc",searchTerm)
+    if (searchTerm === ""){
+      return val;
+    } else if (val.filter((f) => f.location.toLowerCase().includes(searchTerm.toLowerCase()))){
+      return val;
+    } else {
+      return false;}
   } 
   
   const handleSubmit = (e) => {
@@ -93,13 +105,16 @@ const TravelForm = () => {
               className="w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
               placeholder="Från:"
               required
-              value={start}
-              onChange={(e) => {setStart(e.target.value); filterLocation(e)}}
+              value={searchTerm}
+              onChange={(e) => {setStart(e.target.value); setSearchTerm(e.target.value) /*filterLocation(e)*/}}
             />
           </div>
           <ul>
-            {allLocations.map((arr)=>
-             arr.map((item) =>
+            {allLocations && allLocations
+            .filter(filterByLocation)
+            .map((arr)=>
+             arr
+             .map((item) =>
               <li key={item.id}>{item.location}</li>
             ))}
           </ul>
