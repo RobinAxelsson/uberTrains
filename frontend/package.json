@@ -31,6 +31,7 @@
   },
   "scripts": {
     "start": "craco start",
+    "start:dev": "cross-env REACT_APP_ENVIRONMENT=Development craco start",
     "build": "craco build",
     "build-no-warn": "cross-env CI=false craco build",
     "test": "craco test",

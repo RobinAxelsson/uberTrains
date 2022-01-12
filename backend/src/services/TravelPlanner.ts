@@ -1,10 +1,7 @@
 import {
   Brackets,
   createQueryBuilder,
-  getManager,
-  getRepository,
 } from "typeorm";
-import { RouteEvent } from "../models/RouteEvent.entity";
 import { TravelPlan } from "../models/TravelPlan.entity";
 
 export class TravelPlanner {
@@ -17,6 +14,15 @@ export class TravelPlanner {
       .leftJoinAndSelect("Seat.booking", "Booking")
       .where("travelPlan.id = :id", { id: id })
       .getOne()) as TravelPlan;
+  }
+  async getAllTravelPlans() {
+    return (await createQueryBuilder(TravelPlan)
+      .leftJoinAndSelect("TravelPlan.routeEvents", "RouteEvent")
+      .leftJoinAndSelect("TravelPlan.trainUnits", "TrainUnit")
+      .leftJoinAndSelect("TravelPlan.priceModel", "PriceModel")
+      .leftJoinAndSelect("TrainUnit.seats", "Seat")
+      .leftJoinAndSelect("Seat.booking", "Booking")
+      .getMany()) as TravelPlan[];
   }
   async getFullTravelPlanByStartStopDate(start: string, end: string, date: string) {
     

@@ -1,22 +1,20 @@
 import StripeCheckout from "react-stripe-checkout";
 import { toast } from "react-toastify";
-import { postBooking } from "../services/BookingClient";
-import { sendBookingInfo } from "../services/MailClient";
+import { BOOKING_URL } from "../constants/urls";
+import { postBooking } from "../services/BackendClient";
 
 toast.configure();
 
 function BookingCheckout({ choosenSeats, choosenTravel }) {
   async function handleToken(token) {
     const { card, email, id } = token;
-    const response = await postBooking(choosenSeats, choosenTravel, id, email, card.name)
+    const response = await postBooking(choosenSeats, choosenTravel, id, email, card.name, BOOKING_URL)
     
     if(response.status !== 200){
-      console.log("BackendClient.postBooking failed")
+      console.log("BackendClient.postBooking failed");
+      console.log(response?.message);
       return
     }
-    
-    const booking = response.data;
-    await sendBookingInfo(booking, card.name, email);
   }
 
   return (
