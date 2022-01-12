@@ -51,6 +51,9 @@ const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoose
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 ">
                             {new Date(i.dateTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " | " + new Date(i.dateTime).toLocaleDateString()}
                           </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
+                            {i.event}
+                          </td>
                         </tr>
                       ))}
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
