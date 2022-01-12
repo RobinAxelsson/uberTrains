@@ -40,6 +40,16 @@ router.get("/api/travelPlan/:id", async (req: Request, res: Response) => {
     res.json(err);
   }
 });
+router.get("/api/travelPlan", async (req: Request, res: Response) => {
+  try {
+    const travelPlanner = new TravelPlanner();
+    const travelPlans = await travelPlanner.getAllTravelPlans();
+    res.json(travelPlans);
+  } catch (err) {
+    console.log("Failed!\nError:\n", err);
+    res.json(err);
+  }
+});
 
 router.post("/api/travelPlan", async (req: Request, res: Response) => {
   try {
