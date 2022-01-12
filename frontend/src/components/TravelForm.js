@@ -23,6 +23,7 @@ const TravelForm = () => {
   const [date, setDate] = useState([dateVal]);
   const [choosenTravel, setChoosenTravel] = useState([]);
   const [choosenSeats, setChoosenSeats] = useState([]);
+  const [showForm,setShowForm] = useState(true)
 
   console.log(choosenSeats.length);
 
@@ -45,7 +46,7 @@ const TravelForm = () => {
         if (data) {
           setAvailableTravels(data);
           setShowTravels(true);
-          //setShowForm(false)
+          setShowForm(false)
         }
       });
     console.log(availableTravels);
@@ -54,6 +55,7 @@ const TravelForm = () => {
   return (
     <div className="">
       <div className="flex justify-center items-center">
+        {showForm && 
         <form
           className="w-11/12 tablet:w-6/12 laptop:w-4/12 rounded-md border-white border-8 border-opacity-5 bg-white bg-opacity-75 mt-6 flex-col flex justify-center items-center"
           onSubmit={handleSubmit}
@@ -94,6 +96,7 @@ const TravelForm = () => {
             Fortsätt
           </button>
         </form>
+        }
         {process.env.REACT_APP_ENVIRONMENT === "Development" && (
           <button
             onClick={async () => {
