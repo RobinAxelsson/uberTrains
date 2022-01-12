@@ -4,6 +4,7 @@ import ListTravels from "./ListTravels";
 import { JOURNEY_URL } from "../constants/urls";
 import { getAllTravelPlans } from "../services/BackendClient";
 import { deleteAllBookings } from "../services/BackendClient";
+import BookingReceipt from "./BookingReceipt";
 const TravelForm = () => {
   let startVal = "";
   let endVal = "";
@@ -24,7 +25,7 @@ const TravelForm = () => {
   const [choosenTravel, setChoosenTravel] = useState([]);
   const [choosenSeats, setChoosenSeats] = useState([]);
   const [showForm,setShowForm] = useState(true)
-
+  const [showReceipt, setShowReceipt] = useState(false);
   console.log(choosenSeats.length);
 
   const handleSubmit = (e) => {
@@ -143,8 +144,13 @@ const TravelForm = () => {
             setChoosenSeats={setChoosenSeats}
             choosenSeats={choosenSeats}
             choosenTravel={choosenTravel}
+            setShowReceipt={setShowReceipt}
+            setShowSeats={setShowSeats}
           />
         )}
+      </div>
+      <div>
+        {showReceipt && (<BookingReceipt />)}
       </div>
     </div>
   );
