@@ -27,6 +27,7 @@ const TravelForm = () => {
   const [allLocations,setAllLocations] = useState([])
   const [filteredData, setFilteredData] = useState([])
   const [showForm,setShowForm] = useState(true)
+  const [endStationFilter,setEndStationFilter] = useState([])
 
   useEffect (()=> {
     let canceled = false;
@@ -58,14 +59,26 @@ const TravelForm = () => {
      });
   },[]);
 
-  console.log("stations",stations)
-
    const filterLocation = e => {
     const search = e.target.value.toLowerCase()
-    console.log(search)
-    const filteredLocations = allLocations.map((arr) => arr.filter(f => f.location.toLowerCase().includes(search)))
     
-    setFilteredData(filteredLocations)
+    const filteredStations = stations.filter((val) => { return val.name.toLowerCase().includes(search.toLowerCase())})
+    if (search === ""){
+      setFilteredData([])
+    }else {
+      setFilteredData(filteredStations)
+    }
+  } 
+
+  const filterEndStation = e => {
+    const search = e.target.value.toLowerCase()
+    
+    const filteredStations = stations.filter((val) => { return val.name.toLowerCase().includes(search.toLowerCase())})
+    if (search === ""){
+      setEndStationFilter([])
+    }else {
+      setEndStationFilter(filteredStations)
+    }
   } 
   
   const handleSubmit = (e) => {
@@ -117,11 +130,9 @@ const TravelForm = () => {
           </div>
           <ul>
             {filteredData && filteredData
-            .map((arr)=>
-             arr
              .map((item) =>
-              <li key={item.id}>{item.location}</li>
-            ))}
+              <li onClick={() => {setStart(item.name); setFilteredData([])}} key={item.id}>{item.name}</li>
+            )}
           </ul>
           <div className="mt-1 w-11/12">
             <input
@@ -130,9 +141,15 @@ const TravelForm = () => {
               placeholder="Till:"
               required
               value={end}
-              onChange={(e) => setEnd(e.target.value)}
+              onChange={(e) => {setEnd(e.target.value); filterEndStation(e)}}
             />
           </div>
+          <ul>
+            {endStationFilter && endStationFilter
+             .map((item) =>
+              <li onClick={() => {setEnd(item.name); setEndStationFilter([])}} key={item.id}>{item.name}</li>
+            )}
+          </ul>
           <div className="mt-1 w-11/12">
             <input
               type="date"
