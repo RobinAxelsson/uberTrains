@@ -32,7 +32,7 @@ const BookingReceipt = (prop) => {
         <p className="text-center top-0 left-0 right-0 mt-2">
          <strong className="text-2xl ">Sådär ja!</strong>
          <br></br>
-         <span className="text-lg underline">Din bokning är betald och redo</span><br />
+         <span className="text-lg underline">Din resa är betald och redo</span><br />
         <span className="text-base underline">En bokningsbekräftelse skall ha skickats till din e-post</span>
          
         </p>
