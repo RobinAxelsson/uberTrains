@@ -2,7 +2,7 @@ import { FAKEBOOKING_URL } from "../constants/urls";
 import { postBooking } from "../services/BackendClient";
 import BookingCheckout from "./BookingCheckout";
 
-const Seats = ({ setChoosenSeats, choosenSeats, choosenTravel }) => {
+const Seats = ({ setChoosenSeats, choosenSeats, choosenTravel, setShowReceipt, setShowSeats, setBookingNumber}) => {
   return (
     <div className="mb-6 w-11/12 tablet:w-6/12 laptop:w-4/12 mt-2 flex justify-center items-center">
       <div className="mt-2 flex justify-center justify-around bg-white bg-opacity-75 rounded-md shadow-md w-4/5">
@@ -72,7 +72,11 @@ const Seats = ({ setChoosenSeats, choosenSeats, choosenTravel }) => {
             <BookingCheckout
               choosenSeats={choosenSeats}
               choosenTravel={choosenTravel}
+              setShowReceipt={setShowReceipt}
+              setShowSeats={setShowSeats}
+              setBookingNumber={setBookingNumber}
             />
+       
           </div>
         </div>
       </div>
