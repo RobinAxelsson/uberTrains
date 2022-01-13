@@ -16,7 +16,6 @@ function BookingCheckout({ choosenSeats, choosenTravel, setShowReceipt, setShowS
       return
     }
 else if(response.status === 200) {
-  console.log("Booking number: " + response.data.bookingNumber);
   return(
     setBookingNumber(response.data.bookingNumber),
     setShowReceipt(true),

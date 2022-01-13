@@ -3,24 +3,7 @@ const BookingReceipt = (prop) => {
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
       }
-    function getBookedSeats() {
-        let seats = [];
-        prop.choosenTravel.trainUnits.forEach(t => {
-            t.seats.forEach(s => {
-              prop.choosenSeats.forEach(cs => {
-                if(s.id === cs) {
-                        if(t.name.startsWith("Vagn")) {
-                            seats.push(t.name + ": Säte " + s.seatNumber.toUpperCase());
-                        }
-                        else {
-                            seats.push("Vagn " + t.name + ": Säte " + s.seatNumber.toUpperCase());
-                        }
-                }   
-            })  
-            })
-        })
-        return seats;
-    }
+    
     function getBookedSeatsString() {
         let seats = "";
         prop.choosenTravel.trainUnits.forEach(t => {
@@ -39,12 +22,6 @@ const BookingReceipt = (prop) => {
         })
         return seats.slice(0, seats.length - 3);
     }
-class seatMapper {
-constructor(seatNumber, wagon) {
-    this.seatNumber = seatNumber;
-    this.wagon = wagon;
-}
-}
     return (
         
       <div className="mb-4 flex flex-col">

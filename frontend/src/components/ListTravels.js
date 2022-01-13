@@ -1,5 +1,7 @@
 // import { Link } from "react-router-dom";
-
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoosenTravel }) => {
   return (
     <div className="w-full mt-2 flex justify-center items-center">
@@ -46,7 +48,7 @@ const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoose
                       {item.routeEvents.map((i) => (
                         <tr key={item.dateTime}>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
-                            {i.location}
+                            {capitalizeFirstLetter(i.location)}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 ">
                             {new Date(i.dateTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " | " + new Date(i.dateTime).toLocaleDateString()}
