@@ -15,6 +15,7 @@ const TravelForm = () => {
     dateVal = "2022-02-22";
   }
 
+  const [stations,setStations] = useState([])
   const [showTravels, setShowTravels] = useState(false);
   const [showSeats, setShowSeats] = useState(false);
   const [availableTravels, setAvailableTravels] = useState([]);
@@ -41,6 +42,23 @@ const TravelForm = () => {
       canceled = true;
     }
   }, []);
+
+   useEffect(() => {
+     fetch("stations.json", {
+       headers: {
+         "Content-typ": "application/json",
+         Accept: "application/json",
+       },
+     })
+     .then((res)=> {
+       return res.json();
+     })
+     .then((data)=>{
+       setStations(data)
+     });
+  },[]);
+
+  console.log("stations",stations)
 
    const filterLocation = e => {
     const search = e.target.value.toLowerCase()
