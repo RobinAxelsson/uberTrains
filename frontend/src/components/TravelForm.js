@@ -128,12 +128,16 @@ const TravelForm = () => {
               onChange={(e) => {setStart(e.target.value);  filterLocation(e)}}
             />
           </div>
+          {filteredData.length != 0 &&
+          <div className="bg-white w-11/12 border-white border-8 border-opacity-5">
           <ul>
             {filteredData && filteredData
              .map((item) =>
-              <li onClick={() => {setStart(item.name); setFilteredData([])}} key={item.id}>{item.name}</li>
+              <li className="cursor-pointer" onClick={() => {setStart(item.name); setFilteredData([])}} key={item.id}>{item.name}</li>
             )}
           </ul>
+          </div> 
+            }   
           <div className="mt-1 w-11/12">
             <input
               type="text"
@@ -144,12 +148,16 @@ const TravelForm = () => {
               onChange={(e) => {setEnd(e.target.value); filterEndStation(e)}}
             />
           </div>
+          {endStationFilter.length != 0 &&
+          <div className="bg-white w-11/12 border-white border-8 border-opacity-5">
           <ul>
             {endStationFilter && endStationFilter
              .map((item) =>
-              <li onClick={() => {setEnd(item.name); setEndStationFilter([])}} key={item.id}>{item.name}</li>
+              <li className="cursor-pointer" onClick={() => {setEnd(item.name); setEndStationFilter([])}} key={item.id}>{item.name}</li>
             )}
           </ul>
+          </div>
+          }
           <div className="mt-1 w-11/12">
             <input
               type="date"
