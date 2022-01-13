@@ -114,7 +114,7 @@ export class BookingManager {
     }
 
     const dbBooking = await Booking.save(booking);
-    let mailResponse = await this.mailService.sendEmail(dbBooking, seats);
+    let mailResponse = await this.mailService.sendEmail(dbBooking, seats, routeEvents);
 
     console.log(mailResponse);
     return dbBooking;

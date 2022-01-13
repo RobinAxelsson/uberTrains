@@ -1,5 +1,7 @@
 // import { Link } from "react-router-dom";
-
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoosenTravel }) => {
   return (
     <div className="w-full mt-2 flex justify-center items-center">
@@ -14,6 +16,12 @@ const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoose
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider "
                   >
                     Resa
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider "
+                  >
+                    Restid
                   </th>
                   <th
                     scope="col"
@@ -40,17 +48,19 @@ const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoose
                       {item.routeEvents.map((i) => (
                         <tr key={item.dateTime}>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
-                            {i.location}
+                            {capitalizeFirstLetter(i.location)}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 ">
                             {new Date(i.dateTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " | " + new Date(i.dateTime).toLocaleDateString()}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {i.eventType}
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
+                            {i.event}
                           </td>
                         </tr>
                       ))}
-
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        4 h 0 min (hard coded)
+                      </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         {item.tripName}
                       </td>
