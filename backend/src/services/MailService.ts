@@ -3,7 +3,7 @@ import { Booking } from '../models/Booking.entity';
 import { RouteEvent } from '../models/RouteEvent.entity';
 import * as fs from 'fs';
 import { Seat } from '../models/Seat.entity';
-import { Guid } from './UtilityFunctions';
+import { Guid, StringFormatting } from './UtilityFunctions';
 export interface IMailService {
   sendEmail(
     booking: Booking,
@@ -54,7 +54,7 @@ export class mailService implements IMailService {
     htmlData = await this.formatStations(booking, htmlData);
     return htmlData;
   }
-
+ 
   private async formatSeats(seats: Seat[], htmlData: string) {
     console.log(seats);
 
@@ -102,11 +102,11 @@ export class mailService implements IMailService {
   }
   private async formatStations(booking: Booking, htmlData: string) {
     htmlData = htmlData
-      .replace('BOOKINGSTARTSTATION', booking.routeEvents[0].location)
+      .replace('BOOKINGSTARTSTATION', StringFormatting.capitalizeFirstLetter(booking.routeEvents[0].location))
       .replace(
         'BOOKINGENDSTATION',
-        booking.routeEvents[booking.routeEvents.length - 1].location
-      );
+        StringFormatting.capitalizeFirstLetter(booking.routeEvents[booking.routeEvents.length - 1].location
+      ));
     return htmlData;
   }
 }

@@ -26,3 +26,8 @@ export class Guid {
     return result;
   }
 }
+export class StringFormatting {
+  static capitalizeFirstLetter(input:string) {
+    return input.charAt(0).toUpperCase() + input.slice(1);
+  }
+}
