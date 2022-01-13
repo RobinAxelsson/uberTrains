@@ -120,6 +120,7 @@ const TravelForm = () => {
           </div>
           <div className="mt-4 w-11/12">
             <input
+              maxlength="30"
               type="text"
               className="w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
               placeholder="Från:"
@@ -140,6 +141,7 @@ const TravelForm = () => {
             }   
           <div className="mt-1 w-11/12">
             <input
+              maxlength="30"
               type="text"
               className="w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block sm:text-sm border-gray-300 rounded-md"
               placeholder="Till:"
@@ -161,6 +163,7 @@ const TravelForm = () => {
           <div className="mt-1 w-11/12">
             <input
               type="date"
+              max="2999-12-31"
               className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-7/12 sm:text-sm border-gray-300 rounded-md"
               required
               value={date}
