@@ -4,7 +4,7 @@ import { BOOKING_URL } from "../constants/urls";
 import { postBooking } from "../services/BackendClient";
 
 toast.configure();
-function BookingCheckout({ choosenSeats, choosenTravel, setShowReceipt, setShowSeats}) {
+function BookingCheckout({ choosenSeats, choosenTravel, setShowReceipt, setShowSeats, setBookingNumber}) {
 
   async function handleToken(token) {
     const { card, email, id } = token;
@@ -15,12 +15,15 @@ function BookingCheckout({ choosenSeats, choosenTravel, setShowReceipt, setShowS
       console.log(response?.message);
       return
     }
-    console.log("Purchase complete", choosenTravel);
-    console.log(setShowReceipt);
-    return(
-      setShowReceipt(true),
-      setShowSeats(false)
-    );
+else if(response.status === 200) {
+  console.log("Booking number: " + response.data.bookingNumber);
+  return(
+    setBookingNumber(response.data.bookingNumber),
+    setShowReceipt(true),
+    setShowSeats(false)
+  );
+}
+   
   }
 
   return (

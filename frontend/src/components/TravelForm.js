@@ -26,6 +26,7 @@ const TravelForm = () => {
   const [choosenSeats, setChoosenSeats] = useState([]);
   const [showForm,setShowForm] = useState(true)
   const [showReceipt, setShowReceipt] = useState(false);
+  const [bookingNumber, setBookingNumber] = useState("");
   console.log(choosenSeats.length);
 
   const handleSubmit = (e) => {
@@ -50,7 +51,6 @@ const TravelForm = () => {
           setShowForm(false)
         }
       });
-    console.log(availableTravels);
   };
 
   return (
@@ -146,11 +146,17 @@ const TravelForm = () => {
             choosenTravel={choosenTravel}
             setShowReceipt={setShowReceipt}
             setShowSeats={setShowSeats}
+            setBookingNumber={setBookingNumber}
           />
         )}
       </div>
       <div>
-        {showReceipt && (<BookingReceipt />)}
+        
+        {showReceipt && (<BookingReceipt 
+        choosenSeats={choosenSeats}
+        choosenTravel={choosenTravel}
+        bookingNumber={bookingNumber}
+        />)}
       </div>
     </div>
   );
