@@ -12,7 +12,7 @@ const TravelForm = () => {
 
   if (process.env.REACT_APP_ENVIRONMENT === "Development") {
     startVal = "Göteborg";
-    endVal = "Stockholm";
+    endVal = "Jönköping";
     dateVal = "2022-02-22";
   }
 
@@ -30,7 +30,6 @@ const TravelForm = () => {
   const [endStationFilter,setEndStationFilter] = useState([])
   const [showReceipt, setShowReceipt] = useState(false);
   const [bookingNumber, setBookingNumber] = useState("");
-  console.log(choosenSeats.length);
 
    useEffect(() => {
      fetch("stations.json", {
@@ -194,6 +193,8 @@ const TravelForm = () => {
       <div>
         {showTravels && (
           <ListTravels
+            startStation={[start]}
+            endStation={[end]}
             availableTravels={availableTravels}
             setShowTravels={setShowTravels}
             setShowSeats={setShowSeats}
