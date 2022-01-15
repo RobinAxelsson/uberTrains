@@ -12,7 +12,7 @@ const TravelForm = () => {
 
   if (process.env.REACT_APP_ENVIRONMENT === "Development") {
     startVal = "Göteborg";
-    endVal = "Stockholm";
+    endVal = "Jönköping";
     dateVal = "2022-02-22";
   }
 
@@ -25,28 +25,11 @@ const TravelForm = () => {
   const [date, setDate] = useState([dateVal]);
   const [choosenTravel, setChoosenTravel] = useState([]);
   const [choosenSeats, setChoosenSeats] = useState([]);
-  const [allLocations,setAllLocations] = useState([])
   const [filteredData, setFilteredData] = useState([])
   const [showForm,setShowForm] = useState(true)
   const [endStationFilter,setEndStationFilter] = useState([])
-
-  useEffect (()=> {
-    let canceled = false;
-    getAllTravelPlans().then((data)=>{
-      if (canceled) {
-        return;
-      }
-      let location = data.map((item)=> item.routeEvents.map((items)=> {return items})
-      )
-      setAllLocations(location)
-    });
-    return () => {
-      canceled = true;
-    }
-  }, []);
   const [showReceipt, setShowReceipt] = useState(false);
   const [bookingNumber, setBookingNumber] = useState("");
-  console.log(choosenSeats.length);
 
    useEffect(() => {
      fetch("stations.json", {
@@ -132,7 +115,7 @@ const TravelForm = () => {
               onChange={(e) => {setStart(e.target.value);  filterLocation(e)}}
             />
           </div>
-          {filteredData.length != 0 &&
+          {filteredData.length !== 0 &&
           <div className="bg-white w-11/12 border-white border-8 border-opacity-5">
           <ul>
             {filteredData && filteredData
@@ -153,7 +136,7 @@ const TravelForm = () => {
               onChange={(e) => {setEnd(e.target.value); filterEndStation(e)}}
             />
           </div>
-          {endStationFilter.length != 0 &&
+          {endStationFilter.length !== 0 &&
           <div className="bg-white w-11/12 border-white border-8 border-opacity-5">
           <ul>
             {endStationFilter && endStationFilter
@@ -210,6 +193,8 @@ const TravelForm = () => {
       <div>
         {showTravels && (
           <ListTravels
+            startStation={[start]}
+            endStation={[end]}
             availableTravels={availableTravels}
             setShowTravels={setShowTravels}
             setShowSeats={setShowSeats}
