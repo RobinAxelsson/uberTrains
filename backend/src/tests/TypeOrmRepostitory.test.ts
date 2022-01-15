@@ -4,7 +4,7 @@ import { TravelPlan } from "../models/TravelPlan.entity";
 import { TrainUnit } from "../models/TrainUnit.entity";
 import { Seat } from "../models/Seat.entity";
 import { RouteEvent } from "../models/RouteEvent.entity";
-import { seed } from "../services/Seeder";
+import { seed } from "../seeder/Seeder";
 import { TravelPlanner } from "../services/TravelPlanner";
 import { BookingDto } from "../dtos/BookingDto";
 import { BookingManager } from "../services/BookingManager";

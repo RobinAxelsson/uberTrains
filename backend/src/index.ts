@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
-import { seed, seedTravelPlan } from './services/Seeder';
+import { seed, seedDate } from './seeder/Seeder';
 import { testRouter } from './routes/test.router';
 import { travelPlanRouter } from './routes/travelPlan.router';
 import { bookingRouter } from './routes/booking.router';
@@ -29,9 +29,9 @@ const corsOptions = {
 if (process.env.NODE_ENV === "Development") {
   createConnection()
     .then(async () => {
-      await seedTravelPlan('2012-04-23');
-      await seedTravelPlan('2022-01-11');
-      await seedTravelPlan('2022-02-22');
+      await seedDate('2012-04-23');
+      await seedDate('2022-01-11');
+      await seedDate('2022-02-22');
     })
     .catch((error) => console.log(error));
 
