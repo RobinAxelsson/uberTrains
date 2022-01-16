@@ -5,6 +5,8 @@ Systemet är webbaserat och använder sig av följande teknologier:
 
 `Node.js | Express.js | React | Sqlite | Tailwind | TypeORM`
 
+![ubertrains frontpage](img/2022-01-16-21-55-10.png)
+
 ## Verktyg som behövs
 
 - Skapa konto på github.com
