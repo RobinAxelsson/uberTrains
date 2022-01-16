@@ -19,6 +19,8 @@ Systemet är webbaserat och använder sig av följande teknologier:
     - [Avsluta sessioner](#avsluta-sessioner)
   - [Dev Notes](#dev-notes)
 
+![ubertrains frontpage](img/2022-01-16-21-55-10.png)
+
 ## Verktyg som behövs
 
 - Skapa konto på github.com
