@@ -70,6 +70,8 @@ else if(response.status === 200) {
   return (
     <div className="mb-3 mt-3">
       <StripeCheckout
+    
+        locale= "sv"
         stripeKey="pk_test_51K7JpMAwp97GmluX8sVfd1zSkEGFdj6fAaqbqSH40qdWc4RcL12RSJ8jxNkHR2fDCpe1f3T3xzzEzuKZhsNQ8QKE00DVMxtEkG"
         token={handleToken}
         name="uberTrains"
@@ -78,8 +80,6 @@ else if(response.status === 200) {
         amount={choosenSeats.length * choosenTravel.price * 100}
         currency="SEK"
         label="Betala"
-        panelLabel="Betala"
-       
         
       />
     <Toast toastlist={list} position="top-right" setList={setList} />
