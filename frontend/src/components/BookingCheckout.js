@@ -48,7 +48,7 @@ else if(response.status === 200) {
       case 'info':
         toastProperties = {
           id: list.length+1,
-          title: 'Vänligen Vänta!',
+          title: 'Vänligen vänta!',
           description: 'Behandlar betalningen ...',
           backgroundColor: '#e0702b'
         }
