@@ -17,7 +17,7 @@ const TravelForm = () => {
     dateVal = "2022-02-22";
   }
 
-  const [stations,setStations] = useState([])
+  const [stations, setStations] = useState([])
   const [showTravels, setShowTravels] = useState(false);
   const [showSeats, setShowSeats] = useState(false);
   const [availableTravels, setAvailableTravels] = useState([]);
@@ -32,49 +32,49 @@ const TravelForm = () => {
   const [showReceipt, setShowReceipt] = useState(false);
   const [bookingNumber, setBookingNumber] = useState("");
 
-   useEffect(() => {
-     fetch("stations.json", {
-       headers: {
-         "Content-typ": "application/json",
-         Accept: "application/json",
-       },
-     })
-     .then((res)=> {
-       return res.json();
-     })
-     .then((data)=>{
-       setStations(data)
-     });
-  },[]);
+  useEffect(() => {
+    fetch("stations.json", {
+      headers: {
+        "Content-typ": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setStations(data)
+      });
+  }, []);
 
-   const filterLocation = e => {
+  const filterLocation = e => {
     const search = e.target.value.toLowerCase()
-    
-    const filteredStations = stations.filter((val) => { return val.name.toLowerCase().includes(search.toLowerCase())})
-    if (search === ""){
+
+    const filteredStations = stations.filter((val) => { return val.name.toLowerCase().includes(search.toLowerCase()) })
+    if (search === "") {
       setFilteredData([])
-    }else {
+    } else {
       setFilteredData(filteredStations)
     }
-  } 
+  }
 
   const filterEndStation = e => {
     const search = e.target.value.toLowerCase()
-    
-    const filteredStations = stations.filter((val) => { return val.name.toLowerCase().includes(search.toLowerCase())})
-    if (search === ""){
+
+    const filteredStations = stations.filter((val) => { return val.name.toLowerCase().includes(search.toLowerCase()) })
+    if (search === "") {
       setEndStationFilter([])
-    }else {
+    } else {
       setEndStationFilter(filteredStations)
     }
-  } 
-  
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     let urlStart = encodeURIComponent(start).toLowerCase();
     let urlEnd = encodeURIComponent(end).toLowerCase();
-    fetch(`${JOURNEY_URL}?date=${date}&start=${urlStart}&end=${urlEnd}`, {
+    date && fetch(`${JOURNEY_URL}?date=${date}&start=${urlStart}&end=${urlEnd}`, {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -92,7 +92,7 @@ const TravelForm = () => {
         }
       });
   };
-  console.log("filter",filteredData)
+  console.log("filter", filteredData)
 
   return (
     <div className="">
@@ -217,11 +217,11 @@ const TravelForm = () => {
         )}
       </div>
       <div>
-        
-        {showReceipt && (<BookingReceipt 
-        choosenSeats={choosenSeats}
-        choosenTravel={choosenTravel}
-        bookingNumber={bookingNumber}
+
+        {showReceipt && (<BookingReceipt
+          choosenSeats={choosenSeats}
+          choosenTravel={choosenTravel}
+          bookingNumber={bookingNumber}
         />)}
       </div>
     </div>
