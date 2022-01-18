@@ -6,6 +6,7 @@ import { getAllTravelPlans } from "../services/BackendClient";
 import { deleteAllBookings } from "../services/BackendClient";
 import BookingReceipt from "./BookingReceipt";
 const TravelForm = () => {
+
   let startVal = "";
   let endVal = "";
   let dateVal = new Date().toISOString().split("T")[0];
@@ -20,9 +21,9 @@ const TravelForm = () => {
   const [showTravels, setShowTravels] = useState(false);
   const [showSeats, setShowSeats] = useState(false);
   const [availableTravels, setAvailableTravels] = useState([]);
-  const [start, setStart] = useState([startVal]);
-  const [end, setEnd] = useState([endVal]);
-  const [date, setDate] = useState([dateVal]);
+  const [start, setStart] = useState(startVal);
+  const [end, setEnd] = useState(endVal);
+  const [date, setDate] = useState(dateVal);
   const [choosenTravel, setChoosenTravel] = useState([]);
   const [choosenSeats, setChoosenSeats] = useState([]);
   const [filteredData, setFilteredData] = useState([])

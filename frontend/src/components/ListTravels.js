@@ -15,13 +15,14 @@ const cell = (cellFont, vals) => (
 );
 
 const ListTravels = ({
-  startStation: [[start]],
-  endStation: [[end]],
+  startStation: [start],
+  endStation: [end],
   availableTravels,
   setShowTravels,
   setShowSeats,
   setChoosenTravel,
 }) => {
+  if(typeof start !== 'string' && typeof start !== 'string') throw new Error(`Input stations invalid in TravelForm. \nstart: ${start}\nend: ${end}`);
   console.log('availableTravels', availableTravels);
   return (
     <div className="w-full mt-2 flex justify-center items-center">
@@ -50,7 +51,7 @@ const ListTravels = ({
                 {availableTravels &&
                   availableTravels
                     .map((travelPlan) => {
-                      console.log(travelPlan);
+                      console.log('availableTravels-.map(travelPlan)', travelPlan);
                       let data = extractTravelListData(travelPlan, start, end);
                       console.log(data);
                       return data;
