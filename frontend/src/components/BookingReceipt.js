@@ -39,7 +39,8 @@ const BookingReceipt = (prop) => {
         <p className="text-sm mt-10 mb-5">
         <strong className="text-base">Bokningsnummer: </strong> {prop.bookingNumber}
             <br />
-            <strong className="text-base">Du har betalat:</strong> {new Intl.NumberFormat('sv-se', { style: 'currency', currency: 'SEK' }).format(prop.choosenTravel.price)}
+            {console.log(prop)}
+            <strong className="text-base">Du har betalat:</strong> {new Intl.NumberFormat('sv-se', { style: 'currency', currency: 'SEK' }).format(prop.choosenTravel.price * prop.choosenSeats.length)}
             <br />
             <br />
             <strong>Avresa:</strong> {capitalizeFirstLetter(prop.choosenTravel.routeEvents[0].location)}<br />
