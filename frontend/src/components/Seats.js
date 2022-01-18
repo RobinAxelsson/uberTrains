@@ -2,10 +2,11 @@ import { FAKEBOOKING_URL } from "../constants/urls";
 import { postBooking } from "../services/BackendClient";
 import BookingCheckout from "./BookingCheckout";
 
-const Seats = ({ setChoosenSeats, choosenSeats, choosenTravel, setShowReceipt, setShowSeats, setBookingNumber}) => {
+const Seats = ({ setChoosenSeats, choosenSeats, choosenTravel, setShowReceipt, setShowSeats, setBookingNumber, setShowTravels, setChoosenTravel}) => {
   return (
     <div className="mb-6 w-11/12 tablet:w-6/12 laptop:w-4/12 mt-2 flex justify-center items-center">
       <div className="mt-2 flex justify-center justify-around bg-white bg-opacity-75 rounded-md shadow-md w-4/5">
+      
         <div className="">
           <div className="mt-1">
             {choosenTravel &&
@@ -52,6 +53,15 @@ const Seats = ({ setChoosenSeats, choosenSeats, choosenTravel, setShowReceipt, s
                 ))}
           </div>
           <div className="mt-2 mr-12 -ml-3 flex justify-end">
+          <button class="bg-gray-400 hover:bg-gray-400 text-gray-800s font-bold px-4 rounded w-24 h-8 m-2 mt-3 "
+                    onClick={() => {
+                      setShowSeats(false)
+                      setShowTravels(true)
+                      setChoosenTravel([])
+                    }}
+                    >
+                    Tillbaka
+                    </button>
             {process.env.REACT_APP_ENVIRONMENT === "Development" && (
               <button
                 onClick={() => {

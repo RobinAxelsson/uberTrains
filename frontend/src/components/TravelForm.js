@@ -173,7 +173,7 @@ const TravelForm = () => {
               onChange={(e) => setDate(e.target.value)}
             />
           </div>
-          <button className="mt-1 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <button  className="mt-1 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             Fortsätt
           </button>
         </form>
@@ -214,6 +214,7 @@ const TravelForm = () => {
             setShowTravels={setShowTravels}
             setShowSeats={setShowSeats}
             setChoosenTravel={setChoosenTravel}
+            setShowForm={setShowForm}
           />
         )}
       </div>
@@ -227,6 +228,9 @@ const TravelForm = () => {
             setShowReceipt={setShowReceipt}
             setShowSeats={setShowSeats}
             setBookingNumber={setBookingNumber}
+            setShowTravels={setShowTravels}
+            setShowSeats={setShowSeats}
+            setChoosenTravel={setChoosenTravel}
           />
         )}
       </div>

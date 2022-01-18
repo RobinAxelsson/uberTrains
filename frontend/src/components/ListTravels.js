@@ -2,7 +2,7 @@
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
-const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoosenTravel }) => {
+const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoosenTravel,setShowForm }) => {
   return (
     <div className="w-full mt-2 flex justify-center items-center">
       <div className="overflow-x-auto w-full sm:-mx-6 lg:-mx-8">
@@ -37,8 +37,17 @@ const ListTravels = ({ availableTravels, setShowTravels, setShowSeats, setChoose
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  ></th>
+                    className="px-6 py-3 text- text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
+                    onClick={() => {
+                      setShowTravels(false);
+                      setShowForm(true)
+                    }}
+                    >
+                    Tillbaka
+                    </button>
+                  </th>
                 </tr>
               </thead>
               <tbody>
