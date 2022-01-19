@@ -1,30 +1,21 @@
 import "./App.css";
 import TravelForm from "./components/TravelForm";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import BookingReceipt from "./components/BookingReceipt";
-import Navbar from "./components/Navbar";
-import Seats from "./components/Seats";
-import Checkout from "./components/Checkout";
-
+//import Footer from "./components/Footer";
+import LogoForm from "./components/LogoForm";
 function App() {
-
+  document.title = "UberTrains - Boka resa";
   return (
-  <div>
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/seats" element={<Seats />} />
-        <Route path="/" element={<TravelForm />} />
-        <Route path="/receipt" element={<BookingReceipt />} />
-        
-      </Routes>
-    </Router>
+    <div className="flex flex-col min-h-screen">
+      <Router>
+        <LogoForm></LogoForm>
+        <Routes>
+          <Route path="/" element={<TravelForm />} />
+        </Routes>
+      </Router>
+      {/* <Footer /> */}
     </div>
   );
 }
 
 export default App;
-
-
-
-

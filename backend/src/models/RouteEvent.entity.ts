@@ -1,9 +1,16 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Booking } from "./Booking.entity";
 import { TravelPlan } from "./TravelPlan.entity";
 @Entity()
 export class RouteEvent extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id: string
+  id: number
+  @ManyToMany(() => Booking, booking => booking.routeEvents)
+  @JoinTable({
+    name: "routeevent_booking",
+    
+  })
+  bookings: Booking[]
   @Column()
   dateTime: string;
   @Column()

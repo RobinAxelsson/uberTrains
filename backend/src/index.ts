@@ -1,18 +1,20 @@
-import "reflect-metadata";
-import { createConnection } from "typeorm";
-import { seed } from "./services/Seeder";
-import { testRouter } from "./routes/test.router";
-import { travelPlanRouter } from "./routes/travelPlan.router";
-import { bookingRouter } from "./routes/booking.router";
-import { trainUnitRouter } from "./routes/trainUnit.router";
-import { seatRouter } from "./routes/seat.router";
-import { routeEventRouter } from "./routes/routeEvent.router";
-import { priceModelRouter } from "./routes/priceModel.router";
+import 'reflect-metadata';
+import { createConnection } from 'typeorm';
+import { seed, seedTravelPlan } from './services/Seeder';
+import { testRouter } from './routes/test.router';
+import { travelPlanRouter } from './routes/travelPlan.router';
+import { bookingRouter } from './routes/booking.router';
+import { trainUnitRouter } from './routes/trainUnit.router';
+import { seatRouter } from './routes/seat.router';
+import { routeEventRouter } from './routes/routeEvent.router';
+import { priceModelRouter } from './routes/priceModel.router';
 
-const settings = require("../settings.json");
-const path = require("path");
-const express = require("express");
+const settings = require('../settings.json');
+const express = require('express');
 const webServer = express();
+
+require("dotenv").config();
+
 const stripe = require("stripe")(
   "sk_test_51K7JpMAwp97GmluXslTTgNnwx2H7CBcUwDpIOjhZoR3gV6LxY6ZZIUnqVdlzdjOWGhVWS2owaJ3SACXg7F6G2Kqs00B1E5iMEs"
 );
@@ -27,7 +29,9 @@ const corsOptions = {
 if (process.env.NODE_ENV === "Development") {
   createConnection()
     .then(async () => {
-      await seed();
+      await seedTravelPlan('2012-04-23');
+      await seedTravelPlan('2022-01-11');
+      await seedTravelPlan('2022-02-22');
     })
     .catch((error) => console.log(error));
 

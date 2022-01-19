@@ -1,4 +1,3 @@
-import { getRepository } from "typeorm";
 import { Seat } from "../models/Seat.entity";
 import { TrainUnit } from "../models/TrainUnit.entity";
 import { TravelPlan } from "../models/TravelPlan.entity";
@@ -6,14 +5,11 @@ import { RouteEvent } from "../models/RouteEvent.entity";
 import { PriceModel } from "../models/PriceModel.entity";
 
 export async function seed() {
-  let seatsA: Seat[] = [
-    { seatNumber: "6a" } as Seat,
-    { seatNumber: "7a" } as Seat,
-  ];
-  let seatsB: Seat[] = [
-    { seatNumber: "2a" } as Seat,
-    { seatNumber: "3a" } as Seat,
-  ];
+  return await seedTravelPlan('2012-04-23')
+}
+export async function seedTravelPlan(isoDate: String) {
+  let seatsA: Seat[] = [{ seatNumber: '6a' } as Seat, { seatNumber: '7a' } as Seat];
+  let seatsB: Seat[] = [{ seatNumber: '2a' } as Seat, { seatNumber: '3a' } as Seat];
 
   let trainUnits: TrainUnit[] = [
     {
@@ -32,34 +28,34 @@ export async function seed() {
     {
       latitude: 57.7072326,
       longitude: 11.9670171,
-      dateTime: "2012-04-23T18:30:43.511Z",
-      location: "goteborg",
-      specifiedLocation: "Platform 5",
-      event: "Departure",
+      dateTime: isoDate + 'T18:30:43.511Z',
+      location: 'göteborg',
+      specifiedLocation: 'Platform 5',
+      event: 'Avgång',
     } as RouteEvent,
     {
       latitude: 57.7825634,
       longitude: 14.165719,
-      dateTime: "2012-04-23T20:30:43.511Z",
-      specifiedLocation: "Platform 1",
-      location: "jonkoping",
-      event: "Arrival",
+      dateTime: isoDate + 'T20:30:43.511Z',
+      specifiedLocation: 'Platform 1',
+      location: 'jönköping',
+      event: 'Ankomst',
     } as RouteEvent,
     {
       latitude: 57.7825634,
       longitude: 14.165719,
-      dateTime: "2012-04-23T20:35:43.511Z",
-      specifiedLocation: "Platform 1",
-      location: "jonkoping",
-      event: "Departure",
+      dateTime: isoDate + 'T20:35:43.511Z',
+      specifiedLocation: 'Platform 1',
+      location: 'jönköping',
+      event: 'Avgång',
     } as RouteEvent,
     {
       latitude: 59.3251172,
       longitude: 18.0710935,
-      dateTime: "2012-04-23T22:30:43.511Z",
-      specifiedLocation: "Platform 10a",
-      location: "stockholm",
-      event: "Arrival",
+      dateTime: isoDate + 'T22:30:43.511Z',
+      specifiedLocation: 'Platform 10a',
+      location: 'stockholm',
+      event: 'Ankomst',
     } as RouteEvent,
   ];
 
@@ -76,7 +72,7 @@ export async function seed() {
     trainTypeMultiplyer: 0.8,
     travelPlans: [travelPlan],
   } as PriceModel;
-  
+
   for (const s of seatsA) {
     await Seat.save(s);
   }

@@ -1,0 +1,18 @@
+[
+    {
+    "id": 1,
+    "name": "Göteborg"
+    },
+    {
+        "id": 2,
+        "name": "Stockholm"
+        },
+        {
+            "id": 3,
+            "name": "Jönköping"
+            },
+            {
+                "id": 4,
+                "name": "Malmö"
+                }
+]

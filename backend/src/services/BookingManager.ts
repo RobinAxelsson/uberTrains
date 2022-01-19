@@ -7,24 +7,29 @@ import { GetPriceDto } from "../dtos/GetPriceDto";
 import { TravelPlan } from "../models/TravelPlan.entity";
 import { RouteEvent } from "../models/RouteEvent.entity";
 import { createQueryBuilder } from "typeorm";
-import { IPaymentManager } from './PaymentManager';
+import { IPaymentManager } from "./PaymentManager";
+import { IMailService } from "./MailService";
 
 export class BookingManager {
   priceCalculator: PriceCalculator;
   paymentManager: IPaymentManager;
-  constructor(paymentManager: IPaymentManager) {
+  mailService: IMailService;
+  constructor(paymentManager: IPaymentManager, mailService: IMailService) {
     this.priceCalculator = new PriceCalculator();
     this.paymentManager = paymentManager;
+    this.mailService = mailService;
   }
   async getPriceForBooking(calculatePriceDto: GetPriceDto) {
     const { amount, endRouteEventId, startRouteEventId, travelPlanId } =
       calculatePriceDto;
-    let entities = await this.getEntities(
-      travelPlanId,
+    let entities = await this.getEntities(travelPlanId, [
       startRouteEventId,
-      endRouteEventId
-    );
-    const { startRouteEvent, endRouteEvent, travelPlan } = entities;
+      endRouteEventId,
+    ]);
+    const { routeEvents, travelPlan } = entities;
+    let startRouteEvent = routeEvents[0];
+    let endRouteEvent = routeEvents[1];
+
     let distance = this.priceCalculator.calculateDistance(
       startRouteEvent.latitude,
       startRouteEvent.longitude,
@@ -39,32 +44,42 @@ export class BookingManager {
       amount
     );
   }
-  async seatsAreFree(seatIds: number[]){
-
+  async validateSeatsAreFree(seatIds: number[], routeEventIds: number[]) {
     const seats = await createQueryBuilder(Seat)
-    .leftJoinAndSelect("Seat.booking", "Booking")
-    .whereInIds(seatIds)
-    .getMany();
-    console.log({seats: seats});
-    return seats.reduce((prev, cur) => {
-      console.log({prev: prev});
-      console.log({cur: cur});
-      return prev && cur.booking === null
-    }, true)
+      .leftJoinAndSelect("Seat.booking", "Booking")
+      .leftJoinAndSelect("Booking.routeEvents", "RouteEvent")
+      .whereInIds(seatIds)
+      .getMany();
+    let seatsBookings = seats.map((s) => s.booking).filter((x) => x !== null);
+    let seatBookingRouteEvents = seatsBookings
+      .map((b) => b.routeEvents)
+      .flat(1)
+      .filter((x) => x !== null);
+
+    if (seatBookingRouteEvents.length === 0) return;
+    let dbSeatEventIds = seatBookingRouteEvents.map((x) => x.id);
+    if (routeEventIds.filter((x) => dbSeatEventIds.includes(x)).length > 0)
+      throw new Error("All seats are not free with the selected options");
+    return;
   }
   async book(bookingDto: BookingDto) {
     const {
-      startRouteEventId,
-      endRouteEventId,
+      routeEventIds,
       seatIds,
       travelPlanId,
-      stripeInfo: stripeToken
+      stripeInfo: stripeToken,
     } = bookingDto;
 
-    if((await this.seatsAreFree(seatIds)) === false) throw new Error('Seats are booked');
+    await this.validateSeatsAreFree(seatIds, routeEventIds); //throws if err
 
-    const { startRouteEvent, endRouteEvent, travelPlan } =
-      await this.getEntities(travelPlanId, startRouteEventId, endRouteEventId);
+    const { routeEvents, travelPlan, seats } = await this.getBookingEntities(
+      travelPlanId,
+      routeEventIds,
+      seatIds
+    );
+
+    let startRouteEvent = routeEvents[0];
+    let endRouteEvent = routeEvents[routeEvents.length - 1];
 
     let distance = this.priceCalculator.calculateDistance(
       startRouteEvent.latitude,
@@ -72,8 +87,6 @@ export class BookingManager {
       endRouteEvent.latitude,
       endRouteEvent.longitude
     );
-    
-
 
     let price = this.priceCalculator.calculatePrice(
       distance,
@@ -81,20 +94,16 @@ export class BookingManager {
       travelPlan?.priceModel.priceConstant as number,
       bookingDto.seatIds.length
     );
-    console.log(JSON.stringify({price: price}), null, '\t');
-    
+
     let stripeId = await this.paymentManager.Pay(stripeToken, price);
 
-
-    
     const booking = {
-      bookingNumber: Guid.newGuid(),
+      bookingNumber: Guid.newShortGuid(),
       localDateTime: Date().toString(),
       email: stripeToken.email,
       totalPrice: price,
       stripeId: stripeId,
-      startStation: startRouteEvent.location,
-      endStation: endRouteEvent.location,
+      routeEvents: routeEvents,
       bookedSeats: [] as Seat[],
     } as Booking;
 
@@ -105,29 +114,91 @@ export class BookingManager {
     }
 
     const dbBooking = await Booking.save(booking);
+    let mailResponse = await this.mailService.sendEmail(dbBooking, seats, routeEvents);
+
+    console.log(mailResponse);
     return dbBooking;
   }
-  private async getEntities(
-    travelPlanId: number,
-    startRouteEventId: number,
-    endRouteEventId: number
-  ) {
-    const travelPlan = (await createQueryBuilder(TravelPlan)
-    .leftJoinAndSelect("TravelPlan.priceModel", "PriceModel")
-    .where("travelPlan.id = :id", {id: travelPlanId})
-    .getOne())
+  private async getEntities(travelPlanId: number, routeEventIds: number[]) {
+    console.log({ travelPlanId: travelPlanId, routeEventIds: routeEventIds });
+    const travelPlan = await createQueryBuilder(TravelPlan)
+      .leftJoinAndSelect("TravelPlan.priceModel", "PriceModel")
+      .where("travelPlan.id = :id", { id: travelPlanId })
+      .getOne();
 
-    console.log(JSON.stringify({ BookingManagerGetEntities: travelPlan }, null, "\t"));
-    const startRouteEvent = (await RouteEvent.findOne(
-      startRouteEventId
-    )) as RouteEvent;
-    const endRouteEvent = (await RouteEvent.findOne(
-      endRouteEventId
-    )) as RouteEvent;
+    if (travelPlan instanceof TravelPlan === false) {
+      console.log(
+        JSON.stringify(
+          {
+            travelPlanWhenNotFound: travelPlan,
+            travelPlanId: travelPlanId,
+            routeEventIds: routeEventIds,
+          },
+          null,
+          "\t"
+        )
+      );
+
+      throw new Error("TravelPlan not found!");
+    }
+
+    const routeEvents = [] as RouteEvent[];
+
+    for (const id of routeEventIds) {
+      let routeEvent = (await RouteEvent.findOne(id)) as RouteEvent;
+      if (routeEvent instanceof RouteEvent === false)
+        throw new Error("RouteEvent was not found");
+      routeEvents.push(routeEvent);
+    }
     return {
       travelPlan: travelPlan,
-      startRouteEvent: startRouteEvent,
-      endRouteEvent: endRouteEvent,
+      routeEvents: routeEvents,
+    };
+  }
+  private async getBookingEntities(
+    travelPlanId: number,
+    routeEventIds: number[],
+    seatIds: number[]
+  ) {
+    console.log({ travelPlanId: travelPlanId, routeEventIds: routeEventIds });
+    const travelPlan = await createQueryBuilder(TravelPlan)
+      .leftJoinAndSelect("TravelPlan.priceModel", "PriceModel")
+      .where("travelPlan.id = :id", { id: travelPlanId })
+      .getOne();
+
+    const seats = await createQueryBuilder(Seat)
+      .leftJoinAndSelect("Seat.trainUnit", "TrainUnit")
+      .where("Seat.id IN (:...ids)", { ids: seatIds })
+      .getMany();
+
+    if (travelPlan instanceof TravelPlan === false) {
+      console.log(
+        JSON.stringify(
+          {
+            travelPlanWhenNotFound: travelPlan,
+            travelPlanId: travelPlanId,
+            routeEventIds: routeEventIds,
+          },
+          null,
+          "\t"
+        )
+      );
+
+      throw new Error("TravelPlan not found!");
+    }
+
+    const routeEvents = [] as RouteEvent[];
+
+    for (const id of routeEventIds) {
+      let routeEvent = (await RouteEvent.findOne(id)) as RouteEvent;
+      if (routeEvent instanceof RouteEvent === false)
+        throw new Error("RouteEvent was not found");
+      routeEvents.push(routeEvent);
+    }
+    return {
+      travelPlan: travelPlan,
+      routeEvents: routeEvents,
+      seats: seats,
     };
   }
 }

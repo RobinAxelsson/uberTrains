@@ -14,7 +14,7 @@ export class PaymentManager implements IPaymentManager {
       source: stripeInfo.id,
     });
 
-    const charge = await stripe.charges.create({
+    const charge = await stripe.charges.create({      
       amount: Math.round(price * 100),
       currency: "sek",
       customer: customer.id,
