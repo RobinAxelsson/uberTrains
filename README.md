@@ -1,164 +1,183 @@
 # UberTrains Grupp 6
 
-Detta repo avser ett bokningssystem för virtuella tågresor skapat som ett skolprojekt för kurs TH2103, Teknikhögskolan Göteborg.
-Systemet är webbaserat och använder sig av följande teknologier:
-
-`Node.js | Express.js | React | Sqlite | Tailwind | TypeORM`
-
-- [UberTrains Grupp 6](#ubertrains-grupp-6)
-  - [Verktyg som behövs](#verktyg-som-behövs)
-- [Komma igång med projektet](#komma-igång-med-projektet)
-  - [Kloning av Github-projekt](#kloning-av-github-projekt)
-  - [Projektgrenar](#projektgrenar)
-  - [Installation av dependencies](#installation-av-dependencies)
-    - [Automatiserad installation](#automatiserad-installation)
-    - [Manuell installation](#manuell-installation)
-  - [Körning av projekt](#körning-av-projekt)
-    - [Starta backend](#starta-backend)
-    - [Starta frontend](#starta-frontend)
-    - [Avsluta sessioner](#avsluta-sessioner)
-  - [Hur testar man i mobilen?](#hur-testar-man-i-mobilen)
-  - [Dev Notes](#dev-notes)
-
 ![ubertrains frontpage](img/2022-01-16-21-55-10.png)
 
-## Verktyg som behövs
+## Introduction
 
-- Skapa konto på github.com
-- Installera Git
-- Installera Visual Studio Code (VS Code)
-- Installera Postman (och skapa konto)
-- Installera node.js
-- Installera SQLite Studio
+This repository contains proof-of-concept booking system for travels by train and is a collaboration between 3 different classes (one Java, one .Net and one Test -class) from the vocational school Teknikhögskolan. We are all Swedish speaking so some of the content is in Swedish. We followed SCRUM Methodology and worked together for 6 weeks (6 sprints).
 
-# Komma igång med projektet
-**Denna guide avser att du redan installerat samtlig mjukvara som krävs**
-## Kloning av Github-projekt
-Öppna Visual Studio Code på din dator och i vänstra menyfältet väljer du "Source Control" <br>
+[SWEDISH-SETUP-GUIDE](KOM-IGÅNG-swedish.md)
 
-![image](https://user-images.githubusercontent.com/70197523/146829432-7047612b-81b0-4898-bc67-71f3cf4ec1c6.png)
+[GITHUB-REPO](https://github.com/RobinAxelsson/uberTrains)
 
-Därefter välj att klona ett repository och i sökfältet som dyker upp klistrar du in huvudlänken till projektet. <br>
-Om du inte har denna länk så är URL:en: `https://github.com/malmz90/uberTrains` <br>
-Avsluta genom att klicka på "Clone from URL". <br>
-![image](https://user-images.githubusercontent.com/70197523/146829709-b154e920-f446-41e5-8861-fe0ec9b6ab7c.png)
-<br>
-I nästa steg väljer du i vilken mapp du vill arbeta med projektet. Sökvägen till detta är frivilligt. <br>
+## The team
 
-## Projektgrenar
+- Alexander Malm (Java-developer) -> [github page](https://github.com/malmz90)
+- Albin Alm (.NET-developer) -> [github page](https://github.com/albinalm)
+- Maria Herm (Software Tester) -> [github page](https://github.com/mariamurmansk)
+- Adam Kärmander (Java-developer) -> [github page](https://github.com/adamkarmander)
+- Anas Shikh Aldaya (.NET-developer) -> [github page](https://github.com/ItsAnass)
+- Robin Axelsson (.NET-developer) -> [github page](https://github.com/RobinAxelsson)
+- Marcus Dagquist (Software Tester) -> [github page](https://github.com/marcusdagquist)
 
-Nu är du inne i projektets huvudgren. Men för att kunna testa nya implementationer behöver ni öppna den gren med den kod ni vill testa. <br>
-Man arbetar i grenar och det är som kopior av projektet man sedan kan slå ihop. Detta gör man så ens nya kod inte påverkar någon annan. <br>
-Vår huvudgren för utveckling kallas "dev" och där gäller "färdigbakad" kod som inte riktigt gått ut till användarna ännu. <br>
-Gäller det ny kod för user stories har vi oftast egna branches för detta. <br>
-Det är i en sådan branch ni kommer befinna er i när ni ska testa user stories, innan de bakas ihop med dev-grenen. <br> <br>
-För att växla mellan grenar så trycker ni längst ner i det vänstra hörnet i VSCode och sedan klickar på den gren ni vill hoppa till i menyn som dyker upp. <br>
+Following software technologies are used.
 
-![image](https://user-images.githubusercontent.com/70197523/146832513-c1bde069-d0e9-4810-8b46-0138b448b80e.png) <br>
+`Node.js | Express.js | React | CRACO | Sqlite | Tailwind | TypeORM | Prettier`
 
-![image](https://user-images.githubusercontent.com/70197523/146832667-486eb21d-b78e-431e-88fc-b23d26521750.png) <br>
+---
 
-**I denna bilden har vi t.ex 3st grenar:** <br>
+- [UberTrains Grupp 6](#ubertrains-grupp-6)
+  - [Introduction](#introduction)
+  - [The team](#the-team)
+  - [Quick-setup for development](#quick-setup-for-development)
+  - [What are the different modes to start the app in?](#what-are-the-different-modes-to-start-the-app-in)
+  - [How to add data to the database?](#how-to-add-data-to-the-database)
+  - [How to delete data in the database?](#how-to-delete-data-in-the-database)
+  - [How can you view and query the database?](#how-can-you-view-and-query-the-database)
+  - [How do you test the app in mobile?](#how-do-you-test-the-app-in-mobile)
+  - [Is there a CI Pipeline/Github-Actions?](#is-there-a-ci-pipelinegithub-actions)
+  - [What is Newman?](#what-is-newman)
+  - [What tests do Newman run?](#what-tests-do-newman-run)
+  - [How to add things to development mode in backend or frontend?](#how-to-add-things-to-development-mode-in-backend-or-frontend)
+  - [How do we format the code?](#how-do-we-format-the-code)
+  - [How to query data in TypeOrm](#how-to-query-data-in-typeorm)
+  - [How do we use branches? Feature branch? CI?](#how-do-we-use-branches-feature-branch-ci)
+  - [What is a good getting started?](#what-is-a-good-getting-started)
 
-<ul>
-  <li><strong>TypeORMImplementation</strong>: Detta är en gren som en utvecklare skapat för att utveckla en user story. På namnet antyder den att man arbetat med databashantering. Denna branch vill ni hoppa till om ni ska testa den koden som exempel</li>
-  <li><strong>dev</strong>: Detta är vår gren där vi lägger färdiga funktioner innan de går till demo</li>
-  <li><strong>main</strong>: Detta är vår live-gren. I ett verkligt projekt är alltså detta grenen som användarna ser. Denna vill vi alltså inte pusha till om vi inte är 100 på att implementationen fungerar.</li>
-  <li><strong>handleTrainInfrastructure</strong>: Detta är en gren som en utvecklare skapat för att utveckla en user story. På namnet antyder den att man arbetat med infrastruktur för tåg. Denna branch vill ni hoppa till om ni ska testa den koden som exempel</li>
-</ul>
+## Quick-setup for development
 
-## Installation av dependencies
+From the base directory run:
 
-Nu har du projektet på din dator och nästa steg är att installera samtliga dependencies. Detta kan göras automatiskt via ett skript eller manuellt. <br>
-Välj vilken sektion av guiden du vill följa för manuellt respektive automatiskt.
-
-### Automatiserad installation
-
-Öppna ett nytt terminalfönster i VSCode genom att välja "Terminal" i översta menyraden och sedan klicka "New Terminal" <br>
-Därefter kör nedan kod en rad i taget genom att klistra in och sedan klicka enter: <br>
-
-```powershell
-Set-ExecutionPolicy -ExecutionPolicy unrestricted -Scope CurrentUser
-``` 
-
-<br>
-
-```powershell
-./scripts/install.ps1
-```
-
-<br><br>
-Nu kommer samtliga dependencies att installeras och projektet kommer vara redo att köras.
-Installationsskriptet uppdateras löpande och ska innehålla samtliga nödvändiga paket.
-
-### Manuell installation
-
-Om du hellre vill lära dig och installera dependencies manuellt gör enligt nedan: <br> <br>
-
-Öppna ett nytt terminalfönster i VSCode genom att välja "Terminal" i översta menyraden och sedan klicka "New Terminal" <br>
-Därefter kör nedan kod **en rad i taget** genom att klistra in och sedan klicka enter: <br>
-
-```powershell
-cd backend
-npm install
+```shell
+# install
+cd backend && npm install
 npm upgrade
 cd ..
-cd frontend
-npm install
-cd ..
+cd frontend && npm install
+npm upgrade
 ```
-<br><br>
-Nu ska samtliga paket vara installerade och redo att köras. Paketen installeras via kommandot "npm install" från en fil som har flesta paketen listade. <br>
-Det kan hända att vi har löpande lagt till paket i projektet som saknas i denna guide. Skulle du få problem vid körning, så är detta mycket möjligt en orsak. <br>
-Då kan du prova att köra den automatiserade varianten om den skulle vara uppdaterad, alternativt höra med utvecklare för assistans.
 
-## Körning av projekt
+Again from base directory terminal 1
 
-Körningen av projektet är uppdelat i två delar kallat "front-end" och "back-end". <br>
-Tänk dig att frontend är det användaren ser - alltså det som är på scenen, medans backend är det som händer bakom kulisserna. <br>
-T.ex om du är inne på Kicks och ska handla en parfym så lägger du den i varukorgen. Det du ser är att du trycker på en knapp med en kundvagn och du får parfymen i din varukorg.
-Det är hemsidans frontend. <br> <br>
-Men när du klickar på knappen så händer det egentligen mycket mer i bakgrunden, kanske reserverar lagersaldo osv. Det är backend.
+```shell
+# run backend
+cd backend && npm run watch:dev
+```
 
-<br> <br>
-När du kör detta projekt behöver du alltså först starta vår backend som gör grovjobbet och sedan frontend. Noga att det exekveras i den ordningen. Alltså backend > frontend.
+Again from base directory **but terminal 2**
 
-### Starta backend
-För att starta backend skriver du nedan i ditt terminalfönster i VSCode: <br>
-**Precis som innan, exekvera en rad åt gången** <br>
-```powershell
-cd backend
+```shell
+# run frontend
+cd frontend && npm run start:dev
+```
+
+## What are the different modes to start the app in?
+
+Both frontend and backend has a development mode:
+```
 npm run start:dev
 ```
 
-<br>
+- **Frontend dev mode** has some extra buttons to easier debug the application.
+- **Backend dev mode** runs the backend with TS-Node and do not transpile the typescript to JavaScript.
 
-Nu ska du få ett meddelande som säger något dylikt: `Listening on port:4000` 
-<br>
-Får du istället felmeddelanden ha gärna kvar dom och fråga en utvecklare, eller Googla dom om du vill försöka lösa det själv. <br> 
-**Man kan aldrig förstöra något, det går alltid att backa!!**
+## How to add data to the database?
 
-### Starta frontend
+There is two ways to add data to the database: The Seeder class in backend and using endpoint (recommended tool is Postman). The endpoint method is not fully developed and needs to be looked over, also the Seeder can be refactored and smarter. **Right now we seed every time we run the app in development mode**.
 
-Nu när din backend körs så kan du inte skriva i det terminalfönstret, därför behöver du öppna en ny flik. Detta kan du göra på samma sätt du öppnade din första terminal, alltså översta menyn > Terminal > New Terminal <br>
-Alternativt välja "plus-symbolen"
-<br>
-I ditt nya terminalfönster skriver du nedan kod för att starta din front-end: <br>
+## How to delete data in the database?
 
-```powershell
-cd frontend
-npm start
+**Easiest is to delete the database folder** - it will be reseeded anyway in the next run.
+
+## How can you view and query the database?
+
+The database is a SQLite relational database and it is saved in database folder under backend/src/database. Recommended tool to work with it is the [VS-Code extension SQLite](https://marketplace.visualstudio.com/items?itemName=alexcvzz.vscode-sqlite), follow the documentation.
+
+## How do you test the app in mobile?
+
+We use a proxy configuration in React (see frontend/package.json proxy property) that ports the incoming request in frontend to the backend to be able to avoid CORS complexity (cross origin requests).
+
+1) You need to know your local IP-address.
+2) You need to turn off firewall in private network or configure it to give vs code permission to receive incoming signals.
+3) You need to start the application in VS Code (in two terminals):
+   1) cd frontend && npm run start
+   2) cd backend && npm run start:dev
+4) Now should you be able to browse to the IP-address $(your-local-address):3000
+
+```
+http://192.168.1.4:3000 //example
 ```
 
-<br>
-Nu ska det öppnas ett webbläsarfönster med vår frontend. Får du felmeddelanden, som sagt kontakta oss.
+## Is there a CI Pipeline/Github-Actions?
 
-### Avsluta sessioner
+Yes every time you push a branch to GitHub it will run the jobs inside [/.github/workflows/build&test.yml](/.github/workflows/build&test.yml).
 
-För att avsluta går du till respektive terminalfönster och klickar `"ctrl+c"`
-## Hur testar man i mobilen?
+[LINK-TO-ACTIONS](https://github.com/RobinAxelsson/uberTrains/actions)
 
-Det går att köra projektet över ditt lokala nätverk så att andra devices uppkopplade till ditt nätverk kan anropa appen. Se [GUIDE](./how-to-test-mobile.md)
-## Dev Notes
+![](/img/2022-01-19-14-17-20.png)
 
->[How to setup a typescript project for node](https://khalilstemmler.com/blogs/typescript/node-starter-project/)
+## What is Newman?
+
+Newman is the CLI version of Postman, it is used to run postman tests inside a headless server aka our pipeline. To run this we use a **secret api key** that is saved in the repositories GitHub secrets and is not accessible except for the owner of the repo. The Newman script [/scripts/newman-endpoint-job.sh](/scripts/newman-endpoint-job.sh) is **a bash script** and is made for the ubuntu server that **runs the pipeline.**
+
+## What tests do Newman run?
+
+We share a Postman Collection that is fetched in the pipeline and run by Newman after the backend is started. The [STATIC-IMAGE-OF-THE-POSTMAN-TESTS](https://www.getpostman.com/collections/2fe41057f5b1adcda84f)
+
+## How to add things to development mode in backend or frontend?
+
+Just use the IF-statement at an relevant part of the code.
+
+```javascript
+if (process.env.NODE_ENV === "Development") {
+  //Enter your feature/functions here
+}
+```
+
+## How do we format the code?
+
+It is **important to use Prettier extension** to format the code - else the commits will become harder to read and the new formatting will be pushed every time. It has a potential to be a **hazard.**
+
+[PRETTIER-EXTENSION](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+
+The configuration file(s), one in backend one in frontend.
+
+```json
+//from the .prettierrc files
+{
+  "tabWidth": 2,
+  "semi": true,
+  "singleQuote": true
+}
+```
+
+## How to query data in TypeOrm
+
+Best example in our code is [TravelPlanner.ts](/backend/src/services/TravelPlanner.ts)
+
+```javascript
+  async getFullTravelPlanById(id: number) {
+    return (await createQueryBuilder(TravelPlan)
+      .leftJoinAndSelect("TravelPlan.routeEvents", "RouteEvent")
+      .leftJoinAndSelect("TravelPlan.trainUnits", "TrainUnit")
+      .leftJoinAndSelect("TravelPlan.priceModel", "PriceModel")
+      .leftJoinAndSelect("TrainUnit.seats", "Seat")
+      .leftJoinAndSelect("Seat.booking", "Booking")
+      .where("travelPlan.id = :id", { id: id })
+      .getOne()) as TravelPlan;
+  }
+```
+
+We use TypeOrms queryBuilder to construct our SQL-queries.
+
+[USED-DOCUMENTATION-TYPEORM-QUERYBUILDER](https://orkhan.gitbook.io/typeorm/docs/select-query-builder)
+
+## How do we use branches? Feature branch? CI?
+
+We create a branch when a new feature should be made, when we are ready we **merge dev into the feature branch.** Push the branch to GitHub to see if it passes the pipeline and if it does **we merge the feature branch into dev.**
+
+We merge to **main** in consultancy with the team.
+
+## What is a good getting started?
+
+If you are comfortable with TypeScript feel free to refactor the Seeder and as second with the seeder provide the app with richer data when it comes to travels would be a nice start! :)
