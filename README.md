@@ -6,7 +6,7 @@
 
 This repository contains proof-of-concept booking system for travels by train and is a collaboration between 3 different classes (one Java, one .Net and one Test -class) from the vocational school Teknikhögskolan. We are all Swedish speaking so some of the content is in Swedish. We followed SCRUM Methodology and worked together for 6 weeks (6 sprints).
 
-[SWEDISH-SETUP-GUIDE-NODEVELOPER-FRIENDLY](KOM-IGÅNG-swedish.md)
+[SWEDISH-SETUP-GUIDE-NEWBIE-FRIENDLY](KOM-IGÅNG-swedish.md)
 
 [GITHUB-REPO](https://github.com/RobinAxelsson/uberTrains)
 
@@ -32,6 +32,8 @@ Following software technologies are used.
   - [Quick-setup for development](#quick-setup-for-development)
   - [What are the different modes to start the app in?](#what-are-the-different-modes-to-start-the-app-in)
   - [How to add data to the database?](#how-to-add-data-to-the-database)
+  - [How do you navigate the files and folders backend?](#how-do-you-navigate-the-files-and-folders-backend)
+  - [How do you navigate the files and folders frontend?](#how-do-you-navigate-the-files-and-folders-frontend)
   - [How to delete data in the database?](#how-to-delete-data-in-the-database)
   - [How can you view and query the database?](#how-can-you-view-and-query-the-database)
   - [How do you test the app in mobile?](#how-do-you-test-the-app-in-mobile)
@@ -84,6 +86,108 @@ npm run start:dev
 ## How to add data to the database?
 
 There is two ways to add data to the database: The Seeder class in backend and using endpoint (recommended tool is Postman). The endpoint method is not fully developed and needs to be looked over, also the Seeder can be refactored and smarter. **Right now we seed every time we run the app in development mode**.
+
+## How do you navigate the files and folders backend?
+
+```
+# Backend src folder
+ ┃
+ ┣ database #SQLite saves the entire database in a file.
+ ┃ ┣ dev.sqlite3
+ ┃ ┣ dev.sqlite3-shm
+ ┃ ┗ dev.sqlite3-wal
+ ┃
+ ┣ dtos #data transfer objects - used in api requests
+ ┃ ┣ bookingDto.json
+ ┃ ┣ BookingDto.ts
+ ┃ ┣ chargeDto.json
+ ┃ ┣ getPriceDto.json
+ ┃ ┣ GetPriceDto.ts
+ ┃ ┣ stripeTokenDto.json
+ ┃ ┣ travelPlanDto.json
+ ┃ ┗ TravelPlanDto.ts
+ ┃
+ ┣ models #Database models with TypeOrm annotation
+ ┃ ┣ Booking.entity.ts
+ ┃ ┣ PriceModel.entity.ts
+ ┃ ┣ RouteEvent.entity.ts
+ ┃ ┣ Seat.entity.ts
+ ┃ ┣ TrainUnit.entity.ts
+ ┃ ┗ TravelPlan.entity.ts
+ ┃
+ ┣ resources
+ ┃ ┗ template.html
+ ┃
+ ┣ routes #The express servers routers or **controllers**
+ ┃ ┣ booking.router.ts
+ ┃ ┣ priceModel.router.ts
+ ┃ ┣ routeEvent.router.ts
+ ┃ ┣ seat.router.ts
+ ┃ ┣ test.router.ts
+ ┃ ┣ trainUnit.router.ts
+ ┃ ┗ travelPlan.router.ts
+ ┃
+ ┣ services
+ ┃ ┣ BookingManager.ts
+ ┃ ┣ DbEntityManager.ts #Helper with fetching entities
+ ┃ ┣ MailService.ts #Sends the confirmation email with stripe info
+ ┃ ┣ PaymentManager.ts
+ ┃ ┣ PriceCalculator.ts
+ ┃ ┣ Seeder.ts
+ ┃ ┣ TravelPlanner.ts #Big class that loads full travels when user confirms date.
+ ┃ ┗ UtilityFunctions.ts
+ ┃
+ ┣ tests
+ ┃ ┗ TypeOrmRepostitory.test.ts #All tests in same file, Database, functions...
+ ┣ .prettierrc #Needed to have same code formatting.
+ ┗ index.ts #Loads the express server and connects the database and seeds the database.
+```
+## How do you navigate the files and folders frontend?
+
+```
+# Frontend src folder
+ ┣ components #the UI components
+ ┃ ┣ toast
+ ┃ ┃ ┣ Toast.js
+ ┃ ┃ ┗ Toast.module.css
+ ┃ ┃
+ ┃ ┣ BookingCheckout.js
+ ┃ ┣ BookingReceipt.js
+ ┃ ┣ Footer.js
+ ┃ ┣ ListTravels.js
+ ┃ ┣ LogoForm.js
+ ┃ ┣ Navbar.js
+ ┃ ┣ Seats.js
+ ┃ ┣ TravelForm.js
+ ┃ ┗ UberTrainIcon.js
+ ┃
+ ┣ constants # Saves the urls as global variables (easier for proxy)
+ ┃ ┗ urls.js
+ ┃
+ ┣ resources
+ ┃ ┣ background.jpg
+ ┃ ┣ banner.jpg
+ ┃ ┣ logo.jpeg
+ ┃ ┣ logo_black.png
+ ┃ ┣ logo_transparent.png
+ ┃ ┗ logo_white.png
+ ┃
+ ┣ services
+ ┃ ┣ BackendClient.js #sends api-calls to backend
+ ┃ ┗ Utilities.js #decouples logic from components
+ ┃
+ ┣ __tests__
+ ┃ ┗ utility.test.js
+ ┃
+ ┣ .prettierrc #Need for common formatting
+ ┣ App.css
+ ┣ App.js
+ ┣ index.css
+ ┣ index.js
+ ┣ jsconfig.json
+ ┗ logo.svg
+```
+
 
 ## How to delete data in the database?
 
