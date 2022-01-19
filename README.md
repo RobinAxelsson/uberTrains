@@ -6,7 +6,7 @@
 
 This repository contains proof-of-concept booking system for travels by train and is a collaboration between 3 different classes (one Java, one .Net and one Test -class) from the vocational school Teknikhögskolan. We are all Swedish speaking so some of the content is in Swedish. We followed SCRUM Methodology and worked together for 6 weeks (6 sprints).
 
-[SWEDISH-SETUP-GUIDE](KOM-IGÅNG-swedish.md)
+[SWEDISH-SETUP-GUIDE-NODEVELOPER-FRIENDLY](KOM-IGÅNG-swedish.md)
 
 [GITHUB-REPO](https://github.com/RobinAxelsson/uberTrains)
 
