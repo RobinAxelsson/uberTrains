@@ -76,6 +76,7 @@ cd frontend && npm run start:dev
 ## What are the different modes to start the app in?
 
 Both frontend and backend has a development mode:
+
 ```
 npm run start:dev
 ```
@@ -142,6 +143,7 @@ There is two ways to add data to the database: The Seeder class in backend and u
  ┣ .prettierrc #Needed to have same code formatting.
  ┗ index.ts #Loads the express server and connects the database and seeds the database.
 ```
+
 ## How do you navigate the files and folders frontend?
 
 ```
@@ -151,14 +153,14 @@ There is two ways to add data to the database: The Seeder class in backend and u
  ┃ ┃ ┣ Toast.js
  ┃ ┃ ┗ Toast.module.css
  ┃ ┃
- ┃ ┣ BookingCheckout.js
- ┃ ┣ BookingReceipt.js
+ ┃ ┣ BookingCheckout.js #This component handles the payment.
+ ┃ ┣ BookingReceipt.js #HTML CSS for the bookingReceipt
  ┃ ┣ Footer.js
- ┃ ┣ ListTravels.js
+ ┃ ┣ ListTravels.js #This component maps the travels and list them in a table, HTML and CSS for the table,travels.
  ┃ ┣ LogoForm.js
  ┃ ┣ Navbar.js
- ┃ ┣ Seats.js
- ┃ ┣ TravelForm.js
+ ┃ ┣ Seats.js #This component maps and filter the seats from the choosen travelObject, HTML and CSS for seats.
+ ┃ ┣ TravelForm.js #Fetching travelObject from backend,HTML and CSS for the travelform, filterstations function for the input fields. Initial states is passed down from this component.
  ┃ ┗ UberTrainIcon.js
  ┃
  ┣ constants # Saves the urls as global variables (easier for proxy)
@@ -188,7 +190,6 @@ There is two ways to add data to the database: The Seeder class in backend and u
  ┗ logo.svg
 ```
 
-
 ## How to delete data in the database?
 
 **Easiest is to delete the database folder** - it will be reseeded anyway in the next run.
@@ -201,12 +202,12 @@ The database is a SQLite relational database and it is saved in database folder 
 
 We use a proxy configuration in React (see frontend/package.json proxy property) that ports the incoming request in frontend to the backend to be able to avoid CORS complexity (cross origin requests).
 
-1) You need to know your local IP-address.
-2) You need to turn off firewall in private network or configure it to give vs code permission to receive incoming signals.
-3) You need to start the application in VS Code (in two terminals):
-   1) cd frontend && npm run start
-   2) cd backend && npm run start:dev
-4) Now should you be able to browse to the IP-address $(your-local-address):3000
+1. You need to know your local IP-address.
+2. You need to turn off firewall in private network or configure it to give vs code permission to receive incoming signals.
+3. You need to start the application in VS Code (in two terminals):
+   1. cd frontend && npm run start
+   2. cd backend && npm run start:dev
+4. Now should you be able to browse to the IP-address $(your-local-address):3000
 
 ```
 http://192.168.1.4:3000 //example
